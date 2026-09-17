@@ -1,1 +1,27 @@
-{"name":"t:sections.header.name","type":"header","sections":{"pravas-announcement":{"type":"pravas-announcement","settings":{}},"pravas-header":{"type":"pravas-header","settings":{}}},"order":["pravas-announcement","pravas-header"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "pravas-announcement": {
+      "type": "pravas-announcement",
+      "settings": {}
+    },
+    "pravas-header": {
+      "type": "pravas-header",
+      "settings": {}
+    }
+  },
+  "order": [
+    "pravas-announcement",
+    "pravas-header"
+  ]
+}

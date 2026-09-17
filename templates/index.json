@@ -1,20 +1,83 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "pravas-hero": { "type": "pravas-hero", "settings": {} },
-    "pravas-ticker": { "type": "pravas-ticker", "settings": {} },
-    "pravas-pillars": { "type": "pravas-pillars", "settings": {} },
-    "pravas-featured": { "type": "pravas-featured", "settings": {} },
-    "pravas-philosophy": { "type": "pravas-philosophy", "settings": {} },
-    "pravas-trust": { "type": "pravas-trust", "settings": {} },
+    "pravas-hero": {
+      "type": "pravas-hero",
+      "settings": {}
+    },
+    "pravas-ticker": {
+      "type": "pravas-ticker",
+      "settings": {}
+    },
+    "pravas-pillars": {
+      "type": "pravas-pillars",
+      "settings": {}
+    },
+    "pravas-featured": {
+      "type": "pravas-featured",
+      "settings": {
+        "green_image": "shopify://shop_images/Luxury_watch_social_media_advert__202609011153.jpg",
+        "black_image": "shopify://shop_images/Luxury_watch_social_media_advert__202609011152.jpg"
+      }
+    },
+    "pravas-philosophy": {
+      "type": "pravas-philosophy",
+      "settings": {}
+    },
+    "pravas-trust": {
+      "type": "pravas-trust",
+      "settings": {}
+    },
     "pravas-ugc": {
       "type": "pravas-ugc",
       "blocks": {
-        "ugc-1": { "type": "ugc_item", "settings": {} },
-        "ugc-2": { "type": "ugc_item", "settings": {} },
-        "ugc-3": { "type": "ugc_item", "settings": {} },
-        "ugc-4": { "type": "ugc_item", "settings": {} }
+        "ugc-1": {
+          "type": "ugc_item",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "ugc-2": {
+          "type": "ugc_item",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "ugc-3": {
+          "type": "ugc_item",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "ugc-4": {
+          "type": "ugc_item",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        }
       },
-      "block_order": ["ugc-1", "ugc-2", "ugc-3", "ugc-4"],
+      "block_order": [
+        "ugc-1",
+        "ugc-2",
+        "ugc-3",
+        "ugc-4"
+      ],
       "settings": {}
     }
   },
