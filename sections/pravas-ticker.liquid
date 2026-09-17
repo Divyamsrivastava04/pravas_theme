@@ -1,0 +1,135 @@
+{% comment %}
+  PRAVAS Timepieces — social proof ticker.
+  Inventory counts are always pulled live from variant.inventory_quantity —
+  never hardcoded.
+{% endcomment %}
+
+{%- liquid
+  assign aarambh = all_products['pravas-aarambh']
+  assign sapphire = aarambh.variants | where: 'title', 'Sapphire Green' | first
+  assign midnight = aarambh.variants | where: 'title', 'Midnight Black' | first
+  assign sapphire_qty = sapphire.inventory_quantity | default: 0
+  assign midnight_qty = midnight.inventory_quantity | default: 0
+  assign total = sapphire_qty | plus: midnight_qty
+-%}
+
+<div class="pravas-section pravas-ticker-wrapper">
+  <div class="pravas-ticker-inner" id="ticker-inner">
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Someone just claimed their AARAMBH
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      {{ total }} of 100 pieces remaining
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Founder Delivery available — packed by hand
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Free delivery across India
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Automatic only. No quartz. No compromise.
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Sapphire Green: {{ sapphire_qty }} pieces left
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Midnight Black: {{ midnight_qty }} pieces left
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+
+    <span class="pravas-ticker-item">
+      <span class="pravas-ticker-dot">&#10022;</span>
+      Leather straps available — Burgundy &amp; Black
+    </span>
+    <span class="pravas-ticker-sep">&middot;</span>
+  </div>
+</div>
+
+{% stylesheet %}
+  .pravas-ticker-wrapper {
+    overflow: hidden;
+    height: 48px;
+    background: var(--midnight);
+    border-top: 1px solid var(--charcoal);
+    border-bottom: 1px solid var(--charcoal);
+    display: flex;
+    align-items: center;
+  }
+
+  .pravas-ticker-inner {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: pravas-ticker-scroll 40s linear infinite;
+  }
+
+  .pravas-ticker-item {
+    font-family: var(--font-body-pravas);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--silver-mist);
+    padding: 0 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pravas-ticker-dot {
+    color: var(--gold);
+  }
+
+  .pravas-ticker-sep {
+    color: var(--charcoal);
+    padding: 0 8px;
+    font-size: 16px;
+  }
+
+  @keyframes pravas-ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 767px) {
+    .pravas-ticker-inner {
+      animation-duration: 55s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pravas-ticker-inner {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PRAVAS Ticker",
+  "settings": [],
+  "presets": [
+    {
+      "name": "PRAVAS Ticker"
+    }
+  ]
+}
+{% endschema %}

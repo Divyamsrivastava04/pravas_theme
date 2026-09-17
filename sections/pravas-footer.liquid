@@ -1,0 +1,237 @@
+{% comment %}
+  PRAVAS Timepieces — footer. Rendered sitewide via sections/footer-group.json.
+  Only collections/pages/links that exist today are included — no fabricated
+  nav items (no "The Navigator", "Limited Editions", "Accessories", "Press Kit",
+  or "Warranty Info").
+{% endcomment %}
+
+<footer class="pravas-footer">
+  <div class="pravas-footer__grid">
+
+    <div class="pravas-footer__brand">
+      <svg class="pravas-mark" style="width: 20px; height: auto; color: var(--parchment);" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="36" cy="30" r="22" stroke="currentColor" stroke-width="2"/>
+        <line x1="30" y1="0" x2="30" y2="80" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span class="pravas-footer__wordmark">PRAVAS</span>
+      <p class="pravas-footer__tagline">Wear Your Journey.</p>
+      <p class="pravas-footer__desc">Premium Indian automatic watches.</p>
+
+      <!-- [CLIENT TO CONFIRM: Instagram handle assumed as @pravas.co — confirm before launch] -->
+      <div class="pravas-footer__social">
+        <a href="https://instagram.com/pravas.co" target="_blank" rel="noopener" aria-label="Instagram">
+          <span class="pravas-footer__social-icon">{{ 'icon-instagram.svg' | inline_asset_content }}</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="pravas-footer__col">
+      <p class="pravas-footer__col-heading">COLLECTIONS</p>
+      <ul class="pravas-footer__links">
+        <li><a href="/collections/aarambh">The Aarambh</a></li>
+        <li><span class="pravas-footer__links-placeholder">More Coming</span></li>
+      </ul>
+    </div>
+
+    <div class="pravas-footer__col">
+      <p class="pravas-footer__col-heading">COMPANY</p>
+      <ul class="pravas-footer__links">
+        <li><a href="/pages/our-story">Our Story</a></li>
+        <li><a href="/pages/philosophy">Philosophy</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="pravas-footer__col">
+      <p class="pravas-footer__col-heading">SUPPORT</p>
+      <!-- [CLIENT TO CONFIRM: no direct contact email address is published — Contact links to /pages/contact only] -->
+      <ul class="pravas-footer__links">
+        <li><a href="/pages/faq">FAQ</a></li>
+        <li><a href="/pages/refund-policy">Shipping &amp; Returns</a></li>
+        <li><a href="/pages/terms-of-service">Terms of Service</a></li>
+        <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="pravas-footer__bottom">
+    <p class="pravas-footer__copy">&copy; 2025 PRAVAS Timepieces. All rights reserved.</p>
+    <div class="pravas-footer__legal">
+      <a href="/pages/privacy-policy">Privacy Policy</a>
+      <a href="/pages/refund-policy">Refund Policy</a>
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .pravas-footer {
+    background: var(--midnight);
+    border-top: 1px solid var(--charcoal);
+    padding: 60px 80px 40px;
+  }
+
+  .pravas-footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pravas-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pravas-footer__wordmark {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--parchment);
+    letter-spacing: 2px;
+  }
+
+  .pravas-footer__tagline {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--parchment);
+    margin: 0;
+  }
+
+  .pravas-footer__desc {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    color: var(--fog);
+    font-weight: 300;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .pravas-footer__social {
+    display: flex;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  .pravas-footer__social-icon {
+    display: inline-flex;
+    color: var(--fog);
+    width: 20px;
+    height: 20px;
+    transition: color 200ms ease;
+  }
+
+  .pravas-footer__social-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pravas-footer__social a:hover .pravas-footer__social-icon {
+    color: var(--gold);
+  }
+
+  .pravas-footer__col-heading {
+    font-family: var(--font-body-pravas);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--fog);
+    margin-bottom: 16px;
+  }
+
+  .pravas-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pravas-footer__links a {
+    font-family: var(--font-body-pravas);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--fog);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .pravas-footer__links a:hover {
+    color: var(--parchment);
+  }
+
+  .pravas-footer__links-placeholder {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    color: var(--charcoal);
+    font-style: italic;
+  }
+
+  .pravas-footer__bottom {
+    border-top: 1px solid var(--charcoal);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pravas-footer__copy {
+    font-family: var(--font-body-pravas);
+    font-size: 11px;
+    color: var(--fog);
+    margin: 0;
+  }
+
+  .pravas-footer__legal {
+    display: flex;
+    gap: 24px;
+  }
+
+  .pravas-footer__legal a {
+    font-family: var(--font-body-pravas);
+    font-size: 11px;
+    color: var(--fog);
+    text-decoration: none;
+  }
+  .pravas-footer__legal a:hover {
+    color: var(--parchment);
+  }
+
+  @media (max-width: 767px) {
+    .pravas-footer {
+      padding: 40px 24px;
+    }
+    .pravas-footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .pravas-footer__brand {
+      grid-column: 1 / -1;
+    }
+    .pravas-footer__bottom {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PRAVAS Footer",
+  "settings": [],
+  "presets": [
+    {
+      "name": "PRAVAS Footer"
+    }
+  ]
+}
+{% endschema %}

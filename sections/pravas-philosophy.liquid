@@ -1,0 +1,87 @@
+{% comment %}
+  PRAVAS Timepieces — brand philosophy pull-quote.
+  Light parchment background, quote sits openly (no dark card).
+  Quote must be exactly: "PRAVAS exists for those who decide to begin."
+  No attribution label, no second sentence.
+{% endcomment %}
+
+<div class="pravas-section pravas-philosophy-section">
+  <div class="pravas-philosophy__inner">
+    <span class="pravas-eyebrow pravas-eyebrow--fog">OUR BELIEF</span>
+
+    <hr class="pravas-divider pravas-philosophy__rule pravas-philosophy__rule--top">
+
+    <blockquote class="pravas-philosophy__quote">
+      &ldquo;PRAVAS exists for those who decide to begin.&rdquo;
+    </blockquote>
+
+    <p class="pravas-philosophy__subtext">We don't sell time. We sell milestones.</p>
+
+    <hr class="pravas-divider pravas-philosophy__rule pravas-philosophy__rule--bottom">
+  </div>
+</div>
+
+{% stylesheet %}
+  .pravas-philosophy-section {
+    background: var(--parchment);
+    padding: 120px 24px;
+  }
+
+  .pravas-philosophy__inner {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .pravas-philosophy__rule {
+    width: 80px;
+    height: 1px;
+    display: block;
+  }
+
+  .pravas-philosophy__quote {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--midnight);
+    line-height: 1.2;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .pravas-philosophy__subtext {
+    font-family: var(--font-body-pravas);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  @media (max-width: 767px) {
+    .pravas-philosophy__quote {
+      font-size: 28px;
+    }
+    .pravas-philosophy-section {
+      padding: 80px 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PRAVAS Philosophy",
+  "settings": [],
+  "presets": [
+    {
+      "name": "PRAVAS Philosophy"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,248 @@
+{% comment %}
+  PRAVAS Timepieces — community photo/video wall.
+  Eyebrow must read "AS SEEN ON" (not "ON YOUR WRIST").
+  CTA must read "View All on Instagram @pravas.co →" (not "JOIN #PRAVASTIME").
+{% endcomment %}
+
+<div class="pravas-section pravas-ugc-section">
+  <div class="pravas-ugc__header">
+    <div class="pravas-ugc__header-left">
+      <p class="pravas-eyebrow pravas-ugc__eyebrow">AS SEEN ON</p>
+      <h2 class="pravas-ugc__heading">The PRAVAS Community</h2>
+    </div>
+    <!-- [CLIENT TO CONFIRM: Instagram handle assumed as @pravas.co — confirm before launch] -->
+    <a href="https://instagram.com/pravas.co" class="pravas-ugc__cta" target="_blank" rel="noopener">
+      View All on Instagram @pravas.co &rarr;
+    </a>
+  </div>
+
+  <div class="pravas-ugc__subtext">Real wrists. Real moments.</div>
+
+  <div class="pravas-ugc__grid">
+    {%- for block in section.blocks -%}
+      <div class="pravas-ugc__card" {{ block.shopify_attributes }}>
+        {%- if block.settings.thumbnail != blank -%}
+          <div class="pravas-ugc__thumb">
+            {{ block.settings.thumbnail | image_url: width: 400 | image_tag:
+                 loading: 'lazy', alt: block.settings.handle, class: 'pravas-ugc__img' }}
+            {%- if block.settings.video_url != blank -%}
+              <button type="button" class="pravas-ugc__play" data-url="{{ block.settings.video_url }}" aria-label="Play video">&#9658;</button>
+            {%- endif -%}
+          </div>
+          <div class="pravas-ugc__meta">
+            <span class="pravas-ugc__handle">{{ block.settings.handle }}</span>
+            <span class="pravas-ugc__caption">{{ block.settings.caption }}</span>
+          </div>
+        {%- else -%}
+          <div class="pravas-ugc__placeholder">
+            <svg class="pravas-mark" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg" fill="none" width="24" style="color: var(--charcoal);" aria-hidden="true">
+              <circle cx="36" cy="30" r="22" stroke="currentColor" stroke-width="2"/>
+              <line x1="30" y1="0" x2="30" y2="80" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="pravas-ugc__placeholder-label">Coming Soon</span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .pravas-ugc-section {
+    background: var(--midnight);
+    padding: 80px;
+  }
+
+  .pravas-ugc__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 8px;
+  }
+
+  .pravas-ugc__eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .pravas-ugc__heading {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--parchment);
+    margin: 0;
+  }
+
+  .pravas-ugc__cta {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+
+  .pravas-ugc__subtext {
+    font-family: var(--font-body-pravas);
+    font-size: 14px;
+    color: var(--fog);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .pravas-ugc__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .pravas-ugc__card {
+    position: relative;
+  }
+
+  .pravas-ugc__thumb {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    background: #1e1e1e;
+  }
+
+  .pravas-ugc__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .pravas-ugc__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: var(--parchment);
+    font-size: 32px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .pravas-ugc__thumb:hover .pravas-ugc__play {
+    opacity: 1;
+  }
+
+  .pravas-ugc__meta {
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pravas-ugc__handle {
+    font-family: var(--font-body-pravas);
+    font-size: 11px;
+    color: var(--fog);
+  }
+
+  .pravas-ugc__caption {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    color: var(--silver-mist);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pravas-ugc__placeholder {
+    aspect-ratio: 9 / 16;
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .pravas-ugc__placeholder-label {
+    font-family: var(--font-body-pravas);
+    font-size: 11px;
+    color: var(--fog);
+  }
+
+  @media (max-width: 767px) {
+    .pravas-ugc-section {
+      padding: 60px 24px;
+    }
+    .pravas-ugc__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .pravas-ugc__grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding-bottom: 16px;
+      scrollbar-width: none;
+    }
+    .pravas-ugc__grid::-webkit-scrollbar {
+      display: none;
+    }
+    .pravas-ugc__card {
+      flex: 0 0 75vw;
+      scroll-snap-align: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PRAVAS Community Wall",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "ugc_item",
+      "name": "Community post",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Thumbnail image"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Optional. Shows a play button over the thumbnail."
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Instagram handle",
+          "info": "e.g. @customer_handle"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "PRAVAS Community Wall",
+      "blocks": [
+        { "type": "ugc_item" },
+        { "type": "ugc_item" },
+        { "type": "ugc_item" },
+        { "type": "ugc_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

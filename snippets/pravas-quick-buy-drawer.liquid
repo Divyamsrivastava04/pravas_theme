@@ -1,0 +1,54 @@
+{% comment %}
+  PRAVAS quick-buy drawer.
+  Accepts:
+  - aarambh: {Object} the pravas-aarambh product (optional, may be blank in dev)
+  - sapphire_variant: {Object} the "Sapphire Green" variant (optional)
+  - midnight_variant: {Object} the "Midnight Black" variant (optional)
+
+  Usage:
+  {% render 'pravas-quick-buy-drawer', aarambh: aarambh, sapphire_variant: sapphire_variant, midnight_variant: midnight_variant %}
+
+  Note: this component's CSS lives in assets/pravas-custom.css (a shared,
+  global stylesheet) rather than a {% stylesheet %} tag here, because that
+  native tag only bundles per-section — not per-snippet.
+{% endcomment %}
+
+<div id="quick-buy-drawer" class="qb-drawer" role="dialog" aria-modal="true" aria-label="Quick buy AARAMBH">
+  <div class="qb-drawer__overlay" id="qb-overlay"></div>
+  <div class="qb-drawer__panel">
+
+    <div class="qb-drawer__header">
+      <span class="qb-drawer__title">PRAVAS AARAMBH</span>
+      <button type="button" class="qb-drawer__close" id="close-quick-buy" aria-label="Close">&#10005;</button>
+    </div>
+
+    <div class="qb-drawer__body">
+      <p class="pravas-eyebrow pravas-eyebrow--fog qb-drawer__select-label">SELECT COLOURWAY</p>
+
+      <div class="qb-colour-tiles">
+        <button type="button" class="qb-tile" data-variant="{{ sapphire_variant.id }}">
+          <span class="qb-tile__dot" style="background: var(--emerald);"></span>
+          <span class="qb-tile__name">Sapphire Green</span>
+          <span class="qb-tile__count">{{ sapphire_variant.inventory_quantity | default: 0 }} pieces left</span>
+        </button>
+        <button type="button" class="qb-tile" data-variant="{{ midnight_variant.id }}">
+          <span class="qb-tile__dot" style="background: var(--midnight); border: 1px solid var(--charcoal);"></span>
+          <span class="qb-tile__name">Midnight Black</span>
+          <span class="qb-tile__count">{{ midnight_variant.inventory_quantity | default: 0 }} pieces left</span>
+        </button>
+      </div>
+
+      <p class="qb-drawer__meta">
+        {%- if aarambh -%}{{ aarambh.price | money_without_trailing_zeros }}{%- else -%}&#8377;8,499{%- endif -%} &middot; Individually numbered
+      </p>
+      <p class="qb-drawer__note">&#9888; Only 100 pieces total.</p>
+      <!-- [CLIENT TO CONFIRM: Razorpay EMI rate not yet finalized — no EMI messaging shown here] -->
+
+      <button type="button" class="pravas-btn-primary qb-drawer__atc" id="qb-atc" disabled style="width: 100%; margin-top: 24px;">
+        Add to Cart — AARAMBH
+      </button>
+      <a href="/products/pravas-aarambh" class="qb-drawer__details-link">View full details &darr;</a>
+    </div>
+
+  </div>
+</div>

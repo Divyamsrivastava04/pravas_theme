@@ -1,0 +1,263 @@
+{% comment %}
+  PRAVAS Timepieces — homepage hero.
+  Two-column dark hero (copy left / watch image right) with a sticky
+  bottom-of-hero quick-buy strip that opens the quick-buy drawer.
+{% endcomment %}
+
+{%- liquid
+  assign aarambh = all_products['pravas-aarambh']
+  assign sapphire_variant = aarambh.variants | where: 'title', 'Sapphire Green' | first
+  assign midnight_variant = aarambh.variants | where: 'title', 'Midnight Black' | first
+-%}
+
+<section class="pravas-section pravas-hero" id="pravas-hero">
+  <div class="pravas-hero__grid">
+
+    <div class="pravas-hero__copy">
+      <span class="pravas-eyebrow pravas-hero__eyebrow">PRAVAS TIMEPIECES · SINCE 2025</span>
+
+      <h1 class="pravas-hero__heading">Wear Your<br><em>Journey</em></h1>
+
+      <p class="pravas-hero__subtext">Time isn't just measured. It is lived.</p>
+
+      <div class="pravas-divider pravas-hero__rule"></div>
+
+      <div class="pravas-hero__ctas">
+        <a href="/products/pravas-aarambh" class="pravas-btn-primary">EXPLORE AARAMBH</a>
+        <a href="/pages/our-story" class="pravas-hero__text-link">Our Story &rarr;</a>
+      </div>
+    </div>
+
+    <div class="pravas-hero__image-wrap">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 800 | image_tag:
+             loading: 'eager',
+             alt: section.settings.hero_image.alt | default: 'PRAVAS AARAMBH watch',
+             class: 'pravas-hero__image',
+             widths: '400,600,800,1000'
+        }}
+      {%- else -%}
+        <!-- [CLIENT TO CONFIRM: hero watch photography not yet uploaded — set via theme editor "Hero watch image"] -->
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  <div class="pravas-hero__quick-buy-strip" id="quick-buy-strip">
+    <div class="pravas-hero__quick-buy-left">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 72 | image_tag: loading: 'lazy', alt: 'AARAMBH', class: 'pravas-hero__quick-buy-thumb' }}
+      {%- endif -%}
+      <span class="pravas-hero__quick-buy-name">AARAMBH</span>
+    </div>
+    <span class="pravas-hero__quick-buy-price">
+      {%- if aarambh -%}{{ aarambh.price | money_without_trailing_zeros }}{%- else -%}&#8377;8,499{%- endif -%}
+    </span>
+    <button type="button" class="pravas-btn-primary pravas-hero__quick-buy-btn" id="open-quick-buy">
+      Buy Now
+    </button>
+  </div>
+</section>
+
+{% render 'pravas-quick-buy-drawer',
+  aarambh: aarambh,
+  sapphire_variant: sapphire_variant,
+  midnight_variant: midnight_variant
+%}
+
+{% stylesheet %}
+  .pravas-hero {
+    background: var(--midnight);
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pravas-hero__grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    align-items: center;
+    padding: 0 80px;
+  }
+
+  .pravas-hero__copy {
+    padding-right: 40px;
+  }
+
+  .pravas-hero__eyebrow {
+    margin-bottom: 24px;
+  }
+
+  .pravas-hero__heading {
+    font-family: var(--font-display);
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--parchment);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .pravas-hero__heading em {
+    font-style: italic;
+  }
+
+  .pravas-hero__subtext {
+    font-family: var(--font-body-pravas);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--fog);
+    margin: 20px 0 0;
+  }
+
+  .pravas-hero__rule {
+    width: 60px;
+    margin: 24px 0;
+  }
+
+  .pravas-hero__ctas {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .pravas-hero__text-link {
+    font-family: var(--font-body-pravas);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-decoration: underline;
+    transition: color 200ms ease;
+  }
+  .pravas-hero__text-link:hover {
+    color: var(--gold);
+  }
+
+  .pravas-hero__image-wrap {
+    position: relative;
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+
+  .pravas-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Quick-buy strip */
+  .pravas-hero__quick-buy-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: rgba(24, 24, 24, 0.92);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: pravas-strip-appear 300ms ease forwards;
+    animation-delay: 1.5s;
+  }
+  @keyframes pravas-strip-appear {
+    to { opacity: 1; }
+  }
+
+  .pravas-hero__quick-buy-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .pravas-hero__quick-buy-thumb {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .pravas-hero__quick-buy-name {
+    font-family: var(--font-body-pravas);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--parchment);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .pravas-hero__quick-buy-price {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    color: var(--fog);
+  }
+
+  .pravas-hero__quick-buy-btn {
+    padding: 10px 24px;
+    font-size: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pravas-hero__quick-buy-strip {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .pravas-hero__grid {
+      grid-template-columns: 1fr;
+      padding: 40px 24px 90px;
+    }
+    .pravas-hero__copy {
+      padding-right: 0;
+      order: 1;
+    }
+    .pravas-hero__image-wrap {
+      order: 2;
+      min-height: 320px;
+      margin-top: 32px;
+    }
+    .pravas-hero__heading {
+      font-size: 42px;
+    }
+    .pravas-hero__ctas {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .pravas-hero__ctas .pravas-btn-primary {
+      width: 100%;
+      text-align: center;
+    }
+    .pravas-hero__quick-buy-strip {
+      padding: 0 16px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PRAVAS Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero watch image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PRAVAS Hero"
+    }
+  ]
+}
+{% endschema %}
