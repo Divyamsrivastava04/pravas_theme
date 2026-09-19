@@ -1451,5 +1451,70 @@
         "default": "scheme-1"
       }
     ]
+  },
+  {
+    "name": "Password Page",
+    "settings": [
+      { "type": "header", "content": "Page Meta" },
+      { "type": "text", "id": "pw_page_title", "label": "Browser tab title", "default": "PRAVAS Founding Owners" },
+      { "type": "textarea", "id": "pw_meta_description", "label": "Meta description", "default": "Become one of the first to own a PRAVAS watch. Apply for early access." },
+
+      { "type": "header", "content": "Header" },
+      { "type": "text", "id": "pw_brand_name", "label": "Brand name", "default": "PRAVAS" },
+
+      { "type": "header", "content": "Hero Section" },
+      { "type": "text", "id": "pw_hero_eyebrow", "label": "Eyebrow text", "default": "PRAVAS WATCHES · AARAMBH" },
+      { "type": "text", "id": "pw_hero_h1_line1", "label": "Heading line 1", "default": "PRAVAS" },
+      { "type": "text", "id": "pw_hero_h1_line2", "label": "Heading line 2", "default": "Founding Owners" },
+      { "type": "textarea", "id": "pw_hero_subtext", "label": "Subheading", "default": "The first chapter of PRAVAS will be written by a limited number of owners." },
+      { "type": "text", "id": "pw_hero_cta", "label": "CTA button text", "default": "APPLY FOR EARLY ACCESS" },
+      { "type": "text", "id": "pw_hero_caption", "label": "Caption below CTA", "default": "Become part of the first group of people who own one." },
+
+      { "type": "header", "content": "Founding Owners Section" },
+      { "type": "textarea", "id": "pw_owners_heading", "label": "Section heading", "default": "Not customers. Owners." },
+      { "type": "textarea", "id": "pw_owners_body", "label": "Body copy", "default": "We are building a legacy, piece by piece. The Founding Owners will not just acquire a timepiece; they will become the bedrock of the PRAVAS story. This collection is engineered with precision, crafted with soul, and reserved for those who understand the weight of time." },
+      { "type": "text", "id": "pw_stat1_number", "label": "Stat 1 — number", "default": "100" },
+      { "type": "text", "id": "pw_stat1_label", "label": "Stat 1 — label", "default": "PIECES" },
+      { "type": "text", "id": "pw_stat2_number", "label": "Stat 2 — number", "default": "2" },
+      { "type": "text", "id": "pw_stat2_label", "label": "Stat 2 — label", "default": "COLOURWAYS" },
+      { "type": "text", "id": "pw_stat3_number", "label": "Stat 3 — number", "default": "0" },
+      { "type": "text", "id": "pw_stat3_label", "label": "Stat 3 — label", "default": "COMPROMISES" },
+
+      { "type": "header", "content": "Watch Section" },
+      { "type": "image_picker", "id": "pw_watch_image", "label": "Watch / movement image" },
+      { "type": "text", "id": "pw_watch_image_alt", "label": "Image alt text", "default": "PRAVAS AARAMBH movement" },
+      { "type": "text", "id": "pw_watch_eyebrow", "label": "Eyebrow text", "default": "THE AARAMBH" },
+      { "type": "text", "id": "pw_watch_heading", "label": "Section heading", "default": "The Beginning" },
+      { "type": "text", "id": "pw_spec1_label", "label": "Spec row 1 — label", "default": "MOVEMENT" },
+      { "type": "text", "id": "pw_spec1_value", "label": "Spec row 1 — value", "default": "Miyota 8215" },
+      { "type": "text", "id": "pw_spec2_label", "label": "Spec row 2 — label", "default": "CASE" },
+      { "type": "text", "id": "pw_spec2_value", "label": "Spec row 2 — value", "default": "Stainless Steel" },
+      { "type": "text", "id": "pw_spec3_label", "label": "Spec row 3 — label", "default": "DIAMETER" },
+      { "type": "text", "id": "pw_spec3_value", "label": "Spec row 3 — value", "default": "38mm" },
+      { "type": "text", "id": "pw_spec4_label", "label": "Spec row 4 — label", "default": "RESERVE" },
+      { "type": "text", "id": "pw_spec4_value", "label": "Spec row 4 — value (confirmed 42 hours, not 72)", "default": "42 Hours" },
+
+      { "type": "header", "content": "Application Form" },
+      { "type": "text", "id": "pw_form_eyebrow", "label": "Form eyebrow", "default": "APPLICATION" },
+      { "type": "text", "id": "pw_form_heading", "label": "Form heading", "default": "Secure Your Position" },
+      { "type": "text", "id": "pw_field1_label", "label": "Field 1 — label", "default": "FULL NAME" },
+      { "type": "text", "id": "pw_field1_placeholder", "label": "Field 1 — placeholder", "default": "John Doe" },
+      { "type": "text", "id": "pw_field2_label", "label": "Field 2 — label", "default": "EMAIL ADDRESS" },
+      { "type": "text", "id": "pw_field2_placeholder", "label": "Field 2 — placeholder", "default": "john@example.com" },
+      { "type": "text", "id": "pw_field3_label", "label": "Field 3 — label", "default": "COUNTRY" },
+      { "type": "text", "id": "pw_field3_placeholder", "label": "Field 3 — placeholder", "default": "India" },
+      { "type": "text", "id": "pw_form_cta", "label": "Submit button text", "default": "SUBMIT APPLICATION" },
+      { "type": "textarea", "id": "pw_form_fine_print", "label": "Fine print below button", "default": "Submitting this form registers your interest but does not guarantee an allocation." },
+      { "type": "textarea", "id": "pw_success_message", "label": "Post-submit message", "default": "Your access is on its way. We have your name. When the list opens, you will be among the first to know." },
+
+      { "type": "header", "content": "Footer" },
+      { "type": "text", "id": "pw_footer_copy", "label": "Copyright line", "default": "© 2025 Pravas Watches. ALL RIGHTS RESERVED." },
+      { "type": "url", "id": "pw_privacy_url", "label": "Privacy policy URL" },
+      { "type": "text", "id": "pw_privacy_label", "label": "Privacy link text", "default": "Privacy" },
+      { "type": "url", "id": "pw_terms_url", "label": "Terms of service URL" },
+      { "type": "text", "id": "pw_terms_label", "label": "Terms link text", "default": "Terms" },
+      { "type": "url", "id": "pw_contact_url", "label": "Contact page URL" },
+      { "type": "text", "id": "pw_contact_label", "label": "Contact link text", "default": "Contact" }
+    ]
   }
 ]
