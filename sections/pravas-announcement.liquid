@@ -1,156 +1,25 @@
-{% comment %}
-  PRAVAS Timepieces — announcement bar.
-  4 rotating messages on desktop (CSS animation), message 1 static on mobile.
-  Dismissible; dismissal persisted for the session via sessionStorage.
-  Entire bar (except the dismiss button) links to the AARAMBH product page.
-{% endcomment %}
-
-<div class="pravas-announcement" id="pravas-announcement">
-  <a
-    href="{{ section.settings.link_url | default: '/products/pravas-aarambh' }}"
-    class="pravas-announcement__link"
-    aria-label="AARAMBH is here — shop the launch collection"
-  >
-    <div class="pravas-announcement__messages">
-      <span class="pravas-announcement__message">AARAMBH IS HERE — 100 PIECES. INDIVIDUALLY NUMBERED.</span>
-      <span class="pravas-announcement__message">FREE DELIVERY ACROSS INDIA · AUTOMATIC ONLY · NO QUARTZ</span>
-      <span class="pravas-announcement__message">FOUNDER DELIVERY AVAILABLE — PACKED BY HAND, SENT WITH INTENTION</span>
-      <span class="pravas-announcement__message">LEATHER STRAPS AVAILABLE — BURGUNDY &amp; BLACK</span>
-      <!-- [CLIENT TO CONFIRM: leather strap price not yet finalized — no price is shown anywhere on the homepage] -->
-    </div>
-  </a>
-  <button type="button" class="pravas-announcement__dismiss" aria-label="Dismiss announcement">&#10005;</button>
+{% if section.settings.enabled %}
+<div class="pw-ann" id="pw-ann">
+  <div class="pw-ann__track">
+    {% assign msgs = section.settings.messages | split: '|' %}
+    {% for msg in msgs %}
+      <span class="pw-ann__msg" style="animation-delay: {{ forloop.index0 | times: 3 }}s; animation-duration: {{ msgs.size | times: 3 }}s">
+        {{ msg | strip }}
+      </span>
+    {% endfor %}
+  </div>
+  <button class="pw-ann__close" id="pw-ann-close" aria-label="Dismiss">&#10005;</button>
 </div>
-
-{% stylesheet %}
-  .pravas-announcement {
-    position: relative;
-    height: 40px;
-    width: 100%;
-    background: var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .pravas-announcement.is-dismissed {
-    opacity: 0;
-    max-height: 0;
-    transition: opacity 300ms ease;
-  }
-
-  .pravas-announcement__link {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .pravas-announcement__messages {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .pravas-announcement__message {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    opacity: 0;
-    animation: pravas-msg-cycle 12s infinite;
-    font-family: var(--font-body-pravas);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--midnight);
-    text-align: center;
-    padding: 0 48px;
-    white-space: nowrap;
-  }
-
-  .pravas-announcement__message:nth-child(1) { animation-delay: 0s; }
-  .pravas-announcement__message:nth-child(2) { animation-delay: 3s; }
-  .pravas-announcement__message:nth-child(3) { animation-delay: 6s; }
-  .pravas-announcement__message:nth-child(4) { animation-delay: 9s; }
-
-  @keyframes pravas-msg-cycle {
-    0%   { opacity: 0; }
-    5%   { opacity: 1; }
-    22%  { opacity: 1; }
-    27%  { opacity: 0; }
-    100% { opacity: 0; }
-  }
-
-  .pravas-announcement__dismiss {
-    position: absolute;
-    right: 12px;
-    top: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    background: none;
-    border: none;
-    color: var(--midnight);
-    font-size: 12px;
-    cursor: pointer;
-    padding: 0 8px;
-    line-height: 1;
-    z-index: 2;
-  }
-
-  @media (max-width: 767px) {
-    .pravas-announcement__message {
-      position: static;
-      animation: none;
-      opacity: 1;
-      white-space: normal;
-      padding: 0 40px;
-      font-size: 10px;
-    }
-    .pravas-announcement__message:not(:first-child) {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pravas-announcement__message {
-      animation: none;
-      opacity: 0;
-    }
-    .pravas-announcement__message:first-child {
-      position: static;
-      opacity: 1;
-    }
-    .pravas-announcement__message:not(:first-child) {
-      display: none;
-    }
-  }
-{% endstylesheet %}
+{% endif %}
 
 {% schema %}
 {
-  "name": "PRAVAS Announcement Bar",
+  "name": "PW Announcement Bar",
   "settings": [
-    {
-      "type": "url",
-      "id": "link_url",
-      "label": "Announcement link",
-      "info": "Defaults to /products/pravas-aarambh if left blank."
-    }
+    { "type": "checkbox",  "id": "enabled",  "label": "Show bar",    "default": true },
+    { "type": "textarea",  "id": "messages", "label": "Messages (separate with | pipe)",
+      "default": "AARAMBH IS HERE — 100 PIECES. INDIVIDUALLY NUMBERED.|FREE DELIVERY ACROSS INDIA · AUTOMATIC ONLY · NO QUARTZ|FOUNDER DELIVERY AVAILABLE — PACKED BY HAND, SENT WITH INTENTION|LEATHER STRAPS AVAILABLE — BURGUNDY & BLACK" }
   ],
-  "presets": [
-    {
-      "name": "PRAVAS Announcement Bar"
-    }
-  ]
+  "presets": [{ "name": "PW Announcement Bar" }]
 }
 {% endschema %}

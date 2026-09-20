@@ -1,107 +1,41 @@
-{% comment %}
-  PRAVAS Timepieces — brand pillars. Typographic only — no icons.
-  Background is always light parchment (#F5F3EF), never dark.
-{% endcomment %}
+<section class="pw-pillars">
+  <span class="pw-eyebrow pw-pillars__eyebrow">{{ section.settings.eyebrow | default: 'WHAT WE STAND FOR' }}</span>
+  <div class="pw-pillars__grid">
 
-<div class="pravas-section pravas-pillars-section">
-  <p class="pravas-eyebrow pravas-eyebrow--fog pravas-pillars__eyebrow">WHAT WE STAND FOR</p>
-
-  <div class="pravas-pillars__grid">
-
-    <div class="pravas-pillar">
-      <h3 class="pravas-pillar__heading">Automatic Only</h3>
-      <p class="pravas-pillar__body">No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day.</p>
+    <div class="pw-pillar">
+      <h3 class="pw-pillar__h">{{ section.settings.p1_h | default: 'Automatic Only' }}</h3>
+      <p  class="pw-pillar__p">{{ section.settings.p1_p | default: 'No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day.' }}</p>
     </div>
 
-    <div class="pravas-pillar-divider"></div>
+    <div class="pw-pillar-rule" aria-hidden="true"></div>
 
-    <div class="pravas-pillar">
-      <h3 class="pravas-pillar__heading">Designed in India</h3>
-      <p class="pravas-pillar__body">Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story.</p>
+    <div class="pw-pillar">
+      <h3 class="pw-pillar__h">{{ section.settings.p2_h | default: 'Designed in India' }}</h3>
+      <p  class="pw-pillar__p">{{ section.settings.p2_p | default: 'Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story.' }}</p>
     </div>
 
-    <div class="pravas-pillar-divider"></div>
+    <div class="pw-pillar-rule" aria-hidden="true"></div>
 
-    <div class="pravas-pillar">
-      <h3 class="pravas-pillar__heading">Built for First Milestones</h3>
-      <p class="pravas-pillar__body">The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming.</p>
+    <div class="pw-pillar">
+      <h3 class="pw-pillar__h">{{ section.settings.p3_h | default: 'Built for First Milestones' }}</h3>
+      <p  class="pw-pillar__p">{{ section.settings.p3_p | default: 'The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming.' }}</p>
     </div>
 
   </div>
-</div>
-
-{% stylesheet %}
-  .pravas-pillars-section {
-    background: var(--parchment);
-    padding: 100px 80px;
-  }
-
-  .pravas-pillars__eyebrow {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .pravas-pillars__grid {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr;
-    gap: 0 40px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .pravas-pillar {
-    padding: 0 20px;
-  }
-
-  .pravas-pillar-divider {
-    width: 1px;
-    background: var(--gold);
-    align-self: stretch;
-  }
-
-  .pravas-pillar__heading {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--midnight);
-    margin-bottom: 16px;
-    line-height: 1.2;
-  }
-
-  .pravas-pillar__body {
-    font-family: var(--font-body-pravas);
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--charcoal);
-    line-height: 1.8;
-    margin: 0;
-  }
-
-  @media (max-width: 767px) {
-    .pravas-pillars-section {
-      padding: 60px 24px;
-    }
-    .pravas-pillars__grid {
-      grid-template-columns: 1fr;
-      gap: 40px 0;
-    }
-    .pravas-pillar-divider {
-      display: none;
-    }
-    .pravas-pillar {
-      padding: 0;
-    }
-  }
-{% endstylesheet %}
+</section>
 
 {% schema %}
 {
-  "name": "PRAVAS Brand Pillars",
-  "settings": [],
-  "presets": [
-    {
-      "name": "PRAVAS Brand Pillars"
-    }
-  ]
+  "name": "PW Brand Pillars",
+  "settings": [
+    { "type": "text",     "id": "eyebrow", "label": "Eyebrow",         "default": "WHAT WE STAND FOR" },
+    { "type": "text",     "id": "p1_h",    "label": "Pillar 1 heading","default": "Automatic Only" },
+    { "type": "textarea", "id": "p1_p",    "label": "Pillar 1 body",   "default": "No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day." },
+    { "type": "text",     "id": "p2_h",    "label": "Pillar 2 heading","default": "Designed in India" },
+    { "type": "textarea", "id": "p2_p",    "label": "Pillar 2 body",   "default": "Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story." },
+    { "type": "text",     "id": "p3_h",    "label": "Pillar 3 heading","default": "Built for First Milestones" },
+    { "type": "textarea", "id": "p3_p",    "label": "Pillar 3 body",   "default": "The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming." }
+  ],
+  "presets": [{ "name": "PW Brand Pillars" }]
 }
 {% endschema %}

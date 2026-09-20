@@ -1,237 +1,87 @@
-{% comment %}
-  PRAVAS Timepieces — footer. Rendered sitewide via sections/footer-group.json.
-  Only collections/pages/links that exist today are included — no fabricated
-  nav items (no "The Navigator", "Limited Editions", "Accessories", "Press Kit",
-  or "Warranty Info").
-{% endcomment %}
+<footer class="pw-footer">
+  <div class="pw-footer__top">
 
-<footer class="pravas-footer">
-  <div class="pravas-footer__grid">
-
-    <div class="pravas-footer__brand">
-      <svg class="pravas-mark" style="width: 20px; height: auto; color: var(--parchment);" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="36" cy="30" r="22" stroke="currentColor" stroke-width="2"/>
-        <line x1="30" y1="0" x2="30" y2="80" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      <span class="pravas-footer__wordmark">PRAVAS</span>
-      <p class="pravas-footer__tagline">Wear Your Journey.</p>
-      <p class="pravas-footer__desc">Premium Indian automatic watches.</p>
-
-      <!-- [CLIENT TO CONFIRM: Instagram handle assumed as @pravas.co — confirm before launch] -->
-      <div class="pravas-footer__social">
-        <a href="https://instagram.com/pravas.co" target="_blank" rel="noopener" aria-label="Instagram">
-          <span class="pravas-footer__social-icon">{{ 'icon-instagram.svg' | inline_asset_content }}</span>
-        </a>
-      </div>
+    <div class="pw-footer__brand">
+      <span class="pw-footer__wordmark">{{ section.settings.brand | default: 'PRAVAS' }}</span>
+      <p class="pw-footer__tagline">{{ section.settings.tagline | default: 'Wear Your Journey.' }}</p>
+      <p class="pw-footer__desc">{{ section.settings.desc | default: 'Premium Indian automatic watches.' }}</p>
     </div>
 
-    <div class="pravas-footer__col">
-      <p class="pravas-footer__col-heading">COLLECTIONS</p>
-      <ul class="pravas-footer__links">
-        <li><a href="/collections/aarambh">The Aarambh</a></li>
-        <li><span class="pravas-footer__links-placeholder">More Coming</span></li>
-      </ul>
+    <div class="pw-footer__col">
+      <p class="pw-footer__col-title">{{ section.settings.col1_title | default: 'COLLECTIONS' }}</p>
+      <a href="{{ section.settings.col1_l1_url | default: '/collections/aarambh' }}" class="pw-footer__link">
+        {{ section.settings.col1_l1 | default: 'The Aarambh' }}
+      </a>
+      <span class="pw-footer__placeholder">{{ section.settings.col1_placeholder | default: 'More Coming' }}</span>
     </div>
 
-    <div class="pravas-footer__col">
-      <p class="pravas-footer__col-heading">COMPANY</p>
-      <ul class="pravas-footer__links">
-        <li><a href="/pages/our-story">Our Story</a></li>
-        <li><a href="/pages/philosophy">Philosophy</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
-      </ul>
+    <div class="pw-footer__col">
+      <p class="pw-footer__col-title">{{ section.settings.col2_title | default: 'COMPANY' }}</p>
+      <a href="{{ section.settings.col2_l1_url | default: '/pages/our-story' }}"   class="pw-footer__link">{{ section.settings.col2_l1 | default: 'Our Story' }}</a>
+      <a href="{{ section.settings.col2_l2_url | default: '/pages/philosophy' }}"  class="pw-footer__link">{{ section.settings.col2_l2 | default: 'Philosophy' }}</a>
+      <a href="{{ section.settings.col2_l3_url | default: '/pages/contact' }}"     class="pw-footer__link">{{ section.settings.col2_l3 | default: 'Contact' }}</a>
     </div>
 
-    <div class="pravas-footer__col">
-      <p class="pravas-footer__col-heading">SUPPORT</p>
-      <!-- [CLIENT TO CONFIRM: no direct contact email address is published — Contact links to /pages/contact only] -->
-      <ul class="pravas-footer__links">
-        <li><a href="/pages/faq">FAQ</a></li>
-        <li><a href="/pages/refund-policy">Shipping &amp; Returns</a></li>
-        <li><a href="/pages/terms-of-service">Terms of Service</a></li>
-        <li><a href="/pages/privacy-policy">Privacy Policy</a></li>
-      </ul>
+    <div class="pw-footer__col">
+      <p class="pw-footer__col-title">{{ section.settings.col3_title | default: 'SUPPORT' }}</p>
+      <a href="{{ section.settings.col3_l1_url | default: '/pages/faq' }}"              class="pw-footer__link">{{ section.settings.col3_l1 | default: 'FAQ' }}</a>
+      <a href="{{ section.settings.col3_l2_url | default: '/pages/refund-policy' }}"    class="pw-footer__link">{{ section.settings.col3_l2 | default: 'Shipping & Returns' }}</a>
+      <a href="{{ section.settings.col3_l3_url | default: '/pages/terms-of-service' }}" class="pw-footer__link">{{ section.settings.col3_l3 | default: 'Terms of Service' }}</a>
+      <a href="{{ section.settings.col3_l4_url | default: '/pages/privacy-policy' }}"   class="pw-footer__link">{{ section.settings.col3_l4 | default: 'Privacy Policy' }}</a>
     </div>
 
   </div>
 
-  <div class="pravas-footer__bottom">
-    <p class="pravas-footer__copy">&copy; 2025 PRAVAS Timepieces. All rights reserved.</p>
-    <div class="pravas-footer__legal">
-      <a href="/pages/privacy-policy">Privacy Policy</a>
-      <a href="/pages/refund-policy">Refund Policy</a>
+  <div class="pw-footer__bottom">
+    <p class="pw-footer__copy">{{ section.settings.copyright | default: '© 2025 PRAVAS Timepieces. All rights reserved.' }}</p>
+    <div class="pw-footer__legal">
+      <a href="{{ section.settings.privacy_url | default: '/pages/privacy-policy' }}">
+        {{ section.settings.privacy_label | default: 'Privacy Policy' }}
+      </a>
+      <a href="{{ section.settings.refund_url | default: '/pages/refund-policy' }}">
+        {{ section.settings.refund_label | default: 'Refund Policy' }}
+      </a>
     </div>
   </div>
 </footer>
 
-{% stylesheet %}
-  .pravas-footer {
-    background: var(--midnight);
-    border-top: 1px solid var(--charcoal);
-    padding: 60px 80px 40px;
-  }
-
-  .pravas-footer__grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 48px;
-    max-width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .pravas-footer__brand {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .pravas-footer__wordmark {
-    font-family: var(--font-display);
-    font-size: 18px;
-    color: var(--parchment);
-    letter-spacing: 2px;
-  }
-
-  .pravas-footer__tagline {
-    font-family: var(--font-display);
-    font-size: 14px;
-    font-style: italic;
-    color: var(--parchment);
-    margin: 0;
-  }
-
-  .pravas-footer__desc {
-    font-family: var(--font-body-pravas);
-    font-size: 12px;
-    color: var(--fog);
-    font-weight: 300;
-    margin: 0;
-    line-height: 1.6;
-  }
-
-  .pravas-footer__social {
-    display: flex;
-    gap: 16px;
-    margin-top: 4px;
-  }
-
-  .pravas-footer__social-icon {
-    display: inline-flex;
-    color: var(--fog);
-    width: 20px;
-    height: 20px;
-    transition: color 200ms ease;
-  }
-
-  .pravas-footer__social-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .pravas-footer__social a:hover .pravas-footer__social-icon {
-    color: var(--gold);
-  }
-
-  .pravas-footer__col-heading {
-    font-family: var(--font-body-pravas);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--fog);
-    margin-bottom: 16px;
-  }
-
-  .pravas-footer__links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .pravas-footer__links a {
-    font-family: var(--font-body-pravas);
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--fog);
-    text-decoration: none;
-    transition: color 200ms ease;
-  }
-  .pravas-footer__links a:hover {
-    color: var(--parchment);
-  }
-
-  .pravas-footer__links-placeholder {
-    font-family: var(--font-body-pravas);
-    font-size: 12px;
-    color: var(--charcoal);
-    font-style: italic;
-  }
-
-  .pravas-footer__bottom {
-    border-top: 1px solid var(--charcoal);
-    padding-top: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .pravas-footer__copy {
-    font-family: var(--font-body-pravas);
-    font-size: 11px;
-    color: var(--fog);
-    margin: 0;
-  }
-
-  .pravas-footer__legal {
-    display: flex;
-    gap: 24px;
-  }
-
-  .pravas-footer__legal a {
-    font-family: var(--font-body-pravas);
-    font-size: 11px;
-    color: var(--fog);
-    text-decoration: none;
-  }
-  .pravas-footer__legal a:hover {
-    color: var(--parchment);
-  }
-
-  @media (max-width: 767px) {
-    .pravas-footer {
-      padding: 40px 24px;
-    }
-    .pravas-footer__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-    .pravas-footer__brand {
-      grid-column: 1 / -1;
-    }
-    .pravas-footer__bottom {
-      flex-direction: column;
-      gap: 16px;
-      text-align: center;
-    }
-  }
-{% endstylesheet %}
-
 {% schema %}
 {
-  "name": "PRAVAS Footer",
-  "settings": [],
-  "presets": [
-    {
-      "name": "PRAVAS Footer"
-    }
-  ]
+  "name": "PW Footer",
+  "settings": [
+    { "type": "text", "id": "brand",    "label": "Brand name",   "default": "PRAVAS" },
+    { "type": "text", "id": "tagline",  "label": "Tagline",      "default": "Wear Your Journey." },
+    { "type": "text", "id": "desc",     "label": "Brand description", "default": "Premium Indian automatic watches." },
+    { "type": "header", "content": "Collections Column" },
+    { "type": "text", "id": "col1_title",       "label": "Column title",   "default": "COLLECTIONS" },
+    { "type": "text", "id": "col1_l1",          "label": "Link 1 text",    "default": "The Aarambh" },
+    { "type": "url",  "id": "col1_l1_url",      "label": "Link 1 URL",     "default": "/collections/aarambh" },
+    { "type": "text", "id": "col1_placeholder", "label": "Placeholder text","default": "More Coming" },
+    { "type": "header", "content": "Company Column" },
+    { "type": "text", "id": "col2_title",  "label": "Column title", "default": "COMPANY" },
+    { "type": "text", "id": "col2_l1",    "label": "Link 1 text",  "default": "Our Story" },
+    { "type": "url",  "id": "col2_l1_url","label": "Link 1 URL",   "default": "/pages/our-story" },
+    { "type": "text", "id": "col2_l2",    "label": "Link 2 text",  "default": "Philosophy" },
+    { "type": "url",  "id": "col2_l2_url","label": "Link 2 URL",   "default": "/pages/philosophy" },
+    { "type": "text", "id": "col2_l3",    "label": "Link 3 text",  "default": "Contact" },
+    { "type": "url",  "id": "col2_l3_url","label": "Link 3 URL",   "default": "/pages/contact" },
+    { "type": "header", "content": "Support Column" },
+    { "type": "text", "id": "col3_title",  "label": "Column title", "default": "SUPPORT" },
+    { "type": "text", "id": "col3_l1",    "label": "Link 1 text",  "default": "FAQ" },
+    { "type": "url",  "id": "col3_l1_url","label": "Link 1 URL",   "default": "/pages/faq" },
+    { "type": "text", "id": "col3_l2",    "label": "Link 2 text",  "default": "Shipping & Returns" },
+    { "type": "url",  "id": "col3_l2_url","label": "Link 2 URL",   "default": "/pages/refund-policy" },
+    { "type": "text", "id": "col3_l3",    "label": "Link 3 text",  "default": "Terms of Service" },
+    { "type": "url",  "id": "col3_l3_url","label": "Link 3 URL",   "default": "/pages/terms-of-service" },
+    { "type": "text", "id": "col3_l4",    "label": "Link 4 text",  "default": "Privacy Policy" },
+    { "type": "url",  "id": "col3_l4_url","label": "Link 4 URL",   "default": "/pages/privacy-policy" },
+    { "type": "header", "content": "Bottom Bar" },
+    { "type": "text", "id": "copyright",    "label": "Copyright line",  "default": "© 2025 PRAVAS Timepieces. All rights reserved." },
+    { "type": "text", "id": "privacy_label","label": "Privacy link text","default": "Privacy Policy" },
+    { "type": "url",  "id": "privacy_url",  "label": "Privacy link URL", "default": "/pages/privacy-policy" },
+    { "type": "text", "id": "refund_label", "label": "Refund link text", "default": "Refund Policy" },
+    { "type": "url",  "id": "refund_url",   "label": "Refund link URL",  "default": "/pages/refund-policy" }
+  ],
+  "presets": [{ "name": "PW Footer" }]
 }
 {% endschema %}

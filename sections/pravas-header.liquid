@@ -1,289 +1,57 @@
-{% comment %}
-  PRAVAS Timepieces — sticky header + mobile off-canvas drawer.
-  Rendered sitewide via sections/header-group.json.
-{% endcomment %}
-
-<header class="pravas-header" id="pravas-header">
-  <div class="pravas-header__inner">
-
-    <div class="pravas-header__left">
-      <a href="{{ routes.root_url }}" class="pravas-header__logo-link" aria-label="{{ shop.name | default: 'PRAVAS' }} — home">
-        <svg class="pravas-mark pravas-header__mark" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
-          <circle cx="36" cy="30" r="22" stroke="currentColor" stroke-width="2"/>
-          <line x1="30" y1="0" x2="30" y2="80" stroke="currentColor" stroke-width="2"/>
-        </svg>
-        <span class="pravas-header__wordmark">PRAVAS</span>
-      </a>
-    </div>
-
-    <nav class="pravas-header__nav" aria-label="Primary">
-      <a href="{{ routes.all_products_collection_url }}">Shop</a>
-      <a href="/pages/our-story">Our Story</a>
-      <a href="/pages/philosophy">Philosophy</a>
-      <a href="/pages/faq">FAQ</a>
-      <a href="/pages/contact">Contact</a>
-    </nav>
-
-    <div class="pravas-header__right">
-      <a href="{{ routes.cart_url }}" class="pravas-header__cart" id="cart-icon-bubble" aria-label="Cart">
-        {% if cart == empty %}
-          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-        {% else %}
-          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+<header class="pw-hdr" id="pw-hdr">
+  <div class="pw-hdr__inner">
+    <a href="{{ routes.root_url }}" class="pw-hdr__logo">{{ section.settings.brand | default: 'PRAVAS' }}</a>
+    <nav class="pw-hdr__nav">
+      {% for i in (1..5) %}
+        {% assign lbl = 'nav_label_' | append: i %}
+        {% assign url = 'nav_url_'   | append: i %}
+        {% if section.settings[lbl] != blank %}
+          <a href="{{ section.settings[url] | default: '#' }}" class="pw-hdr__link">{{ section.settings[lbl] }}</a>
         {% endif %}
-        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
-          <div class="cart-count-bubble">
-            {%- if cart.item_count < 100 -%}
-              <span aria-hidden="true">{{ cart.item_count }}</span>
-            {%- endif -%}
-            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-          </div>
-        {%- endif -%}
+      {% endfor %}
+    </nav>
+    <div class="pw-hdr__right">
+      <a href="{{ routes.cart_url }}" class="pw-hdr__cart-link" aria-label="Cart">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {% if cart.item_count > 0 %}<span class="pw-hdr__cart-count">{{ cart.item_count }}</span>{% endif %}
       </a>
-
-      <button
-        type="button"
-        class="pravas-header__hamburger"
-        id="pravas-header-menu-toggle"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="pravas-header-drawer"
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#F5F3EF" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <line x1="3" y1="12" x2="21" y2="12"/>
-          <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
+      <button class="pw-hdr__burger" id="pw-burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
     </div>
-
   </div>
 </header>
 
-<div class="pravas-header-drawer" id="pravas-header-drawer" role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="pravas-header-drawer__overlay" id="pravas-header-drawer-overlay"></div>
-  <div class="pravas-header-drawer__panel">
-    <button type="button" class="pravas-header-drawer__close" id="pravas-header-drawer-close" aria-label="Close menu">&#10005;</button>
-    <nav class="pravas-header-drawer__nav" aria-label="Mobile">
-      <a href="{{ routes.all_products_collection_url }}">Shop</a>
-      <a href="/pages/our-story">Our Story</a>
-      <a href="/pages/philosophy">Philosophy</a>
-      <a href="/pages/faq">FAQ</a>
-      <a href="/pages/contact">Contact</a>
-    </nav>
+<div class="pw-nav-drawer" id="pw-nav-drawer">
+  <div class="pw-nav-drawer__overlay" id="pw-nav-overlay"></div>
+  <div class="pw-nav-drawer__panel">
+    <button class="pw-nav-drawer__close" id="pw-nav-close">&#10005;</button>
+    {% for i in (1..5) %}
+      {% assign lbl = 'nav_label_' | append: i %}
+      {% assign url = 'nav_url_'   | append: i %}
+      {% if section.settings[lbl] != blank %}
+        <a href="{{ section.settings[url] | default: '#' }}" class="pw-nav-drawer__link">{{ section.settings[lbl] }}</a>
+      {% endif %}
+    {% endfor %}
   </div>
 </div>
 
-{% stylesheet %}
-  .pravas-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--midnight);
-    height: 64px;
-  }
-
-  .pravas-header__inner {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 80px;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
-
-  .pravas-header__left,
-  .pravas-header__right {
-    display: flex;
-    align-items: center;
-  }
-
-  .pravas-header__logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .pravas-header__mark {
-    width: auto;
-    height: 20px;
-    color: var(--parchment);
-  }
-
-  .pravas-header__wordmark {
-    font-family: var(--font-display);
-    font-size: 20px;
-    color: var(--parchment);
-    margin-left: 10px;
-    letter-spacing: 1px;
-  }
-
-  .pravas-header__nav {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-
-  .pravas-header__nav a {
-    font-family: var(--font-body-pravas);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--parchment);
-    text-decoration: none;
-    transition: color 200ms ease;
-  }
-
-  .pravas-header__nav a:hover {
-    color: var(--gold);
-  }
-
-  .pravas-header__right {
-    gap: 20px;
-  }
-
-  .pravas-header__cart {
-    display: flex;
-    align-items: center;
-    position: relative;
-    color: var(--parchment);
-    text-decoration: none;
-  }
-
-  .pravas-header__cart .svg-wrapper svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-  }
-
-  .pravas-header__cart .cart-count-bubble {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--gold);
-    color: var(--midnight);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-body-pravas);
-    font-size: 9px;
-    font-weight: 600;
-  }
-
-  .pravas-header__hamburger {
-    display: none;
-    background: none;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-  }
-
-  /* Off-canvas drawer */
-  .pravas-header-drawer {
-    z-index: 200;
-    visibility: hidden;
-  }
-  .pravas-header-drawer.is-open {
-    visibility: visible;
-  }
-
-  .pravas-header-drawer__overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 300ms ease;
-    z-index: 199;
-  }
-  .pravas-header-drawer.is-open .pravas-header-drawer__overlay {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .pravas-header-drawer__panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 280px;
-    background: var(--midnight);
-    transform: translateX(-100%);
-    transition: transform 350ms ease;
-    z-index: 201;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-  }
-  .pravas-header-drawer.is-open .pravas-header-drawer__panel {
-    transform: translateX(0);
-  }
-
-  .pravas-header-drawer__close {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    color: var(--fog);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 8px;
-    margin-bottom: 24px;
-  }
-
-  .pravas-header-drawer__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .pravas-header-drawer__nav a {
-    font-family: var(--font-body-pravas);
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--parchment);
-    text-decoration: none;
-    text-align: left;
-  }
-
-  @media (max-width: 767px) {
-    .pravas-header {
-      height: 56px;
-    }
-    .pravas-header__inner {
-      padding: 0 24px;
-    }
-    .pravas-header__nav {
-      display: none;
-    }
-    .pravas-header__hamburger {
-      display: block;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pravas-header-drawer__overlay,
-    .pravas-header-drawer__panel {
-      transition: none;
-    }
-  }
-{% endstylesheet %}
-
-<script src="{{ 'pravas-quick-buy.js' | asset_url }}" defer="defer"></script>
-
 {% schema %}
 {
-  "name": "PRAVAS Header",
-  "settings": [],
-  "presets": [
-    {
-      "name": "PRAVAS Header"
-    }
-  ]
+  "name": "PW Header",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Brand name", "default": "PRAVAS" },
+    { "type": "text", "id": "nav_label_1", "label": "Nav 1 text", "default": "Shop" },
+    { "type": "url",  "id": "nav_url_1",   "label": "Nav 1 URL",  "default": "/collections/all" },
+    { "type": "text", "id": "nav_label_2", "label": "Nav 2 text", "default": "Our Story" },
+    { "type": "url",  "id": "nav_url_2",   "label": "Nav 2 URL",  "default": "/pages/our-story" },
+    { "type": "text", "id": "nav_label_3", "label": "Nav 3 text", "default": "Philosophy" },
+    { "type": "url",  "id": "nav_url_3",   "label": "Nav 3 URL",  "default": "/pages/philosophy" },
+    { "type": "text", "id": "nav_label_4", "label": "Nav 4 text", "default": "FAQ" },
+    { "type": "url",  "id": "nav_url_4",   "label": "Nav 4 URL",  "default": "/pages/faq" },
+    { "type": "text", "id": "nav_label_5", "label": "Nav 5 text", "default": "Contact" },
+    { "type": "url",  "id": "nav_url_5",   "label": "Nav 5 URL",  "default": "/pages/contact" }
+  ],
+  "presets": [{ "name": "PW Header" }]
 }
 {% endschema %}

@@ -1,207 +1,77 @@
-{% comment %}
-  PRAVAS Timepieces — split colourway feature.
-  Labels must read "Sapphire Green" / "Midnight Black" — no other names.
-{% endcomment %}
+<section class="pw-feat">
 
-{%- liquid
-  assign aarambh = all_products['pravas-aarambh']
--%}
-
-<div class="pravas-section pravas-featured-section">
-
-  <div class="pravas-featured__heading-wrap">
-    <p class="pravas-eyebrow pravas-featured__eyebrow">LAUNCH COLLECTION &middot; TWO COLOURWAYS</p>
-    <h2 class="pravas-featured__heading">
-      <em class="pravas-featured__heading-green">Sapphire Green</em>
-      <span class="pravas-featured__heading-vs"> vs </span>
-      <span class="pravas-featured__heading-black">Midnight Black</span>
+  <div class="pw-feat__head">
+    <span class="pw-eyebrow pw-feat__eyebrow">{{ section.settings.eyebrow | default: 'LAUNCH COLLECTION · TWO COLOURWAYS' }}</span>
+    <h2 class="pw-feat__h2">
+      <em>{{ section.settings.h2_italic | default: 'Sapphire Green' }}</em>
+      <span class="pw-feat__vs"> vs </span>
+      <span>{{ section.settings.h2_plain | default: 'Midnight Black' }}</span>
     </h2>
   </div>
 
-  <div class="pravas-featured__split">
-    <div class="pravas-featured__half pravas-featured__half--left">
-      <span class="pravas-featured__label">Sapphire Green</span>
-      {%- if section.settings.green_image != blank -%}
-        {{ section.settings.green_image | image_url: width: 1000 | image_tag:
-             loading: 'lazy', alt: 'PRAVAS AARAMBH — Sapphire Green', class: 'pravas-featured__img' }}
-      {%- else -%}
-        <!-- [CLIENT TO CONFIRM: Sapphire Green product photography not yet uploaded] -->
-      {%- endif -%}
+  <div class="pw-feat__split">
+
+    <div class="pw-feat__half">
+      <span class="pw-feat__label pw-feat__label--left">{{ section.settings.label_green | default: 'Sapphire Green' }}</span>
+      {% if section.settings.img_green %}
+        {{ section.settings.img_green | image_url: width: 1000 | image_tag:
+             alt: section.settings.alt_green | default: 'PRAVAS AARAMBH Sapphire Green',
+             class: 'pw-feat__img',
+             loading: 'lazy',
+             widths: '500,750,1000'
+        }}
+      {% else %}
+        <div class="pw-feat__ph">Upload Sapphire Green image</div>
+      {% endif %}
     </div>
 
-    <div class="pravas-featured__divider"></div>
+    <div class="pw-feat__divider" aria-hidden="true"></div>
 
-    <div class="pravas-featured__half pravas-featured__half--right">
-      <span class="pravas-featured__label">Midnight Black</span>
-      {%- if section.settings.black_image != blank -%}
-        {{ section.settings.black_image | image_url: width: 1000 | image_tag:
-             loading: 'lazy', alt: 'PRAVAS AARAMBH — Midnight Black', class: 'pravas-featured__img' }}
-      {%- else -%}
-        <!-- [CLIENT TO CONFIRM: Midnight Black product photography not yet uploaded] -->
-      {%- endif -%}
+    <div class="pw-feat__half">
+      <span class="pw-feat__label pw-feat__label--right">{{ section.settings.label_black | default: 'Midnight Black' }}</span>
+      {% if section.settings.img_black %}
+        {{ section.settings.img_black | image_url: width: 1000 | image_tag:
+             alt: section.settings.alt_black | default: 'PRAVAS AARAMBH Midnight Black',
+             class: 'pw-feat__img',
+             loading: 'lazy',
+             widths: '500,750,1000'
+        }}
+      {% else %}
+        <div class="pw-feat__ph">Upload Midnight Black image</div>
+      {% endif %}
     </div>
+
   </div>
 
-  <div class="pravas-featured__footer">
-    <p class="pravas-featured__meaning">The Beginning — in two expressions.</p>
-    <p class="pravas-featured__price">
-      {%- if aarambh -%}{{ aarambh.price | money_without_trailing_zeros }}{%- else -%}&#8377;8,499{%- endif -%}
-      &middot; 50 pieces each colourway &middot; Individually numbered.
-    </p>
-    <a href="/products/pravas-aarambh" class="pravas-btn-primary pravas-featured__cta">Explore AARAMBH &rarr;</a>
+  <div class="pw-feat__foot">
+    <p class="pw-feat__meaning">{{ section.settings.meaning | default: 'The Beginning — in two expressions.' }}</p>
+    <p class="pw-feat__pricing">{{ section.settings.pricing | default: '₹8,499 · 50 pieces each colourway · Individually numbered.' }}</p>
+    <a href="{{ section.settings.cta_url | default: '/products/pravas-aarambh' }}"
+       class="btn btn--gold" style="display:inline-block; margin-top:24px;">
+      {{ section.settings.cta_text | default: 'EXPLORE AARAMBH →' }}
+    </a>
   </div>
 
-</div>
-
-{% stylesheet %}
-  .pravas-featured-section {
-    background: var(--midnight);
-    padding-top: 80px;
-  }
-
-  .pravas-featured__heading-wrap {
-    text-align: center;
-    padding: 0 24px;
-    margin-bottom: 48px;
-  }
-
-  .pravas-featured__eyebrow {
-    text-align: center;
-    margin-bottom: 16px;
-  }
-
-  .pravas-featured__heading {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: 300;
-    line-height: 1.1;
-    margin: 0;
-  }
-
-  .pravas-featured__heading-green {
-    color: var(--parchment);
-    font-style: italic;
-  }
-
-  .pravas-featured__heading-vs {
-    color: var(--fog);
-    font-style: normal;
-    font-size: 0.7em;
-  }
-
-  .pravas-featured__heading-black {
-    color: var(--parchment);
-  }
-
-  .pravas-featured__split {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr;
-    position: relative;
-  }
-
-  .pravas-featured__half {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .pravas-featured__img {
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-    display: block;
-    transition: transform 400ms ease;
-  }
-
-  .pravas-featured__half:hover .pravas-featured__img {
-    transform: scale(1.02);
-  }
-
-  .pravas-featured__divider {
-    width: 1px;
-    background: var(--gold);
-    z-index: 2;
-  }
-
-  .pravas-featured__label {
-    position: absolute;
-    top: 24px;
-    left: 20px;
-    font-family: var(--font-body-pravas);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--parchment);
-    background: rgba(24, 24, 24, 0.6);
-    padding: 6px 10px;
-    backdrop-filter: blur(4px);
-    z-index: 3;
-  }
-
-  .pravas-featured__half--right .pravas-featured__label {
-    left: auto;
-    right: 20px;
-  }
-
-  .pravas-featured__footer {
-    text-align: center;
-    padding: 48px 24px;
-  }
-
-  .pravas-featured__meaning {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-style: italic;
-    color: var(--fog);
-    margin-bottom: 8px;
-  }
-
-  .pravas-featured__price {
-    font-family: var(--font-body-pravas);
-    font-size: 13px;
-    color: var(--fog);
-    font-weight: 300;
-  }
-
-  .pravas-featured__cta {
-    margin-top: 24px;
-  }
-
-  @media (max-width: 767px) {
-    .pravas-featured__heading {
-      font-size: 28px;
-    }
-    .pravas-featured__split {
-      grid-template-columns: 1fr;
-    }
-    .pravas-featured__divider {
-      display: none;
-    }
-    .pravas-featured__img {
-      height: 300px;
-    }
-  }
-{% endstylesheet %}
+</section>
 
 {% schema %}
 {
-  "name": "PRAVAS Colourways",
+  "name": "PW Featured Colourways",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "green_image",
-      "label": "Sapphire Green image"
-    },
-    {
-      "type": "image_picker",
-      "id": "black_image",
-      "label": "Midnight Black image"
-    }
+    { "type": "text",         "id": "eyebrow",    "label": "Eyebrow",              "default": "LAUNCH COLLECTION · TWO COLOURWAYS" },
+    { "type": "text",         "id": "h2_italic",  "label": "Heading — italic part","default": "Sapphire Green" },
+    { "type": "text",         "id": "h2_plain",   "label": "Heading — plain part", "default": "Midnight Black" },
+    { "type": "image_picker", "id": "img_green",  "label": "Sapphire Green image" },
+    { "type": "text",         "id": "alt_green",  "label": "Green alt text",       "default": "PRAVAS AARAMBH Sapphire Green" },
+    { "type": "text",         "id": "label_green","label": "Green corner label",   "default": "Sapphire Green" },
+    { "type": "image_picker", "id": "img_black",  "label": "Midnight Black image" },
+    { "type": "text",         "id": "alt_black",  "label": "Black alt text",       "default": "PRAVAS AARAMBH Midnight Black" },
+    { "type": "text",         "id": "label_black","label": "Black corner label",   "default": "Midnight Black" },
+    { "type": "text",         "id": "meaning",    "label": "Italic meaning line",  "default": "The Beginning — in two expressions." },
+    { "type": "text",         "id": "pricing",    "label": "Pricing line",         "default": "₹8,499 · 50 pieces each colourway · Individually numbered." },
+    { "type": "text",         "id": "cta_text",   "label": "CTA button text",      "default": "EXPLORE AARAMBH →" },
+    { "type": "url",          "id": "cta_url",    "label": "CTA URL",              "default": "/products/pravas-aarambh" }
   ],
-  "presets": [
-    {
-      "name": "PRAVAS Colourways"
-    }
-  ]
+  "presets": [{ "name": "PW Featured Colourways" }]
 }
 {% endschema %}

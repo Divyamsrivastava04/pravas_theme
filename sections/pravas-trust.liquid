@@ -1,154 +1,78 @@
-{% comment %}
-  PRAVAS Timepieces — trust indicators.
-  Spec rules (strictly enforced):
-  - Water resistance is 50 metres / 5 ATM only — never "100M" anywhere.
-  - No warranty claims anywhere on the homepage — terms not confirmed.
-  [CLIENT TO CONFIRM: warranty terms not yet finalized — no warranty copy appears below]
-{% endcomment %}
+<section class="pw-trust">
+  <span class="pw-eyebrow pw-trust__eyebrow">{{ section.settings.eyebrow | default: 'WHY PRAVAS' }}</span>
+  <div class="pw-trust__grid">
 
-<div class="pravas-section pravas-trust-section">
-  <p class="pravas-eyebrow pravas-trust__eyebrow">WHY PRAVAS</p>
-
-  <div class="pravas-trust__grid">
-
-    <div class="pravas-trust__item">
-      <svg class="pravas-trust__icon" viewBox="0 0 24 24" fill="none" stroke="#B5924A" stroke-width="1.5" aria-hidden="true">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
-      <h4 class="pravas-trust__heading">Japanese Movement</h4>
-      <p class="pravas-trust__sub">Miyota 8215</p>
-      <p class="pravas-trust__body">Miyota 8215 automatic — reliable, serviceable, honest.</p>
+    <div class="pw-trust__item">
+      {% if section.settings.icon1 %}
+        <img src="{{ section.settings.icon1 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% endif %}
+      <h4 class="pw-trust__h">{{ section.settings.h1 | default: 'Japanese Movement' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s1 | default: 'Miyota 8215' }}</p>
+      <p  class="pw-trust__p">{{ section.settings.p1 | default: 'Miyota 8215 automatic — reliable, serviceable, honest.' }}</p>
     </div>
 
-    <div class="pravas-trust-divider"></div>
+    <div class="pw-trust__div" aria-hidden="true"></div>
 
-    <div class="pravas-trust__item">
-      <svg class="pravas-trust__icon" viewBox="0 0 24 24" fill="none" stroke="#B5924A" stroke-width="1.5" aria-hidden="true">
-        <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
-        <line x1="12" y1="2" x2="12" y2="22"/>
-        <line x1="2" y1="8.5" x2="22" y2="8.5"/>
-      </svg>
-      <h4 class="pravas-trust__heading">Sapphire Crystal</h4>
-      <p class="pravas-trust__sub">Scratch Resistant AR Coating</p>
-      <p class="pravas-trust__body">Scratch-resistant sapphire on the front. No compromises on the face of the watch.</p>
+    <div class="pw-trust__item">
+      {% if section.settings.icon2 %}
+        <img src="{{ section.settings.icon2 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% endif %}
+      <h4 class="pw-trust__h">{{ section.settings.h2 | default: 'Sapphire Crystal' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s2 | default: 'Scratch Resistant' }}</p>
+      <p  class="pw-trust__p">{{ section.settings.p2 | default: 'Scratch-resistant sapphire on the front. No compromises on the face of the watch.' }}</p>
     </div>
 
-    <div class="pravas-trust-divider"></div>
+    <div class="pw-trust__div" aria-hidden="true"></div>
 
-    <div class="pravas-trust__item">
-      <svg class="pravas-trust__icon" viewBox="0 0 24 24" fill="none" stroke="#B5924A" stroke-width="1.5" aria-hidden="true">
-        <path d="M12 2C6 2 3 8 3 12s3 10 9 10 9-4 9-10S18 2 12 2z"/>
-      </svg>
-      <h4 class="pravas-trust__heading">Limited Production</h4>
-      <p class="pravas-trust__sub">100 Pieces Total</p>
-      <p class="pravas-trust__body">Each collection is capped. Your number is yours.</p>
+    <div class="pw-trust__item">
+      {% if section.settings.icon3 %}
+        <img src="{{ section.settings.icon3 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% endif %}
+      <h4 class="pw-trust__h">{{ section.settings.h3 | default: 'Limited Production' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s3 | default: '100 Pieces Total' }}</p>
+      <p  class="pw-trust__p">{{ section.settings.p3 | default: 'Each collection is capped. Your number is yours.' }}</p>
     </div>
 
-    <div class="pravas-trust-divider"></div>
+    <div class="pw-trust__div" aria-hidden="true"></div>
 
-    <div class="pravas-trust__item">
-      <svg class="pravas-trust__icon" viewBox="0 0 24 24" fill="none" stroke="#B5924A" stroke-width="1.5" aria-hidden="true">
-        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-        <line x1="7" y1="7" x2="7.01" y2="7"/>
-      </svg>
-      <h4 class="pravas-trust__heading">Transparent Pricing</h4>
-      <p class="pravas-trust__sub">&#8377;8,499 — One Price</p>
-      <p class="pravas-trust__body">One honest price. No hidden costs, no inflated MRPs.</p>
+    <div class="pw-trust__item">
+      {% if section.settings.icon4 %}
+        <img src="{{ section.settings.icon4 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% endif %}
+      <h4 class="pw-trust__h">{{ section.settings.h4 | default: 'Transparent Pricing' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s4 | default: '₹8,499 — One Price' }}</p>
+      <p  class="pw-trust__p">{{ section.settings.p4 | default: 'One honest price. No hidden costs, no inflated MRPs.' }}</p>
     </div>
 
   </div>
-</div>
-
-{% stylesheet %}
-  .pravas-trust-section {
-    background: var(--midnight);
-    padding: 80px;
-  }
-
-  .pravas-trust__eyebrow {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .pravas-trust__grid {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
-    gap: 0 32px;
-    max-width: 1100px;
-    margin: 0 auto;
-    align-items: start;
-  }
-
-  .pravas-trust-divider {
-    width: 1px;
-    background: var(--gold);
-    align-self: stretch;
-    min-height: 120px;
-  }
-
-  .pravas-trust__item {
-    text-align: center;
-    padding: 0 12px;
-  }
-
-  .pravas-trust__icon {
-    width: 32px;
-    height: 32px;
-    margin: 0 auto 16px;
-    display: block;
-  }
-
-  .pravas-trust__heading {
-    font-family: var(--font-display);
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--parchment);
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-
-  .pravas-trust__sub {
-    font-family: var(--font-body-pravas);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .pravas-trust__body {
-    font-family: var(--font-body-pravas);
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--silver-mist);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  @media (max-width: 767px) {
-    .pravas-trust-section {
-      padding: 60px 24px;
-    }
-    .pravas-trust__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 40px 24px;
-    }
-    .pravas-trust-divider {
-      display: none;
-    }
-  }
-{% endstylesheet %}
+</section>
 
 {% schema %}
 {
-  "name": "PRAVAS Trust Indicators",
-  "settings": [],
-  "presets": [
-    {
-      "name": "PRAVAS Trust Indicators"
-    }
-  ]
+  "name": "PW Trust Indicators",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Section eyebrow", "default": "WHY PRAVAS" },
+    { "type": "header", "content": "Column 1 — Japanese Movement" },
+    { "type": "image_picker", "id": "icon1", "label": "Icon image" },
+    { "type": "text",     "id": "h1", "label": "Heading",    "default": "Japanese Movement" },
+    { "type": "text",     "id": "s1", "label": "Sub-label",  "default": "Miyota 8215" },
+    { "type": "textarea", "id": "p1", "label": "Body copy",  "default": "Miyota 8215 automatic — reliable, serviceable, honest." },
+    { "type": "header", "content": "Column 2 — Sapphire Crystal" },
+    { "type": "image_picker", "id": "icon2", "label": "Icon image" },
+    { "type": "text",     "id": "h2", "label": "Heading",    "default": "Sapphire Crystal" },
+    { "type": "text",     "id": "s2", "label": "Sub-label",  "default": "Scratch Resistant" },
+    { "type": "textarea", "id": "p2", "label": "Body copy",  "default": "Scratch-resistant sapphire on the front. No compromises on the face of the watch." },
+    { "type": "header", "content": "Column 3 — Limited Production" },
+    { "type": "image_picker", "id": "icon3", "label": "Icon image" },
+    { "type": "text",     "id": "h3", "label": "Heading",    "default": "Limited Production" },
+    { "type": "text",     "id": "s3", "label": "Sub-label",  "default": "100 Pieces Total" },
+    { "type": "textarea", "id": "p3", "label": "Body copy",  "default": "Each collection is capped. Your number is yours." },
+    { "type": "header", "content": "Column 4 — Transparent Pricing" },
+    { "type": "image_picker", "id": "icon4", "label": "Icon image" },
+    { "type": "text",     "id": "h4", "label": "Heading",    "default": "Transparent Pricing" },
+    { "type": "text",     "id": "s4", "label": "Sub-label",  "default": "₹8,499 — One Price" },
+    { "type": "textarea", "id": "p4", "label": "Body copy",  "default": "One honest price. No hidden costs, no inflated MRPs." }
+  ],
+  "presets": [{ "name": "PW Trust Indicators" }]
 }
 {% endschema %}

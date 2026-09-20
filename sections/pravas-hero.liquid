@@ -1,263 +1,98 @@
-{% comment %}
-  PRAVAS Timepieces — homepage hero.
-  Two-column dark hero (copy left / watch image right) with a sticky
-  bottom-of-hero quick-buy strip that opens the quick-buy drawer.
-{% endcomment %}
+<section class="pw-hero" id="pw-hero">
+  <div class="pw-hero__inner">
 
-{%- liquid
-  assign aarambh = all_products['pravas-aarambh']
-  assign sapphire_variant = aarambh.variants | where: 'title', 'Sapphire Green' | first
-  assign midnight_variant = aarambh.variants | where: 'title', 'Midnight Black' | first
--%}
-
-<section class="pravas-section pravas-hero" id="pravas-hero">
-  <div class="pravas-hero__grid">
-
-    <div class="pravas-hero__copy">
-      <span class="pravas-eyebrow pravas-hero__eyebrow">PRAVAS TIMEPIECES · SINCE 2025</span>
-
-      <h1 class="pravas-hero__heading">Wear Your<br><em>Journey</em></h1>
-
-      <p class="pravas-hero__subtext">Time isn't just measured. It is lived.</p>
-
-      <div class="pravas-divider pravas-hero__rule"></div>
-
-      <div class="pravas-hero__ctas">
-        <a href="/products/pravas-aarambh" class="pravas-btn-primary">EXPLORE AARAMBH</a>
-        <a href="/pages/our-story" class="pravas-hero__text-link">Our Story &rarr;</a>
+    <div class="pw-hero__copy">
+      <span class="pw-eyebrow pw-hero__eyebrow">{{ section.settings.eyebrow | default: 'PRAVAS TIMEPIECES · SINCE 2025' }}</span>
+      <h1 class="pw-hero__h1">
+        {{ section.settings.h1_top | default: 'Wear Your' }}<br>
+        <em>{{ section.settings.h1_italic | default: 'Journey' }}</em>
+      </h1>
+      <p class="pw-hero__sub">{{ section.settings.subtext | default: "Time isn't just measured. It is lived." }}</p>
+      <hr class="pw-hero__rule">
+      <div class="pw-hero__ctas">
+        <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="btn btn--gold">{{ section.settings.cta1 | default: 'EXPLORE AARAMBH' }}</a>
+        <a href="{{ section.settings.cta2_url | default: '/pages/our-story' }}"          class="btn btn--outline">{{ section.settings.cta2 | default: 'OUR STORY' }}</a>
       </div>
     </div>
 
-    <div class="pravas-hero__image-wrap">
-      {%- if section.settings.hero_image != blank -%}
-        {{ section.settings.hero_image | image_url: width: 800 | image_tag:
+    <div class="pw-hero__img-wrap">
+      {% if section.settings.watch_img %}
+        {{ section.settings.watch_img | image_url: width: 900 | image_tag:
+             alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+             class: 'pw-hero__img',
              loading: 'eager',
-             alt: section.settings.hero_image.alt | default: 'PRAVAS AARAMBH watch',
-             class: 'pravas-hero__image',
-             widths: '400,600,800,1000'
+             widths: '450,600,900'
         }}
-      {%- else -%}
-        <!-- [CLIENT TO CONFIRM: hero watch photography not yet uploaded — set via theme editor "Hero watch image"] -->
-      {%- endif -%}
+      {% else %}
+        <div class="pw-hero__img-ph">Upload hero watch image in Theme Editor</div>
+      {% endif %}
     </div>
 
   </div>
 
-  <div class="pravas-hero__quick-buy-strip" id="quick-buy-strip">
-    <div class="pravas-hero__quick-buy-left">
-      {%- if section.settings.hero_image != blank -%}
-        {{ section.settings.hero_image | image_url: width: 72 | image_tag: loading: 'lazy', alt: 'AARAMBH', class: 'pravas-hero__quick-buy-thumb' }}
-      {%- endif -%}
-      <span class="pravas-hero__quick-buy-name">AARAMBH</span>
+  <!-- Sticky quick-buy strip at bottom of hero -->
+  <div class="pw-qb-strip" id="pw-qb-strip">
+    <div class="pw-qb-strip__left">
+      {% if section.settings.qb_thumb %}
+        <img src="{{ section.settings.qb_thumb | image_url: width: 72 }}" alt="" class="pw-qb-strip__thumb" width="36" height="36">
+      {% endif %}
+      <span class="pw-qb-strip__name">{{ section.settings.qb_name | default: 'AARAMBH' }}</span>
     </div>
-    <span class="pravas-hero__quick-buy-price">
-      {%- if aarambh -%}{{ aarambh.price | money_without_trailing_zeros }}{%- else -%}&#8377;8,499{%- endif -%}
-    </span>
-    <button type="button" class="pravas-btn-primary pravas-hero__quick-buy-btn" id="open-quick-buy">
-      Buy Now
-    </button>
+    <span class="pw-qb-strip__price">{{ section.settings.qb_price | default: '₹8,499' }}</span>
+    <button class="btn btn--gold pw-qb-strip__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'BUY NOW' }}</button>
   </div>
 </section>
 
-{% render 'pravas-quick-buy-drawer',
-  aarambh: aarambh,
-  sapphire_variant: sapphire_variant,
-  midnight_variant: midnight_variant
-%}
-
-{% stylesheet %}
-  .pravas-hero {
-    background: var(--midnight);
-    min-height: 100vh;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .pravas-hero__grid {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 55% 45%;
-    align-items: center;
-    padding: 0 80px;
-  }
-
-  .pravas-hero__copy {
-    padding-right: 40px;
-  }
-
-  .pravas-hero__eyebrow {
-    margin-bottom: 24px;
-  }
-
-  .pravas-hero__heading {
-    font-family: var(--font-display);
-    font-size: 72px;
-    font-weight: 300;
-    color: var(--parchment);
-    line-height: 1.1;
-    margin: 0;
-  }
-
-  .pravas-hero__heading em {
-    font-style: italic;
-  }
-
-  .pravas-hero__subtext {
-    font-family: var(--font-body-pravas);
-    font-size: 18px;
-    font-weight: 300;
-    color: var(--fog);
-    margin: 20px 0 0;
-  }
-
-  .pravas-hero__rule {
-    width: 60px;
-    margin: 24px 0;
-  }
-
-  .pravas-hero__ctas {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .pravas-hero__text-link {
-    font-family: var(--font-body-pravas);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--parchment);
-    text-decoration: underline;
-    transition: color 200ms ease;
-  }
-  .pravas-hero__text-link:hover {
-    color: var(--gold);
-  }
-
-  .pravas-hero__image-wrap {
-    position: relative;
-    height: 100%;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-  }
-
-  .pravas-hero__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-  }
-
-  /* Quick-buy strip */
-  .pravas-hero__quick-buy-strip {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-    background: rgba(24, 24, 24, 0.92);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    animation: pravas-strip-appear 300ms ease forwards;
-    animation-delay: 1.5s;
-  }
-  @keyframes pravas-strip-appear {
-    to { opacity: 1; }
-  }
-
-  .pravas-hero__quick-buy-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .pravas-hero__quick-buy-thumb {
-    width: 36px;
-    height: 36px;
-    object-fit: cover;
-    border-radius: 0;
-  }
-
-  .pravas-hero__quick-buy-name {
-    font-family: var(--font-body-pravas);
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--parchment);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .pravas-hero__quick-buy-price {
-    font-family: var(--font-body-pravas);
-    font-size: 12px;
-    color: var(--fog);
-  }
-
-  .pravas-hero__quick-buy-btn {
-    padding: 10px 24px;
-    font-size: 12px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pravas-hero__quick-buy-strip {
-      animation: none;
-      opacity: 1;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .pravas-hero__grid {
-      grid-template-columns: 1fr;
-      padding: 40px 24px 90px;
-    }
-    .pravas-hero__copy {
-      padding-right: 0;
-      order: 1;
-    }
-    .pravas-hero__image-wrap {
-      order: 2;
-      min-height: 320px;
-      margin-top: 32px;
-    }
-    .pravas-hero__heading {
-      font-size: 42px;
-    }
-    .pravas-hero__ctas {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .pravas-hero__ctas .pravas-btn-primary {
-      width: 100%;
-      text-align: center;
-    }
-    .pravas-hero__quick-buy-strip {
-      padding: 0 16px;
-    }
-  }
-{% endstylesheet %}
+<!-- Quick-buy drawer -->
+<div class="pw-qb-drawer" id="pw-qb-drawer" role="dialog" aria-modal="true">
+  <div class="pw-qb-drawer__overlay" id="pw-qb-overlay"></div>
+  <div class="pw-qb-drawer__panel">
+    <div class="pw-qb-drawer__head">
+      <span class="pw-qb-drawer__title">{{ section.settings.qb_name | default: 'PRAVAS AARAMBH' }}</span>
+      <button class="pw-qb-drawer__close" id="pw-close-qb">&#10005;</button>
+    </div>
+    <span class="pw-eyebrow" style="color:var(--fog); font-size:9px; letter-spacing:3px; margin-bottom:12px; display:block;">SELECT COLOURWAY</span>
+    <div class="pw-qb-tiles">
+      <button class="pw-qb-tile" data-variant="{{ section.settings.variant_green }}">
+        <span class="pw-qb-tile__dot" style="background:#1A5C42;"></span>
+        <span>Sapphire Green</span>
+        <span class="pw-qb-tile__count">50 pieces</span>
+      </button>
+      <button class="pw-qb-tile" data-variant="{{ section.settings.variant_black }}">
+        <span class="pw-qb-tile__dot" style="background:#181818; border:1px solid #3A3A3A;"></span>
+        <span>Midnight Black</span>
+        <span class="pw-qb-tile__count">50 pieces</span>
+      </button>
+    </div>
+    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:12px 0 4px;">{{ section.settings.qb_price | default: '₹8,499' }} · Individually numbered</p>
+    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:0 0 20px;">&#9888; Only 100 pieces total.</p>
+    <button class="btn btn--gold pw-qb-drawer__atc" id="pw-qb-atc" disabled style="width:100%;padding:16px;">Add to Cart — AARAMBH</button>
+    <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="pw-qb-drawer__detail">View full details &darr;</a>
+  </div>
+</div>
 
 {% schema %}
 {
-  "name": "PRAVAS Hero",
+  "name": "PW Hero",
   "settings": [
-    {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Hero watch image"
-    }
+    { "type": "text",         "id": "eyebrow",       "label": "Eyebrow",              "default": "PRAVAS TIMEPIECES · SINCE 2025" },
+    { "type": "text",         "id": "h1_top",        "label": "H1 line 1",            "default": "Wear Your" },
+    { "type": "text",         "id": "h1_italic",     "label": "H1 italic line",       "default": "Journey" },
+    { "type": "textarea",     "id": "subtext",       "label": "Subheading",           "default": "Time isn't just measured. It is lived." },
+    { "type": "text",         "id": "cta1",          "label": "Primary CTA text",     "default": "EXPLORE AARAMBH" },
+    { "type": "url",          "id": "cta1_url",      "label": "Primary CTA URL",      "default": "/products/pravas-aarambh" },
+    { "type": "text",         "id": "cta2",          "label": "Secondary CTA text",   "default": "OUR STORY" },
+    { "type": "url",          "id": "cta2_url",      "label": "Secondary CTA URL",    "default": "/pages/our-story" },
+    { "type": "image_picker", "id": "watch_img",     "label": "Hero watch image" },
+    { "type": "text",         "id": "watch_img_alt", "label": "Image alt text",       "default": "PRAVAS AARAMBH" },
+    { "type": "header",       "content": "Quick-Buy Strip" },
+    { "type": "image_picker", "id": "qb_thumb",      "label": "Strip thumbnail" },
+    { "type": "text",         "id": "qb_name",       "label": "Product name",         "default": "AARAMBH" },
+    { "type": "text",         "id": "qb_price",      "label": "Price",                "default": "₹8,499" },
+    { "type": "text",         "id": "qb_btn",        "label": "Strip button text",    "default": "BUY NOW" },
+    { "type": "text",         "id": "variant_green", "label": "Sapphire Green variant ID (from Shopify product)" },
+    { "type": "text",         "id": "variant_black", "label": "Midnight Black variant ID (from Shopify product)" }
   ],
-  "presets": [
-    {
-      "name": "PRAVAS Hero"
-    }
-  ]
+  "presets": [{ "name": "PW Hero" }]
 }
 {% endschema %}

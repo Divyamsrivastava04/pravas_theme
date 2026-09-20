@@ -280,13 +280,11 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-    {%- comment -%} PRAVAS Timepieces — brand fonts + overrides {%- endcomment -%}
+    {%- comment -%} PRAVAS Timepieces — brand fonts + design system {%- endcomment -%}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;600&display=swap');
-    </style>
-    {{ 'pravas-custom.css' | asset_url | stylesheet_tag }}
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    {{ 'pravas.css' | asset_url | stylesheet_tag }}
 
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 
@@ -410,5 +408,7 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
+    <script src="{{ 'pravas.js' | asset_url }}" defer></script>
   </body>
 </html>

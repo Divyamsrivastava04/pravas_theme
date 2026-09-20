@@ -1,135 +1,40 @@
-{% comment %}
-  PRAVAS Timepieces — social proof ticker.
-  Inventory counts are always pulled live from variant.inventory_quantity —
-  never hardcoded.
-{% endcomment %}
+{% assign prod    = all_products[section.settings.handle] %}
+{% assign v_green = prod.variants | where: 'title', 'Sapphire Green' | first %}
+{% assign v_black = prod.variants | where: 'title', 'Midnight Black' | first %}
+{% assign total   = v_green.inventory_quantity | plus: v_black.inventory_quantity %}
 
-{%- liquid
-  assign aarambh = all_products['pravas-aarambh']
-  assign sapphire = aarambh.variants | where: 'title', 'Sapphire Green' | first
-  assign midnight = aarambh.variants | where: 'title', 'Midnight Black' | first
-  assign sapphire_qty = sapphire.inventory_quantity | default: 0
-  assign midnight_qty = midnight.inventory_quantity | default: 0
-  assign total = sapphire_qty | plus: midnight_qty
--%}
-
-<div class="pravas-section pravas-ticker-wrapper">
-  <div class="pravas-ticker-inner" id="ticker-inner">
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Someone just claimed their AARAMBH
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      {{ total }} of 100 pieces remaining
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Founder Delivery available — packed by hand
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Free delivery across India
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Automatic only. No quartz. No compromise.
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Sapphire Green: {{ sapphire_qty }} pieces left
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Midnight Black: {{ midnight_qty }} pieces left
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
-
-    <span class="pravas-ticker-item">
-      <span class="pravas-ticker-dot">&#10022;</span>
-      Leather straps available — Burgundy &amp; Black
-    </span>
-    <span class="pravas-ticker-sep">&middot;</span>
+<div class="pw-ticker" aria-hidden="true">
+  <div class="pw-ticker__inner" id="pw-ticker-inner">
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m1 | default: 'Someone just claimed their AARAMBH' }}</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ total | default: '100' }} of 100 pieces remaining</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m3 | default: 'Founder Delivery available — packed by hand' }}</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m4 | default: 'Free delivery across India' }}</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> Sapphire Green: {{ v_green.inventory_quantity | default: '50' }} left</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> Midnight Black: {{ v_black.inventory_quantity | default: '50' }} left</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m7 | default: 'Automatic only. No quartz. No compromise.' }}</span>
+    <span class="pw-ticker__sep">&middot;</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m8 | default: 'Leather straps available — Burgundy & Black' }}</span>
+    <span class="pw-ticker__sep">&middot;</span>
   </div>
 </div>
 
-{% stylesheet %}
-  .pravas-ticker-wrapper {
-    overflow: hidden;
-    height: 48px;
-    background: var(--midnight);
-    border-top: 1px solid var(--charcoal);
-    border-bottom: 1px solid var(--charcoal);
-    display: flex;
-    align-items: center;
-  }
-
-  .pravas-ticker-inner {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    animation: pravas-ticker-scroll 40s linear infinite;
-  }
-
-  .pravas-ticker-item {
-    font-family: var(--font-body-pravas);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--silver-mist);
-    padding: 0 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .pravas-ticker-dot {
-    color: var(--gold);
-  }
-
-  .pravas-ticker-sep {
-    color: var(--charcoal);
-    padding: 0 8px;
-    font-size: 16px;
-  }
-
-  @keyframes pravas-ticker-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @media (max-width: 767px) {
-    .pravas-ticker-inner {
-      animation-duration: 55s;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pravas-ticker-inner {
-      animation: none;
-    }
-  }
-{% endstylesheet %}
-
 {% schema %}
 {
-  "name": "PRAVAS Ticker",
-  "settings": [],
-  "presets": [
-    {
-      "name": "PRAVAS Ticker"
-    }
-  ]
+  "name": "PW Social Proof Ticker",
+  "settings": [
+    { "type": "text", "id": "handle", "label": "Product handle",  "default": "pravas-aarambh" },
+    { "type": "text", "id": "m1",     "label": "Message 1",       "default": "Someone just claimed their AARAMBH" },
+    { "type": "text", "id": "m3",     "label": "Message 3",       "default": "Founder Delivery available — packed by hand" },
+    { "type": "text", "id": "m4",     "label": "Message 4",       "default": "Free delivery across India" },
+    { "type": "text", "id": "m7",     "label": "Message 7",       "default": "Automatic only. No quartz. No compromise." },
+    { "type": "text", "id": "m8",     "label": "Message 8",       "default": "Leather straps available — Burgundy & Black" }
+  ],
+  "presets": [{ "name": "PW Social Proof Ticker" }]
 }
 {% endschema %}
