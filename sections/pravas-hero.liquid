@@ -8,39 +8,87 @@
         <em>{{ section.settings.h1_italic | default: 'Journey' }}</em>
       </h1>
       <p class="pw-hero__sub">{{ section.settings.subtext | default: "Time isn't just measured. It is lived." }}</p>
-      <hr class="pw-hero__rule">
       <div class="pw-hero__ctas">
         <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="btn btn--gold">{{ section.settings.cta1 | default: 'EXPLORE AARAMBH' }}</a>
         <a href="{{ section.settings.cta2_url | default: '/pages/our-story' }}"          class="btn btn--outline">{{ section.settings.cta2 | default: 'OUR STORY' }}</a>
       </div>
+
+      {% if section.settings.show_specs %}
+        <div class="pw-hero__specs">
+          <span class="pw-hero__specs-accent" aria-hidden="true"></span>
+          <div class="pw-hero__spec">
+            <span class="pw-hero__spec-label">{{ section.settings.spec1_label | default: 'MOVEMENT' }}</span>
+            <span class="pw-hero__spec-value">{{ section.settings.spec1_value | default: 'Miyota 8215 Automatic' }}</span>
+          </div>
+          <div class="pw-hero__spec-div" aria-hidden="true"></div>
+          <div class="pw-hero__spec">
+            <span class="pw-hero__spec-label">{{ section.settings.spec2_label | default: 'MATERIAL' }}</span>
+            <span class="pw-hero__spec-value">{{ section.settings.spec2_value | default: '316L Stainless Steel' }}</span>
+          </div>
+        </div>
+      {% endif %}
     </div>
 
-    <div class="pw-hero__img-wrap">
-      {% if section.settings.watch_img %}
-        {{ section.settings.watch_img | image_url: width: 900 | image_tag:
-             alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
-             class: 'pw-hero__img',
-             loading: 'eager',
-             widths: '450,600,900'
-        }}
-      {% else %}
-        <div class="pw-hero__img-ph">Upload hero watch image in Theme Editor</div>
-      {% endif %}
+    <div class="pw-hero__visual">
+      <div class="pw-hero__ring" aria-hidden="true"></div>
+      <div class="pw-hero__img-wrap">
+        {% assign has_image = false %}
+        {% if section.settings.watch_img %}
+          {% assign has_image = true %}
+          <div class="pw-hero__img-slide is-active">
+            {{ section.settings.watch_img | image_url: width: 900 | image_tag:
+                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 class: 'pw-hero__img',
+                 loading: 'eager',
+                 widths: '450,600,900'
+            }}
+          </div>
+        {% endif %}
+        {% if section.settings.watch_img_2 %}
+          {% assign has_image = true %}
+          <div class="pw-hero__img-slide">
+            {{ section.settings.watch_img_2 | image_url: width: 900 | image_tag:
+                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 class: 'pw-hero__img',
+                 loading: 'lazy',
+                 widths: '450,600,900'
+            }}
+          </div>
+        {% endif %}
+        {% if section.settings.watch_img_3 %}
+          {% assign has_image = true %}
+          <div class="pw-hero__img-slide">
+            {{ section.settings.watch_img_3 | image_url: width: 900 | image_tag:
+                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 class: 'pw-hero__img',
+                 loading: 'lazy',
+                 widths: '450,600,900'
+            }}
+          </div>
+        {% endif %}
+        {% unless has_image %}
+          <div class="pw-hero__img-ph">Upload hero watch image(s) in Theme Editor — background-removed PNGs work best</div>
+        {% endunless %}
+      </div>
     </div>
 
   </div>
 
-  <!-- Sticky quick-buy strip at bottom of hero -->
-  <div class="pw-qb-strip" id="pw-qb-strip">
-    <div class="pw-qb-strip__left">
-      {% if section.settings.qb_thumb %}
-        <img src="{{ section.settings.qb_thumb | image_url: width: 72 }}" alt="" class="pw-qb-strip__thumb" width="36" height="36">
-      {% endif %}
-      <span class="pw-qb-strip__name">{{ section.settings.qb_name | default: 'AARAMBH' }}</span>
+  <!-- Floating quick-buy card -->
+  {% if section.settings.show_quick_buy %}
+    <div class="pw-qb-card" id="pw-qb-strip">
+      <div class="pw-qb-card__thumb-wrap">
+        {% if section.settings.qb_thumb %}
+          <img src="{{ section.settings.qb_thumb | image_url: width: 96 }}" alt="" class="pw-qb-card__thumb" width="48" height="48">
+        {% endif %}
+      </div>
+      <div class="pw-qb-card__info">
+        <span class="pw-qb-card__eyebrow">{{ section.settings.qb_eyebrow | default: 'LATEST DROP' }}</span>
+        <span class="pw-qb-card__name">{{ section.settings.qb_name | default: 'Aarambh' }}</span>
+      </div>
+      <button class="btn btn--gold pw-qb-card__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'QUICK ADD' }}</button>
     </div>
-    <span class="pw-qb-strip__price">{{ section.settings.qb_price | default: '₹8,499' }}</span>
-    <button class="btn btn--gold pw-qb-strip__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'BUY NOW' }}</button>
-  </div>
+  {% endif %}
 </section>
 
 <!-- Quick-buy drawer -->
@@ -48,7 +96,7 @@
   <div class="pw-qb-drawer__overlay" id="pw-qb-overlay"></div>
   <div class="pw-qb-drawer__panel">
     <div class="pw-qb-drawer__head">
-      <span class="pw-qb-drawer__title">{{ section.settings.qb_name | default: 'PRAVAS AARAMBH' }}</span>
+      <span class="pw-qb-drawer__title">{{ section.settings.qb_name | default: 'Aarambh' }}</span>
       <button class="pw-qb-drawer__close" id="pw-close-qb">&#10005;</button>
     </div>
     <span class="pw-eyebrow" style="color:var(--fog); font-size:9px; letter-spacing:3px; margin-bottom:12px; display:block;">{{ section.settings.qb_select_label | default: 'SELECT COLOURWAY' }}</span>
@@ -83,15 +131,31 @@
     { "type": "url",          "id": "cta1_url",      "label": "Primary CTA URL",      "default": "/products/pravas-aarambh" },
     { "type": "text",         "id": "cta2",          "label": "Secondary CTA text",   "default": "OUR STORY" },
     { "type": "url",          "id": "cta2_url",      "label": "Secondary CTA URL",    "default": "/pages/our-story" },
-    { "type": "image_picker", "id": "watch_img",     "label": "Hero watch image" },
+
+    { "type": "header",       "content": "Watch Visual" },
+    { "type": "paragraph",    "content": "Upload 1–3 watch images with the background removed (transparent PNG). One image gently floats inside a slowly rotating ring; two or three images crossfade between angles every few seconds." },
+    { "type": "image_picker", "id": "watch_img",     "label": "Watch image 1" },
+    { "type": "image_picker", "id": "watch_img_2",   "label": "Watch image 2 (optional)" },
+    { "type": "image_picker", "id": "watch_img_3",   "label": "Watch image 3 (optional)" },
     { "type": "text",         "id": "watch_img_alt", "label": "Image alt text",       "default": "PRAVAS AARAMBH" },
-    { "type": "header",       "content": "Quick-Buy Strip" },
-    { "type": "image_picker", "id": "qb_thumb",      "label": "Strip thumbnail" },
-    { "type": "text",         "id": "qb_name",       "label": "Product name",         "default": "AARAMBH" },
-    { "type": "text",         "id": "qb_price",      "label": "Price",                "default": "₹8,499" },
-    { "type": "text",         "id": "qb_btn",        "label": "Strip button text",    "default": "BUY NOW" },
+
+    { "type": "header",       "content": "Spec Strip" },
+    { "type": "checkbox",     "id": "show_specs",    "label": "Show spec strip below buttons", "default": true },
+    { "type": "text",         "id": "spec1_label",   "label": "Spec 1 label",         "default": "MOVEMENT" },
+    { "type": "text",         "id": "spec1_value",   "label": "Spec 1 value",         "default": "Miyota 8215 Automatic" },
+    { "type": "text",         "id": "spec2_label",   "label": "Spec 2 label",         "default": "MATERIAL" },
+    { "type": "text",         "id": "spec2_value",   "label": "Spec 2 value",         "default": "316L Stainless Steel" },
+
+    { "type": "header",       "content": "Floating Quick-Buy Card" },
+    { "type": "checkbox",     "id": "show_quick_buy","label": "Show floating quick-buy card", "default": true },
+    { "type": "image_picker", "id": "qb_thumb",      "label": "Card thumbnail" },
+    { "type": "text",         "id": "qb_eyebrow",    "label": "Card eyebrow",         "default": "LATEST DROP" },
+    { "type": "text",         "id": "qb_name",       "label": "Product name",         "default": "Aarambh" },
+    { "type": "text",         "id": "qb_price",      "label": "Price (shown in drawer)", "default": "₹8,499" },
+    { "type": "text",         "id": "qb_btn",        "label": "Card button text",     "default": "QUICK ADD" },
     { "type": "text",         "id": "variant_green", "label": "Sapphire Green variant ID (from Shopify product)" },
     { "type": "text",         "id": "variant_black", "label": "Midnight Black variant ID (from Shopify product)" },
+
     { "type": "header",       "content": "Quick-Buy Drawer" },
     { "type": "text",         "id": "qb_select_label",   "label": "\"Select colourway\" label",  "default": "SELECT COLOURWAY" },
     { "type": "color",        "id": "colourway1_swatch", "label": "Colourway 1 swatch colour",   "default": "#1A5C42" },

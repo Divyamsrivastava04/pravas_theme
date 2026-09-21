@@ -23,6 +23,18 @@
   const ticker = document.getElementById('pw-ticker-inner');
   if (ticker) ticker.appendChild(ticker.cloneNode(true));
 
+  /* Hero watch image crossfade rotation (only runs when 2+ images are set) */
+  const heroSlides = document.querySelectorAll('.pw-hero__img-slide');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (heroSlides.length > 1 && !prefersReducedMotion) {
+    let heroSlideIndex = 0;
+    setInterval(() => {
+      heroSlides[heroSlideIndex].classList.remove('is-active');
+      heroSlideIndex = (heroSlideIndex + 1) % heroSlides.length;
+      heroSlides[heroSlideIndex].classList.add('is-active');
+    }, 6000);
+  }
+
   /* Header mobile drawer */
   const burger   = document.getElementById('pw-burger');
   const navDrawer= document.getElementById('pw-nav-drawer');
