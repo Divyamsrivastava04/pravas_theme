@@ -4,7 +4,7 @@
     <span class="pw-eyebrow pw-feat__eyebrow">{{ section.settings.eyebrow | default: 'LAUNCH COLLECTION · TWO COLOURWAYS' }}</span>
     <h2 class="pw-feat__h2">
       <em>{{ section.settings.h2_italic | default: 'Sapphire Green' }}</em>
-      <span class="pw-feat__vs"> vs </span>
+      <span class="pw-feat__vs"> {{ section.settings.h2_connector | default: 'vs' }} </span>
       <span>{{ section.settings.h2_plain | default: 'Midnight Black' }}</span>
     </h2>
   </div>
@@ -61,6 +61,7 @@
     { "type": "text",         "id": "eyebrow",    "label": "Eyebrow",              "default": "LAUNCH COLLECTION · TWO COLOURWAYS" },
     { "type": "text",         "id": "h2_italic",  "label": "Heading — italic part","default": "Sapphire Green" },
     { "type": "text",         "id": "h2_plain",   "label": "Heading — plain part", "default": "Midnight Black" },
+    { "type": "text",         "id": "h2_connector","label": "Heading connector word", "default": "vs" },
     { "type": "image_picker", "id": "img_green",  "label": "Sapphire Green image" },
     { "type": "text",         "id": "alt_green",  "label": "Green alt text",       "default": "PRAVAS AARAMBH Sapphire Green" },
     { "type": "text",         "id": "label_green","label": "Green corner label",   "default": "Sapphire Green" },

@@ -285,6 +285,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     {{ 'pravas.css' | asset_url | stylesheet_tag }}
+    {%- comment -%}
+      Theme Editor color overrides — loaded after pravas.css so these values
+      win the cascade. Every PRAVAS brand colour is editable under
+      Theme Settings → PRAVAS Design System.
+    {%- endcomment -%}
+    {% style %}
+      :root {
+        --midnight: {{ settings.pw_color_midnight }};
+        --midnight-rgb: {{ settings.pw_color_midnight.red }}, {{ settings.pw_color_midnight.green }}, {{ settings.pw_color_midnight.blue }};
+        --parchment: {{ settings.pw_color_parchment }};
+        --gold: {{ settings.pw_color_gold }};
+        --gold-hover: {{ settings.pw_color_gold_hover }};
+        --charcoal: {{ settings.pw_color_charcoal }};
+        --silver: {{ settings.pw_color_silver }};
+        --silver-rgb: {{ settings.pw_color_silver.red }}, {{ settings.pw_color_silver.green }}, {{ settings.pw_color_silver.blue }};
+        --fog: {{ settings.pw_color_fog }};
+        --dark-border: {{ settings.pw_color_dark_border }};
+        --emerald: {{ settings.pw_color_emerald }};
+        --danger: {{ settings.pw_color_danger }};
+      }
+    {% endstyle %}
 
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 

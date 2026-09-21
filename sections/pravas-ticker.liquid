@@ -7,15 +7,15 @@
   <div class="pw-ticker__inner" id="pw-ticker-inner">
     <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m1 | default: 'Someone just claimed their AARAMBH' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
-    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ total | default: '100' }} of 100 pieces remaining</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ total | default: '100' }} {{ section.settings.m2_suffix | default: 'of 100 pieces remaining' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
     <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m3 | default: 'Founder Delivery available — packed by hand' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
     <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m4 | default: 'Free delivery across India' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
-    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> Sapphire Green: {{ v_green.inventory_quantity | default: '50' }} left</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.colourway1_label | default: 'Sapphire Green:' }} {{ v_green.inventory_quantity | default: '50' }} {{ section.settings.left_suffix | default: 'left' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
-    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> Midnight Black: {{ v_black.inventory_quantity | default: '50' }} left</span>
+    <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.colourway2_label | default: 'Midnight Black:' }} {{ v_black.inventory_quantity | default: '50' }} {{ section.settings.left_suffix | default: 'left' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
     <span class="pw-ticker__item"><span class="pw-ticker__dot">&#10022;</span> {{ section.settings.m7 | default: 'Automatic only. No quartz. No compromise.' }}</span>
     <span class="pw-ticker__sep">&middot;</span>
@@ -30,8 +30,12 @@
   "settings": [
     { "type": "text", "id": "handle", "label": "Product handle",  "default": "pravas-aarambh" },
     { "type": "text", "id": "m1",     "label": "Message 1",       "default": "Someone just claimed their AARAMBH" },
+    { "type": "text", "id": "m2_suffix", "label": "Message 2 suffix (after piece count)", "default": "of 100 pieces remaining" },
     { "type": "text", "id": "m3",     "label": "Message 3",       "default": "Founder Delivery available — packed by hand" },
     { "type": "text", "id": "m4",     "label": "Message 4",       "default": "Free delivery across India" },
+    { "type": "text", "id": "colourway1_label", "label": "Colourway 1 label (message 5)", "default": "Sapphire Green:" },
+    { "type": "text", "id": "colourway2_label", "label": "Colourway 2 label (message 6)", "default": "Midnight Black:" },
+    { "type": "text", "id": "left_suffix", "label": "Inventory suffix", "default": "left" },
     { "type": "text", "id": "m7",     "label": "Message 7",       "default": "Automatic only. No quartz. No compromise." },
     { "type": "text", "id": "m8",     "label": "Message 8",       "default": "Leather straps available — Burgundy & Black" }
   ],

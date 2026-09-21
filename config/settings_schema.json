@@ -1516,5 +1516,21 @@
       { "type": "url", "id": "pw_contact_url", "label": "Contact page URL" },
       { "type": "text", "id": "pw_contact_label", "label": "Contact link text", "default": "Contact" }
     ]
+  },
+  {
+    "name": "PRAVAS Design System",
+    "settings": [
+      { "type": "paragraph", "content": "Colours used across the PRAVAS homepage (announcement bar, header, hero, ticker, pillars, featured, philosophy, trust, community wall, footer)." },
+      { "type": "color", "id": "pw_color_midnight", "label": "Midnight (dark section background)", "default": "#181818" },
+      { "type": "color", "id": "pw_color_parchment", "label": "Parchment (light section background / text-on-dark)", "default": "#F5F3EF" },
+      { "type": "color", "id": "pw_color_gold", "label": "Gold (accents, CTAs, dividers, eyebrows)", "default": "#B5924A" },
+      { "type": "color", "id": "pw_color_gold_hover", "label": "Gold — hover state", "default": "#C4A35A" },
+      { "type": "color", "id": "pw_color_charcoal", "label": "Charcoal (body text on light backgrounds)", "default": "#3A3A3A" },
+      { "type": "color", "id": "pw_color_silver", "label": "Silver (body text on dark backgrounds)", "default": "#C8C8CC" },
+      { "type": "color", "id": "pw_color_fog", "label": "Fog (captions, metadata)", "default": "#888888" },
+      { "type": "color", "id": "pw_color_dark_border", "label": "Dark border (hairline dividers on dark sections)", "default": "#2E2E2E" },
+      { "type": "color", "id": "pw_color_emerald", "label": "Emerald (Sapphire Green colourway swatch)", "default": "#1A5C42" },
+      { "type": "color", "id": "pw_color_danger", "label": "Danger (low stock / error states)", "default": "#C0392B" }
+    ]
   }
 ]

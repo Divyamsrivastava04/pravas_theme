@@ -51,23 +51,23 @@
       <span class="pw-qb-drawer__title">{{ section.settings.qb_name | default: 'PRAVAS AARAMBH' }}</span>
       <button class="pw-qb-drawer__close" id="pw-close-qb">&#10005;</button>
     </div>
-    <span class="pw-eyebrow" style="color:var(--fog); font-size:9px; letter-spacing:3px; margin-bottom:12px; display:block;">SELECT COLOURWAY</span>
+    <span class="pw-eyebrow" style="color:var(--fog); font-size:9px; letter-spacing:3px; margin-bottom:12px; display:block;">{{ section.settings.qb_select_label | default: 'SELECT COLOURWAY' }}</span>
     <div class="pw-qb-tiles">
       <button class="pw-qb-tile" data-variant="{{ section.settings.variant_green }}">
-        <span class="pw-qb-tile__dot" style="background:#1A5C42;"></span>
-        <span>Sapphire Green</span>
-        <span class="pw-qb-tile__count">50 pieces</span>
+        <span class="pw-qb-tile__dot" style="background:{{ section.settings.colourway1_swatch | default: '#1A5C42' }};"></span>
+        <span>{{ section.settings.colourway1_name | default: 'Sapphire Green' }}</span>
+        <span class="pw-qb-tile__count">{{ section.settings.colourway1_count | default: '50 pieces' }}</span>
       </button>
       <button class="pw-qb-tile" data-variant="{{ section.settings.variant_black }}">
-        <span class="pw-qb-tile__dot" style="background:#181818; border:1px solid #3A3A3A;"></span>
-        <span>Midnight Black</span>
-        <span class="pw-qb-tile__count">50 pieces</span>
+        <span class="pw-qb-tile__dot" style="background:{{ section.settings.colourway2_swatch | default: '#181818' }}; border:1px solid var(--charcoal);"></span>
+        <span>{{ section.settings.colourway2_name | default: 'Midnight Black' }}</span>
+        <span class="pw-qb-tile__count">{{ section.settings.colourway2_count | default: '50 pieces' }}</span>
       </button>
     </div>
-    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:12px 0 4px;">{{ section.settings.qb_price | default: '₹8,499' }} · Individually numbered</p>
-    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:0 0 20px;">&#9888; Only 100 pieces total.</p>
-    <button class="btn btn--gold pw-qb-drawer__atc" id="pw-qb-atc" disabled style="width:100%;padding:16px;">Add to Cart — AARAMBH</button>
-    <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="pw-qb-drawer__detail">View full details &darr;</a>
+    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:12px 0 4px;">{{ section.settings.qb_price | default: '₹8,499' }} {{ section.settings.qb_meta_suffix | default: '· Individually numbered' }}</p>
+    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:0 0 20px;">&#9888; {{ section.settings.qb_note | default: 'Only 100 pieces total.' }}</p>
+    <button class="btn btn--gold pw-qb-drawer__atc" id="pw-qb-atc" disabled style="width:100%;padding:16px;">{{ section.settings.qb_atc_label | default: 'Add to Cart — AARAMBH' }}</button>
+    <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="pw-qb-drawer__detail">{{ section.settings.qb_detail_label | default: 'View full details' }} &darr;</a>
   </div>
 </div>
 
@@ -91,7 +91,19 @@
     { "type": "text",         "id": "qb_price",      "label": "Price",                "default": "₹8,499" },
     { "type": "text",         "id": "qb_btn",        "label": "Strip button text",    "default": "BUY NOW" },
     { "type": "text",         "id": "variant_green", "label": "Sapphire Green variant ID (from Shopify product)" },
-    { "type": "text",         "id": "variant_black", "label": "Midnight Black variant ID (from Shopify product)" }
+    { "type": "text",         "id": "variant_black", "label": "Midnight Black variant ID (from Shopify product)" },
+    { "type": "header",       "content": "Quick-Buy Drawer" },
+    { "type": "text",         "id": "qb_select_label",   "label": "\"Select colourway\" label",  "default": "SELECT COLOURWAY" },
+    { "type": "color",        "id": "colourway1_swatch", "label": "Colourway 1 swatch colour",   "default": "#1A5C42" },
+    { "type": "text",         "id": "colourway1_name",   "label": "Colourway 1 name",            "default": "Sapphire Green" },
+    { "type": "text",         "id": "colourway1_count",  "label": "Colourway 1 availability text","default": "50 pieces" },
+    { "type": "color",        "id": "colourway2_swatch", "label": "Colourway 2 swatch colour",   "default": "#181818" },
+    { "type": "text",         "id": "colourway2_name",   "label": "Colourway 2 name",            "default": "Midnight Black" },
+    { "type": "text",         "id": "colourway2_count",  "label": "Colourway 2 availability text","default": "50 pieces" },
+    { "type": "text",         "id": "qb_meta_suffix",    "label": "Price line suffix",           "default": "· Individually numbered" },
+    { "type": "text",         "id": "qb_note",           "label": "Warning note (after ⚠)",  "default": "Only 100 pieces total." },
+    { "type": "text",         "id": "qb_atc_label",      "label": "Add to Cart button text",     "default": "Add to Cart — AARAMBH" },
+    { "type": "text",         "id": "qb_detail_label",   "label": "\"View full details\" link text", "default": "View full details" }
   ],
   "presets": [{ "name": "PW Hero" }]
 }
