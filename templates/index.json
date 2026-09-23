@@ -1,21 +1,261 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": { "type": "pravas-hero", "settings": {} },
-    "ticker": { "type": "pravas-ticker", "settings": { "handle": "pravas-aarambh" } },
-    "pillars": { "type": "pravas-pillars", "settings": {} },
-    "featured": { "type": "pravas-featured", "settings": {} },
-    "philosophy": { "type": "pravas-philosophy", "settings": {} },
-    "trust": { "type": "pravas-trust", "settings": {} },
+    "hero": {
+      "type": "pravas-hero",
+      "settings": {
+        "eyebrow": "PRAVAS TIMEPIECES · SINCE 2025",
+        "h1_top": "Wear Your",
+        "h1_italic": "Journey",
+        "subtext": "Time isn't just measured. It is lived.",
+        "cta1": "EXPLORE AARAMBH",
+        "cta1_url": "shopify://products/sunburst-green",
+        "cta2": "OUR STORY",
+        "cta2_url": "shopify://pages/our-story",
+        "show_specs": true,
+        "spec1_label": "MOVEMENT",
+        "spec1_value": "Miyota 8215 Automatic",
+        "spec2_label": "MATERIAL",
+        "spec2_value": "316L Stainless Steel",
+        "show_quick_buy": true,
+        "qb_eyebrow": "LATEST DROP",
+        "latest_drop_product": "sunburst-green",
+        "qb_name": "",
+        "qb_btn": "QUICK ADD",
+        "watch_img": "shopify://shop_images/Luxury_watch_social_media_advert__202609011153_b253bbdd-2d56-4292-bc97-130414bd3eba.jpg",
+        "watch_img_2": "shopify://shop_images/Luxury_watch_social_media_advert__202609011152.jpg",
+        "watch_img_alt": "PRAVAS AARAMBH",
+        "image_object_fit": "contain",
+        "image_object_position": "center",
+        "image_scale": 100,
+        "image_max_width": 78,
+        "image_max_height": 0,
+        "image_radius": 0,
+        "image_offset_x": 0,
+        "image_offset_y": 0,
+        "hero_min_height": 100,
+        "hero_mobile_full_height": false,
+        "hero_min_height_mobile": 90,
+        "content_max_width": 1280,
+        "left_column_width": 50,
+        "column_gap": 40,
+        "pad_top": 80,
+        "pad_bottom": 100,
+        "pad_x_desktop": 40,
+        "pad_top_mobile": 40,
+        "pad_bottom_mobile": 140,
+        "pad_x_mobile": 20,
+        "specs_position": "left",
+        "card_position": "bottom-right",
+        "card_offset_x": 40,
+        "card_offset_y": 40,
+        "eyebrow_font_size": 10,
+        "eyebrow_letter_spacing": 5,
+        "heading_size_desktop": 68,
+        "heading_size_tablet": 52,
+        "heading_size_mobile": 40,
+        "heading_line_height": 1,
+        "heading_letter_spacing": 0,
+        "heading_weight": "300",
+        "heading_line2_italic": true,
+        "heading_line2_weight": "400",
+        "description_font_size": 14,
+        "description_line_height": 1.7,
+        "button_font_size": 12,
+        "button_letter_spacing": 2,
+        "spec_label_font_size": 10,
+        "spec_value_font_size": 13,
+        "color_bg": "#181818",
+        "color_heading": "#f5f3ef",
+        "color_description": "#888888",
+        "color_eyebrow": "#b5924a",
+        "color_primary_btn_bg": "#b5924a",
+        "color_primary_btn_text": "#181818",
+        "color_primary_btn_border": "#b5924a",
+        "color_secondary_btn_bg": "rgba(0,0,0,0)",
+        "color_secondary_btn_text": "#f5f3ef",
+        "color_secondary_btn_border": "#c8c8cc",
+        "color_spec_divider": "#b5924a",
+        "color_spec_label": "#b5924a",
+        "color_spec_value": "#f5f3ef",
+        "color_ring": "#c8c8cc",
+        "ring_opacity": 100,
+        "color_card_bg": "#181818",
+        "color_card_text": "#f5f3ef",
+        "color_card_text_secondary": "#b5924a",
+        "color_card_btn_bg": "#b5924a",
+        "color_card_btn_text": "#181818",
+        "button_padding_x": 28,
+        "button_padding_y": 13,
+        "button_hover_transition": 200,
+        "card_padding": 12,
+        "card_gap": 14,
+        "mobile_card_style": "floating",
+        "ring_size": 100,
+        "ring_offset_x": 0,
+        "ring_offset_y": 0,
+        "hide_ring_mobile": false,
+        "spec_margin_top": 32,
+        "spec_column_gap": 32,
+        "primary_button_radius": 0,
+        "primary_button_border_width": 0,
+        "secondary_button_radius": 0,
+        "secondary_button_border_width": 1,
+        "card_radius": 0,
+        "card_button_radius": 0,
+        "card_border_width": 1,
+        "card_border_color": "#2e2e2e",
+        "ring_border_width": 1,
+        "enable_animations": true,
+        "content_fade_in": true,
+        "image_fade_in": true,
+        "ring_rotation_enabled": true,
+        "ring_rotation_speed": 70,
+        "image_float_enabled": true,
+        "qb_select_label": "SELECT COLOURWAY",
+        "colourway1_swatch": "#1a5c42",
+        "colourway1_name": "Sapphire Green",
+        "colourway1_count": "50 pieces",
+        "colourway2_swatch": "#181818",
+        "colourway2_name": "Midnight Black",
+        "colourway2_count": "50 pieces",
+        "qb_price": "₹8,499",
+        "qb_meta_suffix": "· Individually numbered",
+        "qb_note": "Only 100 pieces total.",
+        "qb_atc_label": "Add to Cart — AARAMBH",
+        "qb_detail_label": "View full details",
+        "variant_green": "",
+        "variant_black": ""
+      }
+    },
+    "ticker": {
+      "type": "pravas-ticker",
+      "settings": {
+        "handle": "pravas-aarambh",
+        "m1": "Someone just claimed their AARAMBH",
+        "m2_suffix": "of 100 pieces remaining",
+        "m3": "Founder Delivery available — packed by hand",
+        "m4": "Free delivery across India",
+        "colourway1_label": "Sapphire Green:",
+        "colourway2_label": "Midnight Black:",
+        "left_suffix": "left",
+        "m7": "Automatic only. No quartz. No compromise.",
+        "m8": "Leather straps available — Burgundy & Black"
+      }
+    },
+    "pillars": {
+      "type": "pravas-pillars",
+      "settings": {
+        "eyebrow": "WHAT WE STAND FOR",
+        "p1_h": "Automatic Only",
+        "p1_p": "No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day.",
+        "p2_h": "Designed in India",
+        "p2_p": "Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story.",
+        "p3_h": "Built for First Milestones",
+        "p3_p": "The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming."
+      }
+    },
+    "featured": {
+      "type": "pravas-featured",
+      "settings": {
+        "eyebrow": "LAUNCH COLLECTION · TWO COLOURWAYS",
+        "h2_italic": "Sapphire Green",
+        "h2_plain": "Midnight Black",
+        "h2_connector": "vs",
+        "alt_green": "PRAVAS AARAMBH Sapphire Green",
+        "label_green": "Sapphire Green",
+        "alt_black": "PRAVAS AARAMBH Midnight Black",
+        "label_black": "Midnight Black",
+        "meaning": "The Beginning — in two expressions.",
+        "pricing": "₹8,499 · 50 pieces each colourway · Individually numbered.",
+        "cta_text": "EXPLORE AARAMBH →",
+        "cta_url": ""
+      }
+    },
+    "philosophy": {
+      "type": "pravas-philosophy",
+      "settings": {
+        "eyebrow": "OUR BELIEF",
+        "quote": "\"PRAVAS exists for those who decide to begin.\"",
+        "subtext": "We don't sell time. We sell milestones."
+      }
+    },
+    "trust": {
+      "type": "pravas-trust",
+      "settings": {
+        "eyebrow": "WHY PRAVAS",
+        "h1": "Japanese Movement",
+        "s1": "Miyota 8215",
+        "p1": "Miyota 8215 automatic — reliable, serviceable, honest.",
+        "h2": "Sapphire Crystal",
+        "s2": "Scratch Resistant",
+        "p2": "Scratch-resistant sapphire on the front. No compromises on the face of the watch.",
+        "h3": "Limited Production",
+        "s3": "100 Pieces Total",
+        "p3": "Each collection is capped. Your number is yours.",
+        "h4": "Transparent Pricing",
+        "s4": "₹8,499 — One Price",
+        "p4": "One honest price. No hidden costs, no inflated MRPs."
+      }
+    },
     "ugc": {
       "type": "pravas-ugc",
-      "settings": {},
       "blocks": {
-        "card1": { "type": "card", "settings": {} },
-        "card2": { "type": "card", "settings": {} },
-        "card3": { "type": "card", "settings": {} },
-        "card4": { "type": "card", "settings": {} }
+        "card1": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card2": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card3": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card4": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        }
       },
-      "block_order": ["card1", "card2", "card3", "card4"]
+      "block_order": [
+        "card1",
+        "card2",
+        "card3",
+        "card4"
+      ],
+      "settings": {
+        "eyebrow": "AS SEEN ON",
+        "heading": "The PRAVAS Community",
+        "subtext": "Real wrists. Real moments.",
+        "ig_url": "",
+        "cta": "View All on Instagram @pravas.co →",
+        "empty_state_label": "Coming Soon"
+      }
     }
   },
   "order": [

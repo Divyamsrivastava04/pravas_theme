@@ -13,11 +13,26 @@
   "sections": {
     "pravas-announcement": {
       "type": "pravas-announcement",
-      "settings": {}
+      "settings": {
+        "enabled": true,
+        "messages": "AARAMBH IS HERE — 100 PIECES. INDIVIDUALLY NUMBERED.|FREE DELIVERY ACROSS INDIA · AUTOMATIC ONLY · NO QUARTZ|FOUNDER DELIVERY AVAILABLE — PACKED BY HAND, SENT WITH INTENTION|LEATHER STRAPS AVAILABLE — BURGUNDY & BLACK"
+      }
     },
     "pravas-header": {
       "type": "pravas-header",
-      "settings": {}
+      "settings": {
+        "brand": "PRAVAS",
+        "nav_label_1": "Shop",
+        "nav_url_1": "shopify://products/sunburst-green",
+        "nav_label_2": "Our Story",
+        "nav_url_2": "shopify://pages/our-story",
+        "nav_label_3": "Philosophy",
+        "nav_url_3": "shopify://pages/philosophy",
+        "nav_label_4": "FAQ",
+        "nav_url_4": "shopify://pages/faq",
+        "nav_label_5": "",
+        "nav_url_5": ""
+      }
     }
   },
   "order": [
