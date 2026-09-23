@@ -1,457 +1,263 @@
+{% comment %}
+  PRAVAS Timepieces — homepage hero.
+  Two-column dark hero (copy left / watch image right) with a sticky
+  bottom-of-hero quick-buy strip that opens the quick-buy drawer.
+{% endcomment %}
+
 {%- liquid
-  assign drop_product = section.settings.latest_drop_product
-  assign qb_display_name = section.settings.qb_name
-  if qb_display_name == blank and drop_product
-    assign qb_display_name = drop_product.title
-  endif
-  if qb_display_name == blank
-    assign qb_display_name = 'Aarambh'
-  endif
-
-  assign qb_display_thumb = section.settings.qb_thumb
-  if qb_display_thumb == blank and drop_product
-    assign qb_display_thumb = drop_product.featured_image
-  endif
-
-  assign qb_link_url = section.settings.cta1_url
-  if qb_link_url == blank and drop_product
-    assign qb_link_url = drop_product.url
-  endif
-  if qb_link_url == blank
-    assign qb_link_url = '/products/pravas-aarambh'
-  endif
-
-  assign split_left = section.settings.left_column_width | default: 50
-  assign split_right = 100 | minus: split_left
+  assign aarambh = all_products['pravas-aarambh']
+  assign sapphire_variant = aarambh.variants | where: 'title', 'Sapphire Green' | first
+  assign midnight_variant = aarambh.variants | where: 'title', 'Midnight Black' | first
 -%}
 
-<section
-  class="pw-hero
-    {%- if section.settings.enable_animations %}
-      {%- if section.settings.content_fade_in %} pw-hero--fade-content{% endif %}
-      {%- if section.settings.image_fade_in %} pw-hero--fade-image{% endif %}
-      {%- if section.settings.show_quick_buy %} pw-hero--fade-card{% endif %}
-      {%- if section.settings.ring_rotation_enabled %} pw-hero--ring-spin{% endif %}
-      {%- if section.settings.image_float_enabled %} pw-hero--img-float{% endif %}
-    {%- endif %}
-    {%- if section.settings.hide_ring_mobile %} pw-hero--hide-ring-mobile{% endif %}"
-  id="pw-hero"
->
-  <div class="pw-hero__inner">
+<section class="pravas-section " id="">
+  <div class="__grid">
 
-    <div class="pw-hero__copy">
-      <span class="pw-eyebrow pw-hero__eyebrow">{{ section.settings.eyebrow | default: 'PRAVAS TIMEPIECES · SINCE 2025' }}</span>
-      <h1 class="pw-hero__h1">
-        {{ section.settings.h1_top | default: 'Wear Your' }}<br>
-        <em>{{ section.settings.h1_italic | default: 'Journey' }}</em>
-      </h1>
-      <p class="pw-hero__sub">{{ section.settings.subtext | default: "Time isn't just measured. It is lived." }}</p>
-      <div class="pw-hero__ctas">
-        <a href="{{ section.settings.cta1_url | default: '/products/pravas-aarambh' }}" class="btn btn--gold">{{ section.settings.cta1 | default: 'EXPLORE AARAMBH' }}</a>
-        <a href="{{ section.settings.cta2_url | default: '/pages/our-story' }}"          class="btn btn--outline">{{ section.settings.cta2 | default: 'OUR STORY' }}</a>
+    <div class="__copy">
+      <span class="pravas-eyebrow __eyebrow">PRAVAS TIMEPIECES · SINCE 2025</span>
+
+      <h1 class="__heading">Wear Your<br><em>Journey</em></h1>
+
+      <p class="__subtext">Time isn't just measured. It is lived.</p>
+
+      <div class="pravas-divider __rule"></div>
+
+      <div class="__ctas">
+        <a href="/products/pravas-aarambh" class="pravas-btn-primary">EXPLORE AARAMBH</a>
+        <a href="/pages/our-story" class="__text-link">Our Story &rarr;</a>
       </div>
-
-      {% if section.settings.show_specs %}
-        <div class="pw-hero__specs{% if section.settings.specs_position == 'centered' %} pw-hero__specs--centered{% endif %}">
-          <span class="pw-hero__specs-accent" aria-hidden="true"></span>
-          <div class="pw-hero__spec">
-            <span class="pw-hero__spec-label">{{ section.settings.spec1_label | default: 'MOVEMENT' }}</span>
-            <span class="pw-hero__spec-value">{{ section.settings.spec1_value | default: 'Miyota 8215 Automatic' }}</span>
-          </div>
-          <div class="pw-hero__spec-div" aria-hidden="true"></div>
-          <div class="pw-hero__spec">
-            <span class="pw-hero__spec-label">{{ section.settings.spec2_label | default: 'MATERIAL' }}</span>
-            <span class="pw-hero__spec-value">{{ section.settings.spec2_value | default: '316L Stainless Steel' }}</span>
-          </div>
-        </div>
-      {% endif %}
     </div>
 
-    <div class="pw-hero__visual">
-      <div class="pw-hero__ring" aria-hidden="true"></div>
-      <div class="pw-hero__img-wrap">
-        {% assign has_image = false %}
-        {% assign hero_img_1 = section.settings.watch_img %}
-        {% if section.settings.watch_img_mobile != blank %}
-          {%- comment -%} desktop keeps its own image(s); mobile can swap via CSS below if provided {%- endcomment -%}
-        {% endif %}
-        {% if hero_img_1 %}
-          {% assign has_image = true %}
-          <div class="pw-hero__img-slide is-active">
-            {{ hero_img_1 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: drop_product.title | default: 'PRAVAS AARAMBH',
-                 class: 'pw-hero__img pw-hero__img--desktop',
-                 loading: 'eager',
-                 widths: '450,600,900'
-            }}
-          </div>
-        {% endif %}
-        {% if section.settings.watch_img_2 %}
-          {% assign has_image = true %}
-          <div class="pw-hero__img-slide">
-            {{ section.settings.watch_img_2 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
-                 class: 'pw-hero__img pw-hero__img--desktop',
-                 loading: 'lazy',
-                 widths: '450,600,900'
-            }}
-          </div>
-        {% endif %}
-        {% if section.settings.watch_img_3 %}
-          {% assign has_image = true %}
-          <div class="pw-hero__img-slide">
-            {{ section.settings.watch_img_3 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
-                 class: 'pw-hero__img pw-hero__img--desktop',
-                 loading: 'lazy',
-                 widths: '450,600,900'
-            }}
-          </div>
-        {% endif %}
-        {% if section.settings.watch_img_mobile %}
-          <div class="pw-hero__img-slide is-active pw-hero__img-slide--mobile">
-            {{ section.settings.watch_img_mobile | image_url: width: 700 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
-                 class: 'pw-hero__img pw-hero__img--mobile',
-                 loading: 'eager',
-                 widths: '350,500,700'
-            }}
-          </div>
-        {% endif %}
-        {% unless has_image %}
-          <div class="pw-hero__img-ph">Upload hero watch image(s) in Theme Editor — background-removed PNGs work best</div>
-        {% endunless %}
-      </div>
+    <div class="__image-wrap">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 800 | image_tag:
+             loading: 'eager',
+             alt: section.settings.hero_image.alt | default: 'PRAVAS AARAMBH watch',
+             class: '__image',
+             widths: '400,600,800,1000'
+        }}
+      {%- else -%}
+        <!-- [CLIENT TO CONFIRM: hero watch photography not yet uploaded — set via theme editor "Hero watch image"] -->
+      {%- endif -%}
     </div>
 
   </div>
 
-  <!-- Floating quick-buy card -->
-  {% if section.settings.show_quick_buy %}
-    <div
-      class="pw-qb-card
-        {%- if section.settings.card_position == 'bottom-left' %} pw-qb-card--left
-        {%- elsif section.settings.card_position == 'bottom-center' %} pw-qb-card--center
-        {%- endif %}
-        {%- if section.settings.mobile_card_style == 'static' %} pw-qb-card--mobile-static{% endif %}"
-      id="pw-qb-strip"
-    >
-      <div class="pw-qb-card__thumb-wrap">
-        {% if qb_display_thumb %}
-          <img src="{{ qb_display_thumb | image_url: width: 96 }}" alt="" class="pw-qb-card__thumb" width="48" height="48">
-        {% endif %}
-      </div>
-      <div class="pw-qb-card__info">
-        <span class="pw-qb-card__eyebrow">{{ section.settings.qb_eyebrow | default: 'LATEST DROP' }}</span>
-        <span class="pw-qb-card__name">{{ qb_display_name }}</span>
-      </div>
-      <button class="btn btn--gold pw-qb-card__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'QUICK ADD' }}</button>
+  <div class="__quick-buy-strip" id="quick-buy-strip">
+    <div class="__quick-buy-left">
+      {%- if section.settings.hero_image != blank -%}
+        {{ section.settings.hero_image | image_url: width: 72 | image_tag: loading: 'lazy', alt: 'AARAMBH', class: '__quick-buy-thumb' }}
+      {%- endif -%}
+      <span class="__quick-buy-name">AARAMBH</span>
     </div>
-  {% endif %}
+    <span class="__quick-buy-price">
+      {%- if aarambh -%}{{ aarambh.price | money_without_trailing_zeros }}{%- else -%}&#8377;8,499{%- endif -%}
+    </span>
+    <button type="button" class="pravas-btn-primary __quick-buy-btn" id="open-quick-buy">
+      Buy Now
+    </button>
+  </div>
 </section>
 
-<!-- Quick-buy drawer — reuses the existing AJAX /cart/add.js flow (see pravas.js) -->
-<div class="pw-qb-drawer" id="pw-qb-drawer" role="dialog" aria-modal="true">
-  <div class="pw-qb-drawer__overlay" id="pw-qb-overlay"></div>
-  <div class="pw-qb-drawer__panel">
-    <div class="pw-qb-drawer__head">
-      <span class="pw-qb-drawer__title">{{ qb_display_name }}</span>
-      <button class="pw-qb-drawer__close" id="pw-close-qb" aria-label="Close">&#10005;</button>
-    </div>
-    <span class="pw-eyebrow" style="color:var(--fog); font-size:9px; letter-spacing:3px; margin-bottom:12px; display:block;">{{ section.settings.qb_select_label | default: 'SELECT COLOURWAY' }}</span>
-    <div class="pw-qb-tiles">
-      <button class="pw-qb-tile" data-variant="{{ section.settings.variant_green }}">
-        <span class="pw-qb-tile__dot" style="background:{{ section.settings.colourway1_swatch | default: '#1A5C42' }};"></span>
-        <span>{{ section.settings.colourway1_name | default: 'Sapphire Green' }}</span>
-        <span class="pw-qb-tile__count">{{ section.settings.colourway1_count | default: '50 pieces' }}</span>
-      </button>
-      <button class="pw-qb-tile" data-variant="{{ section.settings.variant_black }}">
-        <span class="pw-qb-tile__dot" style="background:{{ section.settings.colourway2_swatch | default: '#181818' }}; border:1px solid var(--charcoal);"></span>
-        <span>{{ section.settings.colourway2_name | default: 'Midnight Black' }}</span>
-        <span class="pw-qb-tile__count">{{ section.settings.colourway2_count | default: '50 pieces' }}</span>
-      </button>
-    </div>
-    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:12px 0 4px;">{{ section.settings.qb_price | default: '₹8,499' }} {{ section.settings.qb_meta_suffix | default: '· Individually numbered' }}</p>
-    <p style="font-family:var(--font-body);font-size:11px;color:var(--fog);margin:0 0 20px;">&#9888; {{ section.settings.qb_note | default: 'Only 100 pieces total.' }}</p>
-    <button class="btn btn--gold pw-qb-drawer__atc" id="pw-qb-atc" disabled style="width:100%;padding:16px;">{{ section.settings.qb_atc_label | default: 'Add to Cart — AARAMBH' }}</button>
-    <a href="{{ qb_link_url }}" class="pw-qb-drawer__detail">{{ section.settings.qb_detail_label | default: 'View full details' }} &darr;</a>
-  </div>
-</div>
+{% render 'pravas-quick-buy-drawer',
+  aarambh: aarambh,
+  sapphire_variant: sapphire_variant,
+  midnight_variant: midnight_variant
+%}
 
-{%- comment -%}
-  Per-instance CSS custom properties, generated from Theme Editor settings.
-  Scoped to #pw-hero / #pw-qb-strip so pravas.css's var(--hero-*, fallback)
-  rules pick these up without touching any other section.
-{%- endcomment -%}
-<style>
-  #pw-hero {
-    --hero-min-height: {{ section.settings.hero_min_height | default: 100 }}vh;
-    --hero-mobile-min-height: {% if section.settings.hero_mobile_full_height %}{{ section.settings.hero_min_height_mobile | default: 90 }}vh{% else %}auto{% endif %};
-    --hero-bg: {{ section.settings.color_bg | default: '#181818' }};
-    --hero-content-max-width: {{ section.settings.content_max_width | default: 1280 }}px;
-    --hero-split-left: {{ split_left }}%;
-    --hero-split-right: {{ split_right }}%;
-    --hero-column-gap: {{ section.settings.column_gap | default: 40 }}px;
-    --hero-pad-top: {{ section.settings.pad_top | default: 80 }}px;
-    --hero-pad-bottom: {{ section.settings.pad_bottom | default: 100 }}px;
-    --hero-pad-x: {{ section.settings.pad_x_desktop | default: 40 }}px;
-    --hero-pad-x-mobile: {{ section.settings.pad_x_mobile | default: 20 }}px;
-    --hero-mobile-pad-top: {{ section.settings.pad_top_mobile | default: 40 }}px;
-    --hero-mobile-pad-bottom: {{ section.settings.pad_bottom_mobile | default: 140 }}px;
-
-    --hero-eyebrow-color: {{ section.settings.color_eyebrow | default: '#B5924A' }};
-    --hero-eyebrow-size: {{ section.settings.eyebrow_font_size | default: 10 }}px;
-    --hero-eyebrow-tracking: {{ section.settings.eyebrow_letter_spacing | default: 5 }}px;
-
-    --hero-text-primary: {{ section.settings.color_heading | default: '#F5F3EF' }};
-    --hero-text-secondary: {{ section.settings.color_description | default: '#888888' }};
-    --hero-heading-size-desktop: {{ section.settings.heading_size_desktop | default: 68 }}px;
-    --hero-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 52 }}px;
-    --hero-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 40 }}px;
-    --hero-heading-line-height: {{ section.settings.heading_line_height | default: 1.0 }};
-    --hero-heading-tracking: {{ section.settings.heading_letter_spacing | default: 0 }}px;
-    --hero-heading-weight: {{ section.settings.heading_weight | default: '300' }};
-    --hero-heading-line2-style: {% if section.settings.heading_line2_italic %}italic{% else %}normal{% endif %};
-    --hero-heading-line2-weight: {{ section.settings.heading_line2_weight | default: '400' }};
-    --hero-heading-margin-bottom: 20px;
-    --hero-desc-size: {{ section.settings.description_font_size | default: 14 }}px;
-    --hero-desc-line-height: {{ section.settings.description_line_height | default: 1.7 }};
-    --hero-button-group-margin-top: 24px;
-
-    --hero-btn-font-size: {{ section.settings.button_font_size | default: 12 }}px;
-    --hero-btn-tracking: {{ section.settings.button_letter_spacing | default: 2 }}px;
-    --hero-btn-padding-x: {{ section.settings.button_padding_x | default: 28 }}px;
-    --hero-btn-padding-y: {{ section.settings.button_padding_y | default: 13 }}px;
-    --hero-btn-transition: {{ section.settings.button_hover_transition | default: 200 }}ms;
-
-    --hero-primary-btn-bg: {{ section.settings.color_primary_btn_bg | default: '#B5924A' }};
-    --hero-primary-btn-text: {{ section.settings.color_primary_btn_text | default: '#181818' }};
-    --hero-primary-btn-border: {{ section.settings.color_primary_btn_border | default: '#B5924A' }};
-    --hero-primary-btn-border-width: {{ section.settings.primary_button_border_width | default: 0 }}px;
-    --hero-primary-btn-radius: {{ section.settings.primary_button_radius | default: 0 }}px;
-
-    --hero-secondary-btn-bg: {{ section.settings.color_secondary_btn_bg | default: 'transparent' }};
-    --hero-secondary-btn-text: {{ section.settings.color_secondary_btn_text | default: '#F5F3EF' }};
-    --hero-secondary-btn-border: {{ section.settings.color_secondary_btn_border | default: 'rgba(200,200,204,0.35)' }};
-    --hero-secondary-btn-border-width: {{ section.settings.secondary_button_border_width | default: 1 }}px;
-    --hero-secondary-btn-radius: {{ section.settings.secondary_button_radius | default: 0 }}px;
-
-    --hero-spec-margin-top: {{ section.settings.spec_margin_top | default: 32 }}px;
-    --hero-spec-gap: {{ section.settings.spec_column_gap | default: 32 }}px;
-    --hero-spec-divider-color: {{ section.settings.color_spec_divider | default: '#B5924A' }};
-    --hero-spec-label-color: {{ section.settings.color_spec_label | default: '#B5924A' }};
-    --hero-spec-label-size: {{ section.settings.spec_label_font_size | default: 10 }}px;
-    --hero-spec-value-color: {{ section.settings.color_spec_value | default: '#F5F3EF' }};
-    --hero-spec-value-size: {{ section.settings.spec_value_font_size | default: 13 }}px;
-
-    --hero-image-offset-x: {{ section.settings.image_offset_x | default: 0 }}px;
-    --hero-image-offset-y: {{ section.settings.image_offset_y | default: 0 }}px;
-    --hero-image-object-fit: {{ section.settings.image_object_fit | default: 'contain' }};
-    --hero-image-object-position: {{ section.settings.image_object_position | default: 'center' }};
-    --hero-image-scale: {{ section.settings.image_scale | default: 100 | divided_by: 100.0 }};
-    --hero-image-max-width: {{ section.settings.image_max_width | default: 78 }}%;
-    --hero-image-max-height: {% if section.settings.image_max_height > 0 %}{{ section.settings.image_max_height }}px{% else %}none{% endif %};
-    --hero-image-radius: {{ section.settings.image_radius | default: 0 }}px;
-
-    --hero-ring-color: {{ section.settings.color_ring | default: 'rgba(200,200,204,0.16)' }};
-    --hero-ring-opacity: {{ section.settings.ring_opacity | default: 100 | divided_by: 100.0 }};
-    --hero-ring-size: {{ section.settings.ring_size | default: 100 }}%;
-    --hero-ring-border-width: {{ section.settings.ring_border_width | default: 1 }}px;
-    --hero-ring-offset-x: {{ section.settings.ring_offset_x | default: 0 }}px;
-    --hero-ring-offset-y: {{ section.settings.ring_offset_y | default: 0 }}px;
-    --hero-ring-rotation-speed: {{ section.settings.ring_rotation_speed | default: 70 }}s;
+{% stylesheet %}
+  . {
+    background: var(--midnight);
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  #pw-qb-strip {
-    --hero-card-bg: {{ section.settings.color_card_bg | default: 'rgba(24,24,24,0.85)' }};
-    --hero-card-text: {{ section.settings.color_card_text | default: '#F5F3EF' }};
-    --hero-card-text-secondary: {{ section.settings.color_card_text_secondary | default: '#B5924A' }};
-    --hero-card-btn-bg: {{ section.settings.color_card_btn_bg | default: '#B5924A' }};
-    --hero-card-btn-text: {{ section.settings.color_card_btn_text | default: '#181818' }};
-    --hero-card-padding: {{ section.settings.card_padding | default: 12 }}px {{ section.settings.card_padding | default: 12 | times: 1.33 | round }}px;
-    --hero-card-gap: {{ section.settings.card_gap | default: 14 }}px;
-    --hero-card-radius: {{ section.settings.card_radius | default: 0 }}px;
-    --hero-card-btn-radius: {{ section.settings.card_button_radius | default: 0 }}px;
-    --hero-card-border-width: {{ section.settings.card_border_width | default: 1 }}px;
-    --hero-card-border-color: {{ section.settings.card_border_color | default: '#2E2E2E' }};
-    --hero-card-offset-x: {{ section.settings.card_offset_x | default: 40 }}px;
-    --hero-card-offset-y: {{ section.settings.card_offset_y | default: 40 }}px;
+  .__grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    align-items: center;
+    padding: 0 80px;
+  }
+
+  .__copy {
+    padding-right: 40px;
+  }
+
+  .__eyebrow {
+    margin-bottom: 24px;
+  }
+
+  .__heading {
+    font-family: var(--font-display);
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--parchment);
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .__heading em {
+    font-style: italic;
+  }
+
+  .__subtext {
+    font-family: var(--font-body-pravas);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--fog);
+    margin: 20px 0 0;
+  }
+
+  .__rule {
+    width: 60px;
+    margin: 24px 0;
+  }
+
+  .__ctas {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .__text-link {
+    font-family: var(--font-body-pravas);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-decoration: underline;
+    transition: color 200ms ease;
+  }
+  .__text-link:hover {
+    color: var(--gold);
+  }
+
+  .__image-wrap {
+    position: relative;
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+  }
+
+  .__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Quick-buy strip */
+  .__quick-buy-strip {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: rgba(24, 24, 24, 0.92);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: pravas-strip-appear 300ms ease forwards;
+    animation-delay: 1.5s;
+  }
+  @keyframes pravas-strip-appear {
+    to { opacity: 1; }
+  }
+
+  .__quick-buy-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .__quick-buy-thumb {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .__quick-buy-name {
+    font-family: var(--font-body-pravas);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--parchment);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .__quick-buy-price {
+    font-family: var(--font-body-pravas);
+    font-size: 12px;
+    color: var(--fog);
+  }
+
+  .__quick-buy-btn {
+    padding: 10px 24px;
+    font-size: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .__quick-buy-strip {
+      animation: none;
+      opacity: 1;
+    }
   }
 
   @media (max-width: 767px) {
-    #pw-hero .pw-hero__img--desktop { display: {% if section.settings.watch_img_mobile %}none{% else %}flex{% endif %}; }
-    #pw-hero .pw-hero__img-slide--mobile { display: flex; }
+    .__grid {
+      grid-template-columns: 1fr;
+      padding: 40px 24px 90px;
+    }
+    .__copy {
+      padding-right: 0;
+      order: 1;
+    }
+    .__image-wrap {
+      order: 2;
+      min-height: 320px;
+      margin-top: 32px;
+    }
+    .__heading {
+      font-size: 42px;
+    }
+    .__ctas {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .__ctas .pravas-btn-primary {
+      width: 100%;
+      text-align: center;
+    }
+    .__quick-buy-strip {
+      padding: 0 16px;
+    }
   }
-  @media (min-width: 768px) {
-    #pw-hero .pw-hero__img-slide--mobile { display: none; }
-  }
-</style>
+{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "PW Hero",
+  "name": "PRAVAS Hero",
   "settings": [
-    { "type": "header", "content": "Content" },
-    { "type": "text",         "id": "eyebrow",       "label": "Eyebrow",              "default": "PRAVAS TIMEPIECES · SINCE 2025" },
-    { "type": "text",         "id": "h1_top",        "label": "Heading line 1",       "default": "Wear Your" },
-    { "type": "text",         "id": "h1_italic",     "label": "Heading line 2 (italic)", "default": "Journey" },
-    { "type": "textarea",     "id": "subtext",       "label": "Description",          "default": "Time isn't just measured. It is lived." },
-    { "type": "text",         "id": "cta1",          "label": "Primary button text",  "default": "EXPLORE AARAMBH" },
-    { "type": "url",          "id": "cta1_url",      "label": "Primary button link",  "default": "/products/pravas-aarambh" },
-    { "type": "text",         "id": "cta2",          "label": "Secondary button text","default": "OUR STORY" },
-    { "type": "url",          "id": "cta2_url",      "label": "Secondary button link","default": "/pages/our-story" },
-    { "type": "checkbox",     "id": "show_specs",    "label": "Show spec row",        "default": true },
-    { "type": "text",         "id": "spec1_label",   "label": "Movement label",       "default": "MOVEMENT" },
-    { "type": "text",         "id": "spec1_value",   "label": "Movement value",       "default": "Miyota 8215 Automatic" },
-    { "type": "text",         "id": "spec2_label",   "label": "Material label",       "default": "MATERIAL" },
-    { "type": "text",         "id": "spec2_value",   "label": "Material value",       "default": "316L Stainless Steel" },
-    { "type": "checkbox",     "id": "show_quick_buy","label": "Show floating quick-buy card", "default": true },
-    { "type": "text",         "id": "qb_eyebrow",    "label": "Latest drop label",    "default": "LATEST DROP" },
-    { "type": "product",      "id": "latest_drop_product", "label": "Latest drop product", "info": "Auto-fills the card's name, thumbnail and link. Manual fields below override this." },
-    { "type": "text",         "id": "qb_name",       "label": "Product name (overrides product title)" },
-    { "type": "text",         "id": "qb_btn",        "label": "Quick add button text","default": "QUICK ADD" },
-
-    { "type": "header",       "content": "Hero Image" },
-    { "type": "paragraph",    "content": "Upload 1–3 watch images with the background removed (transparent PNG). One image gently floats inside a slowly rotating ring; two or three crossfade between angles every few seconds." },
-    { "type": "image_picker", "id": "watch_img",     "label": "Watch image 1 (desktop)" },
-    { "type": "image_picker", "id": "watch_img_2",   "label": "Watch image 2 (optional)" },
-    { "type": "image_picker", "id": "watch_img_3",   "label": "Watch image 3 (optional)" },
-    { "type": "image_picker", "id": "watch_img_mobile", "label": "Mobile hero image (optional — falls back to image 1)" },
-    { "type": "text",         "id": "watch_img_alt", "label": "Image alt text",       "default": "PRAVAS AARAMBH" },
-    { "type": "image_picker", "id": "qb_thumb",      "label": "Quick-buy card thumbnail (overrides product image)" },
     {
-      "type": "select", "id": "image_object_fit", "label": "Image fit",
-      "options": [{ "value": "contain", "label": "Contain (show full image)" }, { "value": "cover", "label": "Cover (fill frame, may crop)" }],
-      "default": "contain"
-    },
-    {
-      "type": "select", "id": "image_object_position", "label": "Image position within frame",
-      "options": [
-        { "value": "center", "label": "Center" }, { "value": "top", "label": "Top" },
-        { "value": "bottom", "label": "Bottom" }, { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }
-      ],
-      "default": "center"
-    },
-    { "type": "range", "id": "image_scale", "label": "Image scale", "min": 50, "max": 150, "step": 5, "unit": "%", "default": 100 },
-    { "type": "range", "id": "image_max_width", "label": "Image width (% of visual frame)", "min": 40, "max": 100, "step": 2, "unit": "%", "default": 78 },
-    { "type": "range", "id": "image_max_height", "label": "Image max height (0 = unset)", "min": 0, "max": 900, "step": 10, "unit": "px", "default": 0 },
-    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 100, "step": 2, "unit": "px", "default": 0 },
-    { "type": "range", "id": "image_offset_x", "label": "Image offset — horizontal", "min": -100, "max": 100, "step": 4, "unit": "px", "default": 0 },
-    { "type": "range", "id": "image_offset_y", "label": "Image offset — vertical", "min": -100, "max": 100, "step": 4, "unit": "px", "default": 0 },
-
-    { "type": "header",       "content": "Layout" },
-    { "type": "range", "id": "hero_min_height", "label": "Hero min-height (desktop)", "min": 60, "max": 120, "step": 5, "unit": "vh", "default": 100 },
-    { "type": "checkbox", "id": "hero_mobile_full_height", "label": "Use a fixed min-height on mobile too", "default": false, "info": "Off = mobile height is determined by content." },
-    { "type": "range", "id": "hero_min_height_mobile", "label": "Hero min-height (mobile, if enabled above)", "min": 40, "max": 120, "step": 5, "unit": "vh", "default": 90 },
-    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 960, "max": 1600, "step": 20, "unit": "px", "default": 1280 },
-    { "type": "range", "id": "left_column_width", "label": "Left column width", "min": 30, "max": 70, "step": 1, "unit": "%", "default": 50 },
-    { "type": "range", "id": "column_gap", "label": "Gap between columns", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "pad_top", "label": "Padding — top (desktop)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
-    { "type": "range", "id": "pad_bottom", "label": "Padding — bottom (desktop)", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 100 },
-    { "type": "range", "id": "pad_x_desktop", "label": "Padding — sides (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "pad_top_mobile", "label": "Padding — top (mobile)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "pad_bottom_mobile", "label": "Padding — bottom (mobile)", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 140 },
-    { "type": "range", "id": "pad_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
-    { "type": "select", "id": "specs_position", "label": "Spec row alignment", "options": [{ "value": "left", "label": "Left-aligned" }, { "value": "centered", "label": "Centered" }], "default": "left" },
-    { "type": "select", "id": "card_position", "label": "Quick-buy card position", "options": [{ "value": "bottom-right", "label": "Bottom right" }, { "value": "bottom-left", "label": "Bottom left" }, { "value": "bottom-center", "label": "Bottom center" }], "default": "bottom-right" },
-    { "type": "range", "id": "card_offset_x", "label": "Quick-buy card offset — horizontal", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-    { "type": "range", "id": "card_offset_y", "label": "Quick-buy card offset — vertical", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
-
-    { "type": "header",       "content": "Typography" },
-    { "type": "range", "id": "eyebrow_font_size", "label": "Eyebrow size", "min": 8, "max": 16, "step": 1, "unit": "px", "default": 10 },
-    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 5 },
-    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 36, "max": 100, "step": 2, "unit": "px", "default": 68 },
-    { "type": "range", "id": "heading_size_tablet", "label": "Heading size — tablet", "min": 28, "max": 80, "step": 2, "unit": "px", "default": 52 },
-    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 24, "max": 60, "step": 2, "unit": "px", "default": 40 },
-    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 0.9, "max": 1.4, "step": 0.1, "default": 1.0 },
-    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": -2, "max": 4, "step": 0.5, "unit": "px", "default": 0 },
-    { "type": "select", "id": "heading_weight", "label": "Heading weight (line 1)", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semibold" }, { "value": "700", "label": "Bold" }], "default": "300" },
-    { "type": "checkbox", "id": "heading_line2_italic", "label": "Italicize heading line 2", "default": true },
-    { "type": "select", "id": "heading_line2_weight", "label": "Heading weight (line 2)", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semibold" }, { "value": "700", "label": "Bold" }], "default": "400" },
-    { "type": "range", "id": "description_font_size", "label": "Description size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 14 },
-    { "type": "range", "id": "description_line_height", "label": "Description line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.7 },
-    { "type": "range", "id": "button_font_size", "label": "Button font size", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 12 },
-    { "type": "range", "id": "button_letter_spacing", "label": "Button letter spacing", "min": 0, "max": 5, "step": 0.5, "unit": "px", "default": 2 },
-    { "type": "range", "id": "spec_label_font_size", "label": "Spec label size", "min": 8, "max": 14, "step": 1, "unit": "px", "default": 10 },
-    { "type": "range", "id": "spec_value_font_size", "label": "Spec value size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13 },
-
-    { "type": "header",       "content": "Colors" },
-    { "type": "color", "id": "color_bg", "label": "Hero background", "default": "#181818" },
-    { "type": "color", "id": "color_heading", "label": "Heading color", "default": "#F5F3EF" },
-    { "type": "color", "id": "color_description", "label": "Description color", "default": "#888888" },
-    { "type": "color", "id": "color_eyebrow", "label": "Eyebrow color", "default": "#B5924A" },
-    { "type": "color", "id": "color_primary_btn_bg", "label": "Primary button background", "default": "#B5924A" },
-    { "type": "color", "id": "color_primary_btn_text", "label": "Primary button text", "default": "#181818" },
-    { "type": "color", "id": "color_primary_btn_border", "label": "Primary button border", "default": "#B5924A" },
-    { "type": "color", "id": "color_secondary_btn_bg", "label": "Secondary button background", "default": "#00000000" },
-    { "type": "color", "id": "color_secondary_btn_text", "label": "Secondary button text", "default": "#F5F3EF" },
-    { "type": "color", "id": "color_secondary_btn_border", "label": "Secondary button border", "default": "#C8C8CC" },
-    { "type": "color", "id": "color_spec_divider", "label": "Spec divider color", "default": "#B5924A" },
-    { "type": "color", "id": "color_spec_label", "label": "Spec label color", "default": "#B5924A" },
-    { "type": "color", "id": "color_spec_value", "label": "Spec value color", "default": "#F5F3EF" },
-    { "type": "color", "id": "color_ring", "label": "Ring color", "default": "#C8C8CC" },
-    { "type": "range", "id": "ring_opacity", "label": "Ring opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
-    { "type": "color", "id": "color_card_bg", "label": "Quick-buy card background", "default": "#181818" },
-    { "type": "color", "id": "color_card_text", "label": "Quick-buy card text", "default": "#F5F3EF" },
-    { "type": "color", "id": "color_card_text_secondary", "label": "Quick-buy card eyebrow", "default": "#B5924A" },
-    { "type": "color", "id": "color_card_btn_bg", "label": "Quick-buy card button background", "default": "#B5924A" },
-    { "type": "color", "id": "color_card_btn_text", "label": "Quick-buy card button text", "default": "#181818" },
-
-    { "type": "header",       "content": "Buttons" },
-    { "type": "range", "id": "button_padding_x", "label": "Button padding — horizontal", "min": 12, "max": 60, "step": 2, "unit": "px", "default": 28 },
-    { "type": "range", "id": "button_padding_y", "label": "Button padding — vertical", "min": 6, "max": 30, "step": 1, "unit": "px", "default": 13 },
-    { "type": "range", "id": "button_hover_transition", "label": "Button hover transition", "min": 0, "max": 600, "step": 50, "unit": "ms", "default": 200 },
-
-    { "type": "header",       "content": "Product Card" },
-    { "type": "range", "id": "card_padding", "label": "Card padding (vertical basis)", "min": 6, "max": 32, "step": 2, "unit": "px", "default": 12 },
-    { "type": "range", "id": "card_gap", "label": "Card internal gap", "min": 4, "max": 32, "step": 2, "unit": "px", "default": 14 },
-    { "type": "select", "id": "mobile_card_style", "label": "Mobile card style", "options": [{ "value": "floating", "label": "Floating overlay (matches desktop)" }, { "value": "static", "label": "Static block below image" }], "default": "floating" },
-
-    { "type": "header",       "content": "Circle Decoration" },
-    { "type": "range", "id": "ring_size", "label": "Ring size (% of frame)", "min": 60, "max": 120, "step": 2, "unit": "%", "default": 100 },
-    { "type": "range", "id": "ring_offset_x", "label": "Ring offset — horizontal", "min": -60, "max": 60, "step": 2, "unit": "px", "default": 0 },
-    { "type": "range", "id": "ring_offset_y", "label": "Ring offset — vertical", "min": -60, "max": 60, "step": 2, "unit": "px", "default": 0 },
-    { "type": "checkbox", "id": "hide_ring_mobile", "label": "Hide ring on mobile", "default": false },
-
-    { "type": "header",       "content": "Spacing" },
-    { "type": "range", "id": "spec_margin_top", "label": "Spec row — margin top", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
-    { "type": "range", "id": "spec_column_gap", "label": "Spec row — column gap", "min": 8, "max": 80, "step": 4, "unit": "px", "default": 32 },
-
-    { "type": "header",       "content": "Borders & Radius" },
-    { "type": "range", "id": "primary_button_radius", "label": "Primary button radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "primary_button_border_width", "label": "Primary button border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "secondary_button_radius", "label": "Secondary button radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "secondary_button_border_width", "label": "Secondary button border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 1 },
-    { "type": "range", "id": "card_radius", "label": "Quick-buy card radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "card_button_radius", "label": "Quick-buy card button radius", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
-    { "type": "range", "id": "card_border_width", "label": "Quick-buy card border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 1 },
-    { "type": "color", "id": "card_border_color", "label": "Quick-buy card border color", "default": "#2E2E2E" },
-    { "type": "range", "id": "ring_border_width", "label": "Ring border width", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
-
-    { "type": "header",       "content": "Animation" },
-    { "type": "checkbox", "id": "enable_animations", "label": "Enable hero animations", "default": true, "info": "Master switch. All animations already respect the visitor's reduced-motion preference." },
-    { "type": "checkbox", "id": "content_fade_in", "label": "Fade/slide in text content on load", "default": true },
-    { "type": "checkbox", "id": "image_fade_in", "label": "Fade in watch image on load", "default": true },
-    { "type": "checkbox", "id": "ring_rotation_enabled", "label": "Rotate the ring slowly", "default": true },
-    { "type": "range", "id": "ring_rotation_speed", "label": "Ring rotation speed (seconds per turn)", "min": 20, "max": 180, "step": 5, "unit": "s", "default": 70 },
-    { "type": "checkbox", "id": "image_float_enabled", "label": "Gentle float on watch image", "default": true },
-
-    { "type": "header",       "content": "Quick-Buy Drawer" },
-    { "type": "text",         "id": "qb_select_label",   "label": "\"Select colourway\" label",  "default": "SELECT COLOURWAY" },
-    { "type": "color",        "id": "colourway1_swatch", "label": "Colourway 1 swatch colour",   "default": "#1A5C42" },
-    { "type": "text",         "id": "colourway1_name",   "label": "Colourway 1 name",            "default": "Sapphire Green" },
-    { "type": "text",         "id": "colourway1_count",  "label": "Colourway 1 availability text","default": "50 pieces" },
-    { "type": "color",        "id": "colourway2_swatch", "label": "Colourway 2 swatch colour",   "default": "#181818" },
-    { "type": "text",         "id": "colourway2_name",   "label": "Colourway 2 name",            "default": "Midnight Black" },
-    { "type": "text",         "id": "colourway2_count",  "label": "Colourway 2 availability text","default": "50 pieces" },
-    { "type": "text",         "id": "qb_price",          "label": "Price (shown in drawer)",     "default": "₹8,499" },
-    { "type": "text",         "id": "qb_meta_suffix",    "label": "Price line suffix",           "default": "· Individually numbered" },
-    { "type": "text",         "id": "qb_note",           "label": "Warning note (after ⚠)",  "default": "Only 100 pieces total." },
-    { "type": "text",         "id": "qb_atc_label",      "label": "Add to Cart button text",     "default": "Add to Cart — AARAMBH" },
-    { "type": "text",         "id": "qb_detail_label",   "label": "\"View full details\" link text", "default": "View full details" },
-    { "type": "text",         "id": "variant_green",     "label": "Sapphire Green variant ID (from Shopify product)" },
-    { "type": "text",         "id": "variant_black",     "label": "Midnight Black variant ID (from Shopify product)" }
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero watch image"
+    }
   ],
-  "presets": [{ "name": "PW Hero" }]
+  "presets": [
+    {
+      "name": "PRAVAS Hero"
+    }
+  ]
 }
 {% endschema %}
