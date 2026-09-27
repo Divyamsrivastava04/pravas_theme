@@ -1,14 +1,269 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "pravas_story_hero_JMJRpE": {
+      "type": "pravas-story-hero",
+      "name": "PW Story Hero",
+      "settings": {
+        "eyebrow": "THE JOURNEY",
+        "heading": "The Meaning of PRAVAS",
+        "body": "Sanskrit for 'journey' or 'sojourn', Pravas is not about the destination, but the precise measurement of the moments that define our path.",
+        "show_divider": true,
+        "content_alignment": "center",
+        "content_max_width": 720,
+        "min_height": 0,
+        "padding_top": 140,
+        "padding_bottom": 140,
+        "padding_x": 24,
+        "padding_top_mobile": 80,
+        "padding_bottom_mobile": 80,
+        "padding_x_mobile": 20,
+        "line_height": 64,
+        "line_thickness": 1,
+        "line_opacity": 100,
+        "line_margin_top": 48,
+        "line_color": "#2E2E2E",
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 56,
+        "heading_size_mobile": 34,
+        "heading_weight": "400",
+        "heading_italic": true,
+        "heading_line_height": 1.2,
+        "heading_width": 720,
+        "body_font": "inter_n4",
+        "body_size_desktop": 16,
+        "body_size_mobile": 15,
+        "body_line_height": 1.7,
+        "body_width": 520,
+        "bg_color": "#F5F3EF",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#181818",
+        "body_color": "#3A3A3A"
+      }
+    },
+    "pravas_story_heritage_jHUYnm": {
+      "type": "pravas-story-heritage",
+      "name": "PW Story Heritage",
+      "settings": {
+        "eyebrow": "HERITAGE REIMAGINED",
+        "heading": "Designed in India",
+        "body": "Our studio is located in the heart of Bangalore, a city where ancient tradition meets technological futurism. We draw inspiration from the geometric precision of Jantar Mantar and the brutalist architecture of modern India. PRAVAS is a declaration that Indian craftsmanship belongs on the global stage of luxury.",
+        "location_label": "Location",
+        "location_value": "BANGALORE, IN",
+        "est_label": "Est.",
+        "est_value": "MMXXIV",
+        "image_radius": 0,
+        "image_border_width": 0,
+        "image_border_color": "#2E2E2E",
+        "enable_overlay": false,
+        "overlay_color": "#181818",
+        "overlay_opacity": 25,
+        "text_max_width": 440,
+        "text_padding": 64,
+        "text_padding_mobile": 40,
+        "column_gap": 64,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 26,
+        "heading_weight": "400",
+        "heading_line_height": 1.2,
+        "body_font": "inter_n4",
+        "body_size_desktop": 15,
+        "body_size_mobile": 14,
+        "body_line_height": 1.8,
+        "bg_color": "#181818",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#F5F3EF",
+        "body_color": "#C8C8CC",
+        "meta_label_color": "#B5924A",
+        "meta_value_color": "#F5F3EF",
+        "divider_color": "#2E2E2E"
+      }
+    },
+    "pravas_story_mechanical_cDRfaX": {
+      "type": "pravas-story-mechanical",
+      "name": "PW Story Mechanical",
+      "settings": {
+        "eyebrow": "MECHANICAL SOUL",
+        "heading": "Why Automatic, Always",
+        "body": "We believe a timepiece should be alive. A quartz crystal vibrates with clinical indifference, but a balance wheel breathes with the motion of its wearer. Our commitment to purely automatic movements ensures that every Pravas is powered by you—a symbiotic relationship between man and machine that requires no batteries, only existence.",
+        "cta_label": "EXPLORE ENGINEERING",
+        "cta_url": "",
+        "image_radius": 0,
+        "image_border_width": 0,
+        "image_border_color": "#2E2E2E",
+        "enable_overlay": false,
+        "overlay_color": "#181818",
+        "overlay_opacity": 20,
+        "show_caliber": true,
+        "caliber_label": "CALIBER 01",
+        "caliber_text": "42-hour power reserve.\n21,600 vibrations per hour.",
+        "caliber_position": "bottom-left",
+        "caliber_label_color": "#B5924A",
+        "caliber_text_color": "#F5F3EF",
+        "caliber_bg_color": "#181818BF",
+        "caliber_border_color": "#B5924A66",
+        "text_max_width": 420,
+        "column_gap": 64,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_x": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 40,
+        "heading_size_mobile": 28,
+        "heading_weight": "400",
+        "heading_line_height": 1.2,
+        "body_font": "inter_n4",
+        "body_size_desktop": 15,
+        "body_size_mobile": 14,
+        "body_line_height": 1.8,
+        "bg_color": "#181818",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#F5F3EF",
+        "body_color": "#C8C8CC",
+        "cta_color": "#B5924A",
+        "cta_hover_color": "#F5F3EF"
+      }
+    },
+    "pravas_story_intentionality_ehDQ8H": {
+      "type": "pravas-story-intentionality",
+      "blocks": {
+        "column_nKfpKq": {
+          "type": "column",
+          "settings": {
+            "heading": "SINGLE BATCH FOCUS",
+            "body": "We do not produce seasonal collections. We focus on one model at a time, perfecting the weight, the curve of the lugs, and the clarity of the crystal."
+          }
+        },
+        "column_wXw9gF": {
+          "type": "column",
+          "settings": {
+            "heading": "WASTE REDUCTION",
+            "body": "Overproduction is the enemy of luxury. By limiting our output to 500 numbered pieces per batch, we ensure that every watch finds a home."
+          }
+        },
+        "column_Hpy6hc": {
+          "type": "column",
+          "settings": {
+            "heading": "THE ARCHIVE",
+            "body": "Once a batch is gone, it is retired to our archive. This preserves the rarity for those who were part of that specific journey."
+          }
+        }
+      },
+      "block_order": [
+        "column_nKfpKq",
+        "column_wXw9gF",
+        "column_Hpy6hc"
+      ],
+      "name": "PW Story Intentionality",
+      "settings": {
+        "eyebrow": "INTENTIONALITY",
+        "heading": "Why We Make Less",
+        "columns_desktop": "3",
+        "show_dividers": true,
+        "column_gap": 48,
+        "content_max_width": 1100,
+        "head_max_width": 560,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_x": 64,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 26,
+        "heading_weight": "400",
+        "heading_italic": true,
+        "col_heading_size": 12,
+        "col_heading_letter_spacing": 1,
+        "col_body_size": 14,
+        "col_body_line_height": 1.8,
+        "bg_color": "#F5F3EF",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#181818",
+        "col_heading_color": "#181818",
+        "col_body_color": "#3A3A3A",
+        "divider_color": "#2E2E2E"
+      }
+    },
+    "pravas_story_founder_YU9ny8": {
+      "type": "pravas-story-founder",
+      "name": "PW Story Founder",
+      "settings": {
+        "eyebrow": "PERSPECTIVE",
+        "quote": "We are not in the business of selling time. We are in the business of honoring it.",
+        "story": "<p>Growing up, I watched my grandfather wind his HMT every single morning. It was a ritual—a quiet conversation between him and the day ahead.</p><p>Pravas was born from a desire to return to that intentionality. In an era of disposable smartwatches and fleeting trends, we wanted to build something that would outlast us. Something that doesn't just count seconds, but reminds you to live them.</p>",
+        "name": "ARJUN VARMA",
+        "title": "Founder & Creative Director",
+        "signature": "A Varma",
+        "avatar_size": 72,
+        "avatar_radius": 50,
+        "avatar_border_width": 1,
+        "avatar_border_color": "#B5924A",
+        "content_max_width": 800,
+        "quote_max_width": 760,
+        "body_max_width": 480,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_x": 24,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "quote_font": "playfair_display_n4",
+        "quote_size_desktop": 32,
+        "quote_size_mobile": 22,
+        "quote_italic": true,
+        "quote_line_height": 1.4,
+        "body_font": "inter_n4",
+        "body_size_desktop": 15,
+        "body_size_mobile": 14,
+        "body_line_height": 1.8,
+        "bg_color": "#F5F3EF",
+        "eyebrow_color": "#B5924A",
+        "quote_color": "#181818",
+        "story_color": "#3A3A3A",
+        "name_color": "#181818",
+        "title_color": "#888888",
+        "signature_color": "#C8C8CC"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "pravas_story_hero_JMJRpE",
+    "pravas_story_heritage_jHUYnm",
+    "pravas_story_mechanical_cDRfaX",
+    "pravas_story_intentionality_ehDQ8H",
+    "pravas_story_founder_YU9ny8"
   ]
 }
