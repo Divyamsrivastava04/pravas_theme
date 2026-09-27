@@ -2,6 +2,7 @@
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+{{ 'pravas-cart.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -18,12 +19,16 @@
 {%- endstyle -%}
 
 <div
-  class="gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}"
+  class="gradient color-{{ section.settings.color_scheme }} pw-cart-summary{% if cart == empty %} is-empty{% endif %}"
   id="main-cart-footer"
   data-id="{{ section.id }}"
 >
-  <div class="page-width">
-    <div class="cart__footer isolate section-{{ section.id }}-padding">
+  <div class="pw-cart-summary__panel">
+    <div class="cart__footer isolate section-{{ section.id }}-padding pw-cart-summary__inner">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-cart-summary__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
       {%- if settings.show_cart_note -%}
         <cart-note class="cart__note field">
           <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
@@ -43,55 +48,54 @@
             {%- when '@app' -%}
               {% render block %}
             {%- when 'subtotal' -%}
-              <div class="js-contents" {{ block.shopify_attributes }}>
-                <div>
-                  {%- if cart.cart_level_discount_applications.size > 0 -%}
-                    <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
-                      {%- for discount in cart.cart_level_discount_applications -%}
-                        <li class="discounts__discount discounts__discount--position">
-                          {{- 'icon-discount.svg' | inline_asset_content -}}
-                          {{ discount.title | escape }}
-                          (-{{ discount.total_allocated_amount | money }})
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
+              <div class="js-contents pw-cart-summary__rows" {{ block.shopify_attributes }}>
+                {%- if cart.cart_level_discount_applications.size > 0 -%}
+                  <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                    {%- for discount in cart.cart_level_discount_applications -%}
+                      <li class="discounts__discount discounts__discount--position">
+                        {{- 'icon-discount.svg' | inline_asset_content -}}
+                        {{ discount.title | escape }}
+                        (-{{ discount.total_allocated_amount | money }})
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+
+                <div class="pw-cart-summary__row">
+                  <span class="pw-cart-summary__row-label">
+                    {{ section.settings.subtotal_label | default: 'Subtotal' }}
+                    ({{ cart.item_count }} {% if cart.item_count == 1 %}{{ section.settings.item_singular | default: 'item' }}{% else %}{{ section.settings.item_plural | default: 'items' }}{% endif %})
+                  </span>
+                  <span class="pw-cart-summary__row-value">{{ cart.items_subtotal_price | money }}</span>
                 </div>
 
-                <div class="totals">
-                  <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-                  <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+                {%- if section.settings.shipping_value != blank -%}
+                  <div class="pw-cart-summary__row">
+                    <span class="pw-cart-summary__row-label">{{ section.settings.shipping_label | default: 'Shipping' }}</span>
+                    <span class="pw-cart-summary__row-value pw-cart-summary__row-value--accent">{{ section.settings.shipping_value }}</span>
+                  </div>
+                {%- endif -%}
+
+                <div class="pw-cart-summary__row">
+                  <span class="pw-cart-summary__row-label">{{ section.settings.taxes_label | default: 'Taxes & Duties' }}</span>
+                  <span class="pw-cart-summary__row-value">
+                    {%- if cart.taxes_included or cart.duties_included -%}
+                      {{ section.settings.taxes_value | default: 'Included' }}
+                    {%- else -%}
+                      {{ section.settings.taxes_value_excluded | default: 'Calculated at checkout' }}
+                    {%- endif -%}
+                  </span>
                 </div>
 
-                <small class="tax-note caption-large rte">
-                  {%- if cart.duties_included and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}
-                      {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-                    {%- else -%}
-                      {{
-                        'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
-                    {%- endif -%}
-                  {%- elsif cart.duties_included == false and cart.taxes_included -%}
-                    {%- if shop.shipping_policy.body == blank -%}
-                      {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
-                    {%- else -%}
-                      {{
-                        'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
-                    {%- endif -%}
-                  {%- elsif cart.duties_included and cart.taxes_included == false -%}
-                    {%- if shop.shipping_policy.body == blank -%}
-                      {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-                    {%- else -%}
-                      {{
-                        'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                        | t: link: shop.shipping_policy.url
-                      }}
-                    {%- endif -%}
-                  {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+                <div class="pw-cart-summary__divider"></div>
+
+                <div class="totals pw-cart-summary__total">
+                  <h3 class="totals__total pw-cart-summary__total-label">{{ 'sections.cart.estimated_total' | t }}</h3>
+                  <p class="totals__total-value pw-cart-summary__total-value">{{ cart.total_price | money_with_currency }}</p>
+                </div>
+
+                {%- unless cart.taxes_included or cart.duties_included -%}
+                  <small class="tax-note caption-large rte pw-cart-summary__tax-note">
                     {%- if shop.shipping_policy.body == blank -%}
                       {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
                     {%- else -%}
@@ -100,28 +104,54 @@
                         | t: link: shop.shipping_policy.url
                       }}
                     {%- endif -%}
-                  {%- endif -%}
-                </small>
+                  </small>
+                {%- endunless -%}
               </div>
             {%- else -%}
-              <div class="cart__ctas" {{ block.shopify_attributes }}>
+              <div class="cart__ctas pw-cart-summary__cta-wrap" {{ block.shopify_attributes }}>
                 <button
                   type="submit"
                   id="checkout"
-                  class="cart__checkout-button button"
+                  class="cart__checkout-button button pw-cart-summary__checkout"
                   name="checkout"
                   {% if cart == empty %}
                     disabled
                   {% endif %}
                   form="cart"
                 >
-                  {{ 'sections.cart.checkout' | t }}
+                  <span>{{ section.settings.checkout_label | default: 'Proceed to Checkout' }}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </button>
               </div>
 
               {%- if additional_checkout_buttons -%}
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.reassurance_line_1 != blank or section.settings.reassurance_line_2 != blank -%}
+                <div class="pw-cart-summary__reassurance">
+                  {%- if section.settings.reassurance_line_1 != blank -%}
+                    <p><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M16 3H1v13h15M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> {{ section.settings.reassurance_line_1 }}</p>
+                  {%- endif -%}
+                  {%- if section.settings.reassurance_line_2 != blank -%}
+                    <p><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> {{ section.settings.reassurance_line_2 }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.payment_methods != blank -%}
+                <div class="pw-cart-summary__payments">
+                  {%- if section.settings.payment_methods_label != blank -%}
+                    <span class="pw-cart-summary__payments-label">{{ section.settings.payment_methods_label }}</span>
+                  {%- endif -%}
+                  <div class="pw-cart-summary__payments-badges">
+                    {%- assign payment_methods = section.settings.payment_methods | split: '|' -%}
+                    {%- for method in payment_methods -%}
+                      <span class="pw-cart-summary__payment-badge">{{ method | strip }}</span>
+                    {%- endfor -%}
+                  </div>
                 </div>
               {%- endif -%}
           {%- endcase -%}
@@ -132,6 +162,59 @@
     </div>
   </div>
 </div>
+
+<style>
+  /* #MainContent (the grid parent in pravas-cart.css) is an ANCESTOR of
+     #main-cart-footer, so it can't read a var declared only there —
+     custom properties inherit downward, not up. Expose panel width at
+     :root so the ancestor-level grid-template-columns can use it too. */
+  :root {
+    --cart-summary-width: {{ section.settings.panel_width | default: 400 }}px;
+  }
+  #main-cart-footer {
+    --cart-summary-bg: {{ section.settings.panel_bg_color | default: '#1E1E1E' }};
+    --cart-summary-text: {{ section.settings.panel_text_color | default: '#F5F3EF' }};
+    --cart-summary-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --cart-summary-secondary-color: {{ section.settings.secondary_text_color | default: '#888888' }};
+    --cart-summary-price-color: {{ section.settings.price_color | default: '#F5F3EF' }};
+    --cart-summary-accent-color: {{ section.settings.accent_color | default: '#B5924A' }};
+    --cart-summary-border-color: {{ section.settings.border_color | default: '#2E2E2E' }};
+    --cart-summary-border-width: {{ section.settings.border_width | default: 1 }}px;
+    --cart-summary-radius: {{ section.settings.panel_radius | default: 0 }}px;
+    --cart-summary-padding: {{ section.settings.panel_padding | default: 32 }}px;
+    --cart-summary-width: {{ section.settings.panel_width | default: 400 }}px;
+    --cart-summary-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --cart-summary-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+
+    --cart-summary-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --cart-summary-heading-size: {{ section.settings.heading_size | default: 20 }}px;
+    --cart-summary-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+
+    --cart-summary-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --cart-summary-body-size: {{ section.settings.body_size | default: 13 }}px;
+    --cart-summary-letter-spacing: {{ section.settings.letter_spacing | default: 0.5 }}px;
+    --cart-summary-line-height: {{ section.settings.line_height | default: 1.6 }};
+
+    --cart-summary-price-font: {% if section.settings.price_font %}{{ section.settings.price_font.family }}, {{ section.settings.price_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --cart-summary-total-size: {{ section.settings.total_size | default: 26 }}px;
+
+    --cart-btn-bg: {{ section.settings.button_bg_color | default: '#B5924A' }};
+    --cart-btn-text: {{ section.settings.button_text_color | default: '#181818' }};
+    --cart-btn-hover-bg: {{ section.settings.button_hover_bg_color | default: '#C7A25E' }};
+    --cart-btn-hover-text: {{ section.settings.button_hover_text_color | default: '#181818' }};
+    --cart-btn-border-color: {{ section.settings.button_border_color | default: '#B5924A' }};
+    --cart-btn-border-width: {{ section.settings.button_border_width | default: 0 }}px;
+    --cart-btn-radius: {{ section.settings.button_radius | default: 0 }}px;
+    --cart-btn-height: {{ section.settings.button_height | default: 52 }}px;
+    --cart-btn-font-size: {{ section.settings.button_font_size | default: 12 }}px;
+    --cart-btn-letter-spacing: {{ section.settings.button_letter_spacing | default: 2 }}px;
+
+    --cart-payment-bg: {{ section.settings.payment_badge_bg_color | default: 'transparent' }};
+    --cart-payment-text: {{ section.settings.payment_badge_text_color | default: '#C8C8CC' }};
+    --cart-payment-border-color: {{ section.settings.payment_badge_border_color | default: '#2E2E2E' }};
+    --cart-payment-radius: {{ section.settings.payment_badge_radius | default: 0 }}px;
+  }
+</style>
 
 {% schema %}
 {
@@ -144,10 +227,73 @@
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
     },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Order Summary" },
+    { "type": "text", "id": "subtotal_label", "label": "Subtotal label", "default": "Timepiece Subtotal" },
+    { "type": "text", "id": "item_singular", "label": "\"item\" label (singular)", "default": "item" },
+    { "type": "text", "id": "item_plural", "label": "\"items\" label (plural)", "default": "items" },
+    { "type": "text", "id": "shipping_label", "label": "Shipping label", "default": "Shipping" },
+    { "type": "text", "id": "shipping_value", "label": "Shipping value", "info": "Informational text — leave blank to hide this row", "default": "Complimentary (Pan-India)" },
+    { "type": "text", "id": "taxes_label", "label": "Taxes label", "default": "Taxes & Duties" },
+    { "type": "text", "id": "taxes_value", "label": "Taxes value — when included in price", "info": "Shown only if your Shopify tax settings include taxes/duties in prices", "default": "Included in cart" },
+    { "type": "text", "id": "taxes_value_excluded", "label": "Taxes value — when calculated at checkout", "default": "Calculated at checkout" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button label", "default": "Proceed to Checkout" },
+    { "type": "text", "id": "reassurance_line_1", "label": "Reassurance line 1", "default": "Free delivery across India. 5–7 business days." },
+    { "type": "text", "id": "reassurance_line_2", "label": "Reassurance line 2", "default": "Secure checkout powered by Shopify." },
+    { "type": "text", "id": "payment_methods_label", "label": "Payment methods label", "default": "Accepted Payment Methods" },
+    { "type": "text", "id": "payment_methods", "label": "Payment method badges", "info": "Separate with a pipe character ( | ). Only list methods your store actually supports.", "default": "UPI|VISA|MASTERCARD|RUPAY|NET BANKING|EMI" },
+
+    { "type": "header", "content": "Panel" },
+    { "type": "color", "id": "panel_bg_color", "label": "Background", "default": "#1E1E1E" },
+    { "type": "color", "id": "panel_text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "range", "id": "panel_padding", "label": "Padding", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "panel_width", "label": "Panel width (desktop)", "min": 280, "max": 520, "step": 10, "unit": "px", "default": 400 },
+    { "type": "range", "id": "panel_radius", "label": "Panel radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "border_color", "label": "Panel border", "default": "#2E2E2E" },
+    { "type": "range", "id": "border_width", "label": "Panel border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "divider_color", "label": "Row divider", "default": "#2E2E2E" },
+    { "type": "range", "id": "divider_width", "label": "Row divider thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 14, "max": 32, "step": 1, "unit": "px", "default": 20 },
+    { "type": "select", "id": "heading_weight", "label": "Heading weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "letter_spacing", "label": "Letter spacing", "min": 0, "max": 3, "step": 0.5, "unit": "px", "default": 0.5 },
+    { "type": "range", "id": "line_height", "label": "Line height", "min": 1.2, "max": 2, "step": 0.1, "default": 1.6 },
+    { "type": "font_picker", "id": "price_font", "label": "Price font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "total_size", "label": "Total price size", "min": 18, "max": 40, "step": 1, "unit": "px", "default": 26 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "secondary_text_color", "label": "Secondary text", "default": "#888888" },
+    { "type": "color", "id": "price_color", "label": "Price", "default": "#F5F3EF" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" },
+
+    { "type": "header", "content": "Checkout Button" },
+    { "type": "color", "id": "button_bg_color", "label": "Background", "default": "#B5924A" },
+    { "type": "color", "id": "button_text_color", "label": "Text", "default": "#181818" },
+    { "type": "color", "id": "button_hover_bg_color", "label": "Hover background", "default": "#C7A25E" },
+    { "type": "color", "id": "button_hover_text_color", "label": "Hover text", "default": "#181818" },
+    { "type": "color", "id": "button_border_color", "label": "Border", "default": "#B5924A" },
+    { "type": "range", "id": "button_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "button_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "button_height", "label": "Height", "min": 40, "max": 72, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "button_font_size", "label": "Font size", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "button_letter_spacing", "label": "Letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 2 },
+
+    { "type": "header", "content": "Payment Badges" },
+    { "type": "color", "id": "payment_badge_bg_color", "label": "Background", "default": "transparent" },
+    { "type": "color", "id": "payment_badge_text_color", "label": "Text", "default": "#C8C8CC" },
+    { "type": "color", "id": "payment_badge_border_color", "label": "Border", "default": "#2E2E2E" },
+    { "type": "range", "id": "payment_badge_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 },
+
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
-    },    
+    },
     {
       "type": "range",
       "id": "padding_top",

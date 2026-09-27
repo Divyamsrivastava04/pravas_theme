@@ -4,6 +4,7 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+{{ 'pravas-cart.css' | asset_url | stylesheet_tag }}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -26,21 +27,56 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <cart-items
-  class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}"
+  id="pw-cart-items-{{ section.id }}"
+  class="gradient color-{{ section.settings.color_scheme }} isolate pw-cart-items{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}"
   view-event-payload="{{ cart | standard_event_data: 'view', context: 'page' | escape }}"
 >
-  <div class="page-width">
-    <div class="title-wrapper-with-link">
-      <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
-        {{- 'general.continue_shopping' | t -}}
-      </a>
+  <div class="page-width pw-cart-page-width">
+    <div class="pw-cart-header">
+      <div class="pw-cart-header__top">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="pw-cart-header__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.meta_text != blank -%}
+          <span class="pw-cart-header__meta">{{ section.settings.meta_text }}</span>
+        {%- endif -%}
+      </div>
+      <div class="title-wrapper-with-link">
+        <h1 class="title title--primary pw-cart-header__heading">
+          {%- if section.settings.heading != blank -%}
+            {{ section.settings.heading }}
+          {%- else -%}
+            {{ 'sections.cart.title' | t }}
+          {%- endif -%}
+        </h1>
+        {%- if section.settings.show_continue_shopping_link -%}
+          <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
+            {{- 'general.continue_shopping' | t -}}
+          </a>
+        {%- endif -%}
+      </div>
     </div>
 
-    <div class="cart__warnings">
-      <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="button">
-        {{ 'general.continue_shopping' | t }}
+    <div class="cart__warnings pw-cart-empty">
+      {%- if section.settings.empty_eyebrow != blank -%}
+        <span class="pw-cart-empty__eyebrow">{{ section.settings.empty_eyebrow }}</span>
+      {%- endif -%}
+      <h1 class="cart__empty-text pw-cart-empty__heading">
+        {%- if section.settings.empty_heading != blank -%}
+          {{ section.settings.empty_heading }}
+        {%- else -%}
+          {{ 'sections.cart.empty' | t }}
+        {%- endif -%}
+      </h1>
+      {%- if section.settings.empty_description != blank -%}
+        <p class="pw-cart-empty__description">{{ section.settings.empty_description }}</p>
+      {%- endif -%}
+      <a href="{{ routes.all_products_collection_url }}" class="button pw-cart-empty__cta">
+        {%- if section.settings.empty_cta_label != blank -%}
+          {{ section.settings.empty_cta_label }}
+        {%- else -%}
+          {{ 'general.continue_shopping' | t }}
+        {%- endif -%}
       </a>
 
       {%- if shop.customer_accounts_enabled and customer == null -%}
@@ -112,13 +148,23 @@
                       {%- endif -%}
 
                       <div class="cart-item__title">
-                        <a href="{{ item.url }}" class="cart-item__name h4 break">{{ item.product.title | escape }}</a>
+                        <a href="{{ item.url }}" class="cart-item__name h4 break pw-cart-item__name">{{ item.product.title | escape }}</a>
                         {%- assign cart_disclosure_modal_id = 'CartDisclosureModal-cart-' | append: item.key | replace: ':', '-' -%}
                         {%- render 'cart-disclosure-indicator',
                           product: item.product,
                           modal_id: cart_disclosure_modal_id
                         -%}
                       </div>
+
+                      {%- if section.settings.edition_note != blank -%}
+                        <p class="pw-cart-item__edition">{{ section.settings.edition_note }}</p>
+                      {%- endif -%}
+                      {%- if section.settings.serial_note != blank -%}
+                        <p class="pw-cart-item__serial">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+                          {{ section.settings.serial_note }}
+                        </p>
+                      {%- endif -%}
 
                       {%- if item.original_price != item.final_price -%}
                         <div class="cart-item__discounted-prices">
@@ -468,6 +514,71 @@
   </div>
 </cart-items>
 
+<style>
+  /* #MainContent (the grid parent in pravas-cart.css) is an ANCESTOR of
+     this section, so it can't read a var declared only below it —
+     custom properties inherit downward, not up. Expose max-width at
+     :root so the ancestor-level grid rule can use it too. */
+  :root {
+    --cart-content-max-width: {{ section.settings.content_max_width | default: 1440 }}px;
+  }
+  #pw-cart-items-{{ section.id }} {
+    --cart-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --cart-text: {{ section.settings.text_color | default: '#F5F3EF' }};
+    --cart-muted: {{ section.settings.muted_color | default: '#888888' }};
+    --cart-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --cart-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --cart-meta-color: {{ section.settings.meta_color | default: '#888888' }};
+    --cart-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --cart-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+
+    --cart-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --cart-heading-size: {{ section.settings.heading_size_desktop | default: 40 }}px;
+    --cart-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 28 }}px;
+
+    --cart-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --cart-image-border-width: {{ section.settings.image_border_width | default: 0 }}px;
+    --cart-image-border-color: {{ section.settings.image_border_color | default: '#2E2E2E' }};
+    --cart-image-fit: {{ section.settings.image_object_fit | default: 'cover' }};
+    --cart-image-position: {{ section.settings.image_object_position | default: 'center' }};
+    --cart-image-width: {{ section.settings.image_width | default: 96 }}px;
+
+    --cart-title-font: {% if section.settings.title_font %}{{ section.settings.title_font.family }}, {{ section.settings.title_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --cart-title-size: {{ section.settings.title_size | default: 16 }}px;
+    --cart-title-weight: {{ section.settings.title_weight | default: '400' }};
+    --cart-title-color: {{ section.settings.title_color | default: '#F5F3EF' }};
+
+    --cart-variant-font: {% if section.settings.variant_font %}{{ section.settings.variant_font.family }}, {{ section.settings.variant_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --cart-variant-size: {{ section.settings.variant_size | default: 13 }}px;
+    --cart-variant-color: {{ section.settings.variant_color | default: '#B5924A' }};
+
+    --cart-note-font: {% if section.settings.note_font %}{{ section.settings.note_font.family }}, {{ section.settings.note_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --cart-note-size: {{ section.settings.note_size | default: 11 }}px;
+    --cart-note-color: {{ section.settings.note_color | default: '#888888' }};
+
+    --cart-qty-bg: {{ section.settings.qty_bg_color | default: 'transparent' }};
+    --cart-qty-text: {{ section.settings.qty_text_color | default: '#F5F3EF' }};
+    --cart-qty-border-color: {{ section.settings.qty_border_color | default: '#2E2E2E' }};
+    --cart-qty-radius: {{ section.settings.qty_radius | default: 0 }}px;
+    --cart-qty-height: {{ section.settings.qty_height | default: 36 }}px;
+
+    --cart-price-font: {% if section.settings.price_font %}{{ section.settings.price_font.family }}, {{ section.settings.price_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --cart-price-size: {{ section.settings.price_size | default: 16 }}px;
+    --cart-price-weight: {{ section.settings.price_weight | default: '400' }};
+    --cart-price-color: {{ section.settings.price_color | default: '#F5F3EF' }};
+
+    --cart-remove-color: {{ section.settings.remove_color | default: '#888888' }};
+    --cart-remove-hover-color: {{ section.settings.remove_hover_color | default: '#B5924A' }};
+
+    --cart-item-gap: {{ section.settings.item_gap | default: 24 }}px;
+    --cart-content-max-width: {{ section.settings.content_max_width | default: 1440 }}px;
+  }
+
+  #pw-cart-items-{{ section.id }} .pw-cart-empty__heading {
+    font-family: var(--cart-heading-font);
+  }
+</style>
+
 {% schema %}
 {
   "name": "t:sections.main-cart-items.name",
@@ -478,6 +589,75 @@
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
     },
+
+    { "type": "header", "content": "Cart Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "YOUR COLLECTION" },
+    { "type": "text", "id": "heading", "label": "Heading", "info": "Blank uses the default cart title", "default": "Shopping Cart" },
+    { "type": "text", "id": "meta_text", "label": "Top-right meta text", "default": "100 pieces total. Individually numbered." },
+    { "type": "checkbox", "id": "show_continue_shopping_link", "label": "Show continue shopping link", "default": false },
+
+    { "type": "header", "content": "Empty Cart State" },
+    { "type": "text", "id": "empty_eyebrow", "label": "Eyebrow", "default": "YOUR COLLECTION" },
+    { "type": "text", "id": "empty_heading", "label": "Heading", "info": "Blank uses the default empty-cart message", "default": "Your collection awaits" },
+    { "type": "textarea", "id": "empty_description", "label": "Description", "default": "Each PRAVAS piece is made in strictly limited numbers. Begin your journey." },
+    { "type": "text", "id": "empty_cta_label", "label": "CTA label", "info": "Blank uses the default continue-shopping text", "default": "EXPLORE THE COLLECTION" },
+
+    { "type": "header", "content": "Cart Item — Content" },
+    { "type": "text", "id": "edition_note", "label": "Edition note (shown under every item)", "info": "Static brand copy, not per-product Shopify data", "default": "Edition of 50" },
+    { "type": "text", "id": "serial_note", "label": "Serial note (shown under every item)", "default": "Individually numbered. Serial confirmed at dispatch." },
+
+    { "type": "header", "content": "Cart Item — Image" },
+    { "type": "range", "id": "image_width", "label": "Image width", "min": 60, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "select", "id": "image_object_fit", "label": "Object fit", "options": [{ "value": "cover", "label": "Cover" }, { "value": "contain", "label": "Contain" }], "default": "cover" },
+    { "type": "select", "id": "image_object_position", "label": "Object position", "options": [{ "value": "center", "label": "Center" }, { "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }], "default": "center" },
+    { "type": "range", "id": "image_radius", "label": "Image radius (0 = sharp)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#2E2E2E" },
+
+    { "type": "header", "content": "Cart Item — Typography" },
+    { "type": "font_picker", "id": "title_font", "label": "Product title font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "title_size", "label": "Product title size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "title_weight", "label": "Product title weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "font_picker", "id": "variant_font", "label": "Variant text font", "default": "inter_n4" },
+    { "type": "range", "id": "variant_size", "label": "Variant text size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 13 },
+    { "type": "font_picker", "id": "note_font", "label": "Inventory note font", "default": "inter_n4" },
+    { "type": "range", "id": "note_size", "label": "Inventory note size", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 11 },
+    { "type": "font_picker", "id": "price_font", "label": "Price font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "price_size", "label": "Price size", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "price_weight", "label": "Price weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+
+    { "type": "header", "content": "Cart Item — Quantity Control" },
+    { "type": "color", "id": "qty_bg_color", "label": "Background", "default": "transparent" },
+    { "type": "color", "id": "qty_text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "color", "id": "qty_border_color", "label": "Border", "default": "#2E2E2E" },
+    { "type": "range", "id": "qty_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "qty_height", "label": "Height", "min": 28, "max": 52, "step": 2, "unit": "px", "default": 36 },
+
+    { "type": "header", "content": "Cart Item — Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "text_color", "label": "Primary text", "default": "#F5F3EF" },
+    { "type": "color", "id": "muted_color", "label": "Muted text", "default": "#888888" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "meta_color", "label": "Meta text", "default": "#888888" },
+    { "type": "color", "id": "title_color", "label": "Product title", "default": "#F5F3EF" },
+    { "type": "color", "id": "variant_color", "label": "Variant text", "default": "#B5924A" },
+    { "type": "color", "id": "note_color", "label": "Inventory note", "default": "#888888" },
+    { "type": "color", "id": "price_color", "label": "Price", "default": "#F5F3EF" },
+    { "type": "color", "id": "remove_color", "label": "Remove link", "default": "#888888" },
+    { "type": "color", "id": "remove_hover_color", "label": "Remove link hover", "default": "#B5924A" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2E2E2E" },
+    { "type": "range", "id": "divider_width", "label": "Divider thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+
+    { "type": "header", "content": "Cart Heading Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Size — desktop", "min": 24, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 20, "max": 44, "step": 2, "unit": "px", "default": 28 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 1000, "max": 1800, "step": 20, "unit": "px", "default": 1440 },
+    { "type": "range", "id": "item_gap", "label": "Cart item vertical spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 24 },
+
     {
       "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"

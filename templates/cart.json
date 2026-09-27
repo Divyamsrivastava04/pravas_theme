@@ -31,10 +31,22 @@
         "subtotal",
         "buttons"
       ]
+    },
+    "cart-reassurance": {
+      "type": "pravas-cart-reassurance",
+      "blocks": {
+        "r1": { "type": "reassurance", "settings": { "icon": "movement", "heading": "MIYOTA 8215 AUTOMATIC", "description": "21-Jewel Japanese Calibre · 42h Reserve" } },
+        "r2": { "type": "reassurance", "settings": { "icon": "crystal", "heading": "SAPPHIRE CRYSTAL GLASS", "description": "Anti-reflective scratch-proof front crystal" } },
+        "r3": { "type": "reassurance", "settings": { "icon": "limited", "heading": "STRICTLY LIMITED TO 500", "description": "Laser etched case back, individual numbering" } },
+        "r4": { "type": "reassurance", "settings": { "icon": "water", "heading": "50M WATER RESISTANCE", "description": "Tested to 50 metres static pressure" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {}
     }
   },
   "order": [
     "cart-items",
-    "cart-footer"
+    "cart-footer",
+    "cart-reassurance"
   ]
 }

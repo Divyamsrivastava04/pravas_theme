@@ -1,0 +1,146 @@
+{{ 'pravas-cart.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-cart-reassure" id="pw-cart-reassure-{{ section.id }}">
+  {%- if section.blocks.size > 0 -%}
+    <div class="pw-cart-reassure__divider" aria-hidden="true"></div>
+    <div class="pw-cart-reassure__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'reassurance' and block.settings.enabled -%}
+          {%- assign inner = 'div' -%}
+          {%- if block.settings.link != blank -%}{%- assign inner = 'a' -%}{%- endif -%}
+          <{{ inner }}{% if inner == 'a' %} href="{{ block.settings.link }}"{% endif %} class="pw-cart-reassure__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 64 | image_tag: alt: block.settings.heading, class: 'pw-cart-reassure__icon', loading: 'lazy', width: 24, height: 24 }}
+            {%- elsif block.settings.icon == 'movement' -%}
+              <svg class="pw-cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            {%- elsif block.settings.icon == 'crystal' -%}
+              <svg class="pw-cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+                <line x1="12" y1="2" x2="12" y2="22"/>
+                <line x1="2" y1="8.5" x2="22" y2="8.5"/>
+              </svg>
+            {%- elsif block.settings.icon == 'water' -%}
+              <svg class="pw-cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2C6 2 3 8 3 12s3 10 9 10 9-4 9-10S18 2 12 2z"/>
+              </svg>
+            {%- elsif block.settings.icon == 'limited' -%}
+              <svg class="pw-cart-reassure__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2 3 7v10l9 5 9-5V7l-9-5z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="pw-cart-reassure__heading">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="pw-cart-reassure__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </{{ inner }}>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<style>
+  #pw-cart-reassure-{{ section.id }} {
+    --cart-reassure-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --cart-reassure-heading-color: {{ section.settings.heading_color | default: '#B5924A' }};
+    --cart-reassure-body-color: {{ section.settings.body_color | default: '#888888' }};
+    --cart-reassure-icon-color: {{ section.settings.icon_color | default: '#B5924A' }};
+    --cart-reassure-icon-size: {{ section.settings.icon_size | default: 22 }}px;
+    --cart-reassure-icon-stroke: {{ section.settings.icon_stroke_width | default: 1.5 }};
+    --cart-reassure-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --cart-reassure-columns: {{ section.settings.columns_desktop | default: 4 }};
+    --cart-reassure-gap: {{ section.settings.column_gap | default: 32 }}px;
+    --cart-reassure-align: {{ section.settings.alignment | default: 'left' }};
+
+    --cart-reassure-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --cart-reassure-heading-size: {{ section.settings.heading_size | default: 12 }}px;
+    --cart-reassure-heading-letter-spacing: {{ section.settings.letter_spacing | default: 1 }}px;
+
+    --cart-reassure-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --cart-reassure-body-size: {{ section.settings.body_size | default: 12 }}px;
+    --cart-reassure-line-height: {{ section.settings.line_height | default: 1.6 }};
+
+    padding-top: {{ section.settings.padding_top | default: 64 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px;
+    padding-left: {{ section.settings.padding_x | default: 64 }}px;
+    padding-right: {{ section.settings.padding_x | default: 64 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    #pw-cart-reassure-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PW Cart Reassurance",
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns_desktop", "label": "Columns — desktop", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "4" },
+    { "type": "select", "id": "alignment", "label": "Alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }], "default": "left" },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x", "label": "Padding — sides (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Icon" },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#B5924A" },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 14, "max": 40, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "icon_stroke_width", "label": "Icon stroke width", "min": 1, "max": 3, "step": 0.5, "default": 1.5 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "heading_size", "label": "Size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "letter_spacing", "label": "Letter spacing", "min": 0, "max": 3, "step": 0.5, "unit": "px", "default": 1 },
+
+    { "type": "header", "content": "Typography — Description" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Size", "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "line_height", "label": "Line height", "min": 1.2, "max": 2, "step": 0.1, "default": 1.6 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#B5924A" },
+    { "type": "color", "id": "body_color", "label": "Description", "default": "#888888" },
+    { "type": "color", "id": "divider_color", "label": "Top divider", "default": "#2E2E2E" }
+  ],
+  "blocks": [
+    {
+      "type": "reassurance",
+      "name": "Reassurance Block",
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Visible", "default": true },
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "movement", "label": "Movement (gear)" }, { "value": "crystal", "label": "Crystal (diamond)" }, { "value": "limited", "label": "Limited (badge)" }, { "value": "water", "label": "Water resistance (drop)" }, { "value": "none", "label": "None" }], "default": "movement" },
+        { "type": "image_picker", "id": "image", "label": "Custom icon image (overrides icon above)" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "MIYOTA 8215 AUTOMATIC" },
+        { "type": "text", "id": "description", "label": "Description", "default": "21-Jewel Japanese Calibre · 42h Reserve" },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Cart Reassurance",
+      "blocks": [
+        { "type": "reassurance", "settings": { "icon": "movement", "heading": "MIYOTA 8215 AUTOMATIC", "description": "21-Jewel Japanese Calibre · 42h Reserve" } },
+        { "type": "reassurance", "settings": { "icon": "crystal", "heading": "SAPPHIRE CRYSTAL GLASS", "description": "Anti-reflective scratch-proof front crystal" } },
+        { "type": "reassurance", "settings": { "icon": "limited", "heading": "STRICTLY LIMITED TO 500", "description": "Laser etched case back, individual numbering" } },
+        { "type": "reassurance", "settings": { "icon": "water", "heading": "50M WATER RESISTANCE", "description": "Tested to 50 metres static pressure" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
