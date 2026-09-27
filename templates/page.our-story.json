@@ -1,111 +1,35 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "disabled": true,
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
-    },
-    "pravas_story_hero_bipEaM": {
+    "story-hero": {
       "type": "pravas-story-hero",
-      "name": "PW Story Hero",
-      "settings": {
-        "eyebrow": "THE JOURNEY",
-        "heading": "The Meaning of PRAVAS",
-        "body": "Sanskrit for 'journey' or 'sojourn', Pravas is not about the destination, but the precise measurement of the moments that define our path.",
-        "show_divider": true,
-        "content_alignment": "center",
-        "content_max_width": 720,
-        "min_height": 0,
-        "padding_top": 140,
-        "padding_bottom": 140,
-        "padding_x": 24,
-        "padding_top_mobile": 80,
-        "padding_bottom_mobile": 80,
-        "padding_x_mobile": 20,
-        "line_height": 64,
-        "line_thickness": 1,
-        "line_opacity": 100,
-        "line_margin_top": 48,
-        "line_color": "#2e2e2e",
-        "eyebrow_size": 12,
-        "eyebrow_letter_spacing": 3,
-        "heading_font": "playfair_display_n4",
-        "heading_size_desktop": 56,
-        "heading_size_mobile": 34,
-        "heading_weight": "400",
-        "heading_italic": true,
-        "heading_line_height": 1.2,
-        "heading_width": 720,
-        "body_font": "inter_n4",
-        "body_size_desktop": 16,
-        "body_size_mobile": 15,
-        "body_line_height": 1.7,
-        "body_width": 520,
-        "bg_color": "#f5f3ef",
-        "eyebrow_color": "#b5924a",
-        "heading_color": "#181818",
-        "body_color": "#3a3a3a"
-      }
+      "settings": {}
     },
-    "pravas_story_founder_T87ir7": {
+    "story-mechanical": {
+      "type": "pravas-story-mechanical",
+      "settings": {}
+    },
+    "story-intentionality": {
+      "type": "pravas-story-intentionality",
+      "blocks": {
+        "col1": { "type": "column", "settings": { "heading": "SINGLE BATCH FOCUS", "body": "We do not produce seasonal collections. We focus on one model at a time, perfecting the weight, the curve of the lugs, and the clarity of the crystal." } },
+        "col2": { "type": "column", "settings": { "heading": "WASTE REDUCTION", "body": "Overproduction is the enemy of luxury. By limiting our output to 500 numbered pieces per batch, we ensure that every watch finds a home." } },
+        "col3": { "type": "column", "settings": { "heading": "THE ARCHIVE", "body": "Once a batch is gone, it is retired to our archive. This preserves the rarity for those who were part of that specific journey." } }
+      },
+      "block_order": ["col1", "col2", "col3"],
+      "settings": {}
+    },
+    "story-heritage": {
+      "type": "pravas-story-heritage",
+      "settings": {}
+    },
+    "story-founder": {
       "type": "pravas-story-founder",
-      "name": "PW Story Founder",
       "settings": {
-        "eyebrow": "PERSPECTIVE",
-        "quote": "We are not in the business of selling time. We are in the business of honoring it.",
-        "story": "<p>Growing up, I watched my grandfather wind his HMT every single morning. It was a ritual—a quiet conversation between him and the day ahead.</p><p>Pravas was born from a desire to return to that intentionality. In an era of disposable smartwatches and fleeting trends, we wanted to build something that would outlast us. Something that doesn't just count seconds, but reminds you to live them.</p>",
         "name": "Divyam Srivastava",
         "title": "Founder",
-        "signature": "Divyam",
-        "avatar_size": 72,
-        "avatar_radius": 50,
-        "avatar_border_width": 1,
-        "avatar_border_color": "#b5924a",
-        "content_max_width": 800,
-        "quote_max_width": 760,
-        "body_max_width": 480,
-        "padding_top": 120,
-        "padding_bottom": 120,
-        "padding_x": 24,
-        "padding_top_mobile": 64,
-        "padding_bottom_mobile": 64,
-        "padding_x_mobile": 20,
-        "eyebrow_size": 12,
-        "eyebrow_letter_spacing": 3,
-        "quote_font": "playfair_display_n4",
-        "quote_size_desktop": 32,
-        "quote_size_mobile": 22,
-        "quote_italic": true,
-        "quote_line_height": 1.4,
-        "body_font": "inter_n4",
-        "body_size_desktop": 15,
-        "body_size_mobile": 14,
-        "body_line_height": 1.8,
-        "bg_color": "#f5f3ef",
-        "eyebrow_color": "#b5924a",
-        "quote_color": "#181818",
-        "story_color": "#3a3a3a",
-        "name_color": "#181818",
-        "title_color": "#888888",
-        "signature_color": "#c8c8cc"
+        "signature": "Divyam"
       }
     }
   },
-  "order": [
-    "main",
-    "pravas_story_hero_bipEaM",
-    "pravas_story_founder_T87ir7"
-  ]
+  "order": ["story-hero", "story-mechanical", "story-intentionality", "story-heritage", "story-founder"]
 }
