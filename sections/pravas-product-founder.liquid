@@ -1,0 +1,114 @@
+<section class="pw-pdp-founder" id="pw-pdp-founder-{{ section.id }}">
+  <div class="pw-pdp-founder__inner">
+    <div class="pw-pdp-founder__image-wrap">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag:
+             alt: section.settings.image.alt | default: 'The founder at work',
+             class: 'pw-pdp-founder__image',
+             loading: 'lazy',
+             widths: '600,900,1200'
+        }}
+      {%- else -%}
+        {{ 'model-1' | placeholder_svg_tag: 'pw-pdp-founder__image' }}
+      {%- endif -%}
+    </div>
+
+    <div class="pw-pdp-founder__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-pdp-founder__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-pdp-founder__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pw-pdp-founder__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.enable_serial_option or section.settings.enable_message -%}
+        <!--
+          These fields are not inside their own <form> — they are wired to
+          the real product form (id="pw-pdp-form", rendered in the Main
+          Product section) via the HTML5 form="" attribute, so their values
+          post as genuine cart line-item properties on Add to Cart. No
+          separate form or cart system is created here.
+        -->
+        <div class="pw-pdp-founder__form">
+          {%- if section.settings.enable_serial_option -%}
+            <label class="pw-pdp-founder__checkbox">
+              <input
+                type="checkbox"
+                form="pw-pdp-form"
+                name="properties[Include Limited Serial]"
+                value="Yes"
+                {% if section.settings.serial_checked_by_default %}checked{% endif %}
+              >
+              {{ section.settings.serial_label | default: 'Include Limited Serial Number' }}
+            </label>
+          {%- endif -%}
+
+          {%- if section.settings.enable_message -%}
+            <div class="pw-pdp-founder__field">
+              <label for="pw-pdp-founder-message-{{ section.id }}">{{ section.settings.message_label | default: 'A note to the founder (optional)' }}</label>
+              <textarea
+                id="pw-pdp-founder-message-{{ section.id }}"
+                form="pw-pdp-form"
+                name="properties[Personal Message]"
+                placeholder="{{ section.settings.message_placeholder | default: 'Tell us why this piece matters to you…' }}"
+                maxlength="280"
+              ></textarea>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #pw-pdp-founder-{{ section.id }} {
+    --founder-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --founder-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --founder-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --founder-body-color: {{ section.settings.body_color | default: '#C8C8CC' }};
+    --founder-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --founder-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --founder-image-filter: {% if section.settings.image_grayscale %}grayscale(1){% else %}none{% endif %};
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PW Product Founder",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Founder image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A PERSONAL TOUCH" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Founder's Hand" },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "Each Aarambh is inspected and signed off by hand before it leaves the workshop. If you'd like, we'll include a small note — written by us, for you." },
+
+    { "type": "header", "content": "Image" },
+    { "type": "checkbox", "id": "image_grayscale", "label": "Black & white image", "default": true },
+    { "type": "range", "id": "image_radius", "label": "Image radius (0 = sharp)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Limited Serial Option" },
+    { "type": "checkbox", "id": "enable_serial_option", "label": "Show limited serial checkbox", "default": true },
+    { "type": "text", "id": "serial_label", "label": "Checkbox label", "default": "Include Limited Serial Number" },
+    { "type": "checkbox", "id": "serial_checked_by_default", "label": "Checked by default", "default": false },
+
+    { "type": "header", "content": "Personal Message" },
+    { "type": "checkbox", "id": "enable_message", "label": "Show personal message field", "default": true },
+    { "type": "text", "id": "message_label", "label": "Field label", "default": "A note to the founder (optional)" },
+    { "type": "text", "id": "message_placeholder", "label": "Placeholder text", "default": "Tell us why this piece matters to you…" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#C8C8CC" },
+    { "type": "color", "id": "divider_color", "label": "Field border", "default": "#2E2E2E" }
+  ],
+  "presets": [
+    { "name": "PW Product Founder" }
+  ]
+}
+{% endschema %}

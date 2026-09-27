@@ -1,0 +1,66 @@
+<section class="pw-pdp-phil" id="pw-pdp-phil-{{ section.id }}">
+  <div class="pw-pdp-phil__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-pdp-phil__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pw-pdp-phil__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    <hr class="pw-pdp-phil__rule">
+    {%- if section.settings.body_1 != blank -%}
+      <p class="pw-pdp-phil__body">{{ section.settings.body_1 }}</p>
+    {%- endif -%}
+    {%- if section.settings.body_2 != blank -%}
+      <p class="pw-pdp-phil__body">{{ section.settings.body_2 }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-pdp-phil-{{ section.id }} {
+    --phil-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --phil-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --phil-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --phil-body-color: {{ section.settings.body_color | default: '#C8C8CC' }};
+    padding-top: {{ section.settings.padding_top | default: 100 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 100 }}px;
+  }
+  #pw-pdp-phil-{{ section.id }} .pw-pdp-phil__inner {
+    max-width: {{ section.settings.max_width | default: 720 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    #pw-pdp-phil-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 60 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 60 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PW Product Philosophy",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE PHILOSOPHY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Art of the Start" },
+    { "type": "textarea", "id": "body_1", "label": "Body paragraph 1", "default": "Every PRAVAS timepiece begins not with a blueprint, but with a belief: that precision and patience are not opposites, but companions." },
+    { "type": "textarea", "id": "body_2", "label": "Body paragraph 2", "default": "The Aarambh — meaning \"the beginning\" — carries this belief on the wrist. It is a first chapter, built to be worn for decades, not seasons." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "max_width", "label": "Content max-width", "min": 480, "max": 960, "step": 20, "unit": "px", "default": 720 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 60 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#C8C8CC" }
+  ],
+  "presets": [
+    { "name": "PW Product Philosophy" }
+  ]
+}
+{% endschema %}

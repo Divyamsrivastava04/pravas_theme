@@ -1,0 +1,97 @@
+<section class="pw-pdp-specs" id="pw-pdp-specs-{{ section.id }}">
+  <div class="pw-pdp-specs__inner">
+    <div class="pw-pdp-specs__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-pdp-specs__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="pw-pdp-specs__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="pw-pdp-specs__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'spec' -%}
+            <div class="pw-pdp-specs__row" {{ block.shopify_attributes }}>
+              <span class="pw-pdp-specs__label">{{ block.settings.label }}</span>
+              <span class="pw-pdp-specs__value">{{ block.settings.value }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-pdp-specs-{{ section.id }} {
+    --specs-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --specs-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --specs-body-color: {{ section.settings.intro_color | default: '#888888' }};
+    --specs-label-color: {{ section.settings.label_color | default: '#888888' }};
+    --specs-value-color: {{ section.settings.value_color | default: '#F5F3EF' }};
+    --specs-divider-color: {{ section.settings.divider_color | default: 'rgba(181,146,74,0.25)' }};
+    --specs-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+    --specs-columns: {{ section.settings.columns | default: 2 }};
+    padding-top: {{ section.settings.padding_top | default: 90 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 90 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    #pw-pdp-specs-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 60 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 60 }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PW Product Specs",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Technical Specifications" },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "Every component chosen with intent, every tolerance measured twice." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns", "label": "Columns — desktop", "options": [{ "value": "1", "label": "1" }, { "value": "2", "label": "2" }], "default": "2" },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 90 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 90 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 60 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "intro_color", "label": "Intro text", "default": "#888888" },
+    { "type": "color", "id": "label_color", "label": "Spec label", "default": "#888888" },
+    { "type": "color", "id": "value_color", "label": "Spec value", "default": "#F5F3EF" },
+    { "type": "color", "id": "divider_color", "label": "Row divider", "default": "rgba(181,146,74,0.25)" },
+    { "type": "range", "id": "divider_width", "label": "Row divider width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Spec Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "MOVEMENT" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Miyota 8215 Automatic" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Product Specs",
+      "blocks": [
+        { "type": "spec", "settings": { "label": "MOVEMENT", "value": "Miyota 8215 Automatic (21 Jewels)" } },
+        { "type": "spec", "settings": { "label": "CRYSTAL", "value": "Double-Domed Sapphire with AR Coating" } },
+        { "type": "spec", "settings": { "label": "POWER RESERVE", "value": "42 Hours" } },
+        { "type": "spec", "settings": { "label": "WATER RESISTANCE", "value": "50 Metres / 5 ATM (Screw-down Crown)" } },
+        { "type": "spec", "settings": { "label": "CASE DIAMETER", "value": "40mm" } },
+        { "type": "spec", "settings": { "label": "STRAP WIDTH", "value": "20mm (Integrated Steel Bracelet)" } },
+        { "type": "spec", "settings": { "label": "LUG-TO-LUG", "value": "47mm" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

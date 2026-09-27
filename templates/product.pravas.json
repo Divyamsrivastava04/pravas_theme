@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "pravas-product-main",
+      "settings": {}
+    },
+    "philosophy": {
+      "type": "pravas-product-philosophy",
+      "settings": {}
+    },
+    "specs": {
+      "type": "pravas-product-specs",
+      "blocks": {
+        "s1": { "type": "spec", "settings": { "label": "MOVEMENT", "value": "Miyota 8215 Automatic (21 Jewels)" } },
+        "s2": { "type": "spec", "settings": { "label": "CRYSTAL", "value": "Double-Domed Sapphire with AR Coating" } },
+        "s3": { "type": "spec", "settings": { "label": "POWER RESERVE", "value": "42 Hours" } },
+        "s4": { "type": "spec", "settings": { "label": "WATER RESISTANCE", "value": "50 Metres / 5 ATM (Screw-down Crown)" } },
+        "s5": { "type": "spec", "settings": { "label": "CASE DIAMETER", "value": "40mm" } },
+        "s6": { "type": "spec", "settings": { "label": "STRAP WIDTH", "value": "20mm (Integrated Steel Bracelet)" } },
+        "s7": { "type": "spec", "settings": { "label": "LUG-TO-LUG", "value": "47mm" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7"],
+      "settings": {}
+    },
+    "founder": {
+      "type": "pravas-product-founder",
+      "settings": {}
+    }
+  },
+  "order": ["main", "philosophy", "specs", "founder"]
+}
