@@ -1,0 +1,155 @@
+{{ 'pravas-story.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-story-founder" id="pw-story-founder-{{ section.id }}">
+  <div class="pw-story-founder__inner" data-reveal>
+    <div class="pw-story-founder__avatar-wrap">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 200 | image_tag:
+             alt: section.settings.name | default: 'Founder',
+             class: 'pw-story-founder__avatar',
+             loading: 'lazy',
+             widths: '100,150,200'
+        }}
+      {%- else -%}
+        {{ 'model-2' | placeholder_svg_tag: 'pw-story-founder__avatar' }}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-story-founder__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="pw-story-founder__quote">{{ section.settings.quote }}</blockquote>
+    {%- endif -%}
+
+    {%- if section.settings.story != blank -%}
+      <div class="pw-story-founder__story">{{ section.settings.story }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.name != blank -%}
+      <p class="pw-story-founder__name">{{ section.settings.name }}</p>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <p class="pw-story-founder__title">{{ section.settings.title }}</p>
+    {%- endif -%}
+    {%- if section.settings.signature != blank -%}
+      <p class="pw-story-founder__signature">{{ section.settings.signature }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-story-founder-{{ section.id }} {
+    --story-bg: {{ section.settings.bg_color | default: '#F5F3EF' }};
+    --story-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --story-quote-color: {{ section.settings.quote_color | default: '#181818' }};
+    --story-story-color: {{ section.settings.story_color | default: '#3A3A3A' }};
+    --story-name-color: {{ section.settings.name_color | default: '#181818' }};
+    --story-title-color: {{ section.settings.title_color | default: '#888888' }};
+    --story-signature-color: {{ section.settings.signature_color | default: '#C8C8CC' }};
+    --story-avatar-border-color: {{ section.settings.avatar_border_color | default: '#B5924A' }};
+    --story-avatar-size: {{ section.settings.avatar_size | default: 72 }}px;
+    --story-avatar-radius: {{ section.settings.avatar_radius | default: 50 }}%;
+    --story-avatar-border-width: {{ section.settings.avatar_border_width | default: 1 }}px;
+
+    --story-eyebrow-size: {{ section.settings.eyebrow_size | default: 12 }}px;
+    --story-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --story-quote-font: {% if section.settings.quote_font %}{{ section.settings.quote_font.family }}, {{ section.settings.quote_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --story-quote-size: {{ section.settings.quote_size_desktop | default: 32 }}px;
+    --story-quote-size-mobile: {{ section.settings.quote_size_mobile | default: 22 }}px;
+    --story-quote-line-height: {{ section.settings.quote_line_height | default: 1.4 }};
+    --story-quote-max-width: {{ section.settings.quote_max_width | default: 760 }}px;
+
+    --story-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --story-body-size: {{ section.settings.body_size_desktop | default: 15 }}px;
+    --story-body-size-mobile: {{ section.settings.body_size_mobile | default: 14 }}px;
+    --story-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --story-body-max-width: {{ section.settings.body_max_width | default: 480 }}px;
+
+    --story-content-max-width: {{ section.settings.content_max_width | default: 800 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 120 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 24 }}px;
+    padding-right: {{ section.settings.padding_x | default: 24 }}px;
+  }
+
+  #pw-story-founder-{{ section.id }} .pw-story-founder__quote {
+    font-style: {% if section.settings.quote_italic %}italic{% else %}normal{% endif %};
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-story-founder-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+
+<script src="{{ 'pravas-story.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Story Founder",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "image_picker", "id": "image", "label": "Founder image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PERSPECTIVE" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "We are not in the business of selling time. We are in the business of honoring it." },
+    { "type": "richtext", "id": "story", "label": "Founder story", "default": "<p>Growing up, I watched my grandfather wind his HMT every single morning. It was a ritual—a quiet conversation between him and the day ahead.</p><p>Pravas was born from a desire to return to that intentionality. In an era of disposable smartwatches and fleeting trends, we wanted to build something that would outlast us. Something that doesn't just count seconds, but reminds you to live them.</p>" },
+    { "type": "text", "id": "name", "label": "Founder name", "default": "ARJUN VARMA" },
+    { "type": "text", "id": "title", "label": "Founder title", "default": "Founder & Creative Director" },
+    { "type": "text", "id": "signature", "label": "Signature text", "default": "A Varma" },
+
+    { "type": "header", "content": "Avatar" },
+    { "type": "range", "id": "avatar_size", "label": "Size", "min": 40, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "avatar_radius", "label": "Radius (%, 50 = circle)", "min": 0, "max": 50, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "avatar_border_width", "label": "Border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "avatar_border_color", "label": "Border color", "default": "#B5924A" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 500, "max": 1100, "step": 20, "unit": "px", "default": 800 },
+    { "type": "range", "id": "quote_max_width", "label": "Quote max-width", "min": 400, "max": 1000, "step": 20, "unit": "px", "default": 760 },
+    { "type": "range", "id": "body_max_width", "label": "Story max-width", "min": 300, "max": 700, "step": 20, "unit": "px", "default": 480 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding — sides (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Eyebrow" },
+    { "type": "range", "id": "eyebrow_size", "label": "Size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Typography — Quote" },
+    { "type": "font_picker", "id": "quote_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "quote_size_desktop", "label": "Size — desktop", "min": 20, "max": 56, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "quote_size_mobile", "label": "Size — mobile", "min": 16, "max": 36, "step": 2, "unit": "px", "default": 22 },
+    { "type": "checkbox", "id": "quote_italic", "label": "Italic", "default": true },
+    { "type": "range", "id": "quote_line_height", "label": "Line height", "min": 1.1, "max": 1.8, "step": 0.1, "default": 1.4 },
+
+    { "type": "header", "content": "Typography — Founder Info (story, name, title)" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size_desktop", "label": "Size — desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "body_size_mobile", "label": "Size — mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "body_line_height", "label": "Line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.8 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F5F3EF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "quote_color", "label": "Quote", "default": "#181818" },
+    { "type": "color", "id": "story_color", "label": "Story text", "default": "#3A3A3A" },
+    { "type": "color", "id": "name_color", "label": "Founder name", "default": "#181818" },
+    { "type": "color", "id": "title_color", "label": "Founder title", "default": "#888888" },
+    { "type": "color", "id": "signature_color", "label": "Signature", "default": "#C8C8CC" }
+  ],
+  "presets": [
+    { "name": "PW Story Founder" }
+  ]
+}
+{% endschema %}

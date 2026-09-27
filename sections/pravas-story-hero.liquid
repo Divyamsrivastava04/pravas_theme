@@ -1,0 +1,134 @@
+{{ 'pravas-story.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-story-hero" id="pw-story-hero-{{ section.id }}">
+  <div class="pw-story-hero__inner" data-reveal>
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-story-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="pw-story-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pw-story-hero__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.show_divider -%}
+      <div class="pw-story-hero__divider" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-story-hero-{{ section.id }} {
+    --story-bg: {{ section.settings.bg_color | default: '#F5F3EF' }};
+    --story-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --story-heading-color: {{ section.settings.heading_color | default: '#181818' }};
+    --story-body-color: {{ section.settings.body_color | default: '#3A3A3A' }};
+    --story-line-color: {{ section.settings.line_color | default: '#2E2E2E' }};
+
+    --story-eyebrow-size: {{ section.settings.eyebrow_size | default: 12 }}px;
+    --story-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --story-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --story-heading-size: {{ section.settings.heading_size_desktop | default: 56 }}px;
+    --story-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 34 }}px;
+    --story-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --story-heading-line-height: {{ section.settings.heading_line_height | default: 1.15 }};
+    --story-heading-width: {{ section.settings.heading_width | default: 720 }}px;
+    --story-heading-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+
+    --story-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --story-body-size: {{ section.settings.body_size_desktop | default: 16 }}px;
+    --story-body-size-mobile: {{ section.settings.body_size_mobile | default: 15 }}px;
+    --story-body-line-height: {{ section.settings.body_line_height | default: 1.7 }};
+    --story-body-width: {{ section.settings.body_width | default: 520 }}px;
+
+    --story-content-max-width: {{ section.settings.content_max_width | default: 720 }}px;
+    --story-content-align: {{ section.settings.content_alignment | default: 'center' }};
+
+    --story-line-height-px: {{ section.settings.line_height | default: 64 }}px;
+    --story-line-thickness: {{ section.settings.line_thickness | default: 1 }}px;
+    --story-line-opacity: {{ section.settings.line_opacity | default: 100 | divided_by: 100.0 }};
+    --story-line-margin-top: {{ section.settings.line_margin_top | default: 48 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 140 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 140 }}px;
+    padding-left: {{ section.settings.padding_x | default: 24 }}px;
+    padding-right: {{ section.settings.padding_x | default: 24 }}px;
+    min-height: {{ section.settings.min_height | default: 0 }}vh;
+  }
+
+  #pw-story-hero-{{ section.id }} .pw-story-hero__heading {
+    font-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-story-hero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 80 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 80 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+
+<script src="{{ 'pravas-story.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Story Hero",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE JOURNEY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Meaning of PRAVAS" },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "Sanskrit for 'journey' or 'sojourn', Pravas is not about the destination, but the precise measurement of the moments that define our path." },
+    { "type": "checkbox", "id": "show_divider", "label": "Show decorative line", "default": true },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "content_alignment", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }], "default": "center" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 400, "max": 1000, "step": 20, "unit": "px", "default": 720 },
+    { "type": "range", "id": "min_height", "label": "Minimum height (vh, 0 = auto)", "min": 0, "max": 100, "step": 5, "unit": "vh", "default": 0 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 140 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 140 },
+    { "type": "range", "id": "padding_x", "label": "Padding — sides (desktop)", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Decorative Line" },
+    { "type": "range", "id": "line_height", "label": "Line height", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "line_thickness", "label": "Line thickness", "min": 1, "max": 6, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "line_opacity", "label": "Line opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "line_margin_top", "label": "Line spacing above", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "color", "id": "line_color", "label": "Line color", "default": "#2E2E2E" },
+
+    { "type": "header", "content": "Typography — Eyebrow" },
+    { "type": "range", "id": "eyebrow_size", "label": "Size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Size — desktop", "min": 28, "max": 96, "step": 2, "unit": "px", "default": 56 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 22, "max": 56, "step": 2, "unit": "px", "default": 34 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "heading_italic", "label": "Italic", "default": true },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 0.9, "max": 1.6, "step": 0.1, "default": 1.2 },
+    { "type": "range", "id": "heading_width", "label": "Max width", "min": 300, "max": 1000, "step": 20, "unit": "px", "default": 720 },
+
+    { "type": "header", "content": "Typography — Body" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size_desktop", "label": "Size — desktop", "min": 12, "max": 22, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "body_size_mobile", "label": "Size — mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "body_line_height", "label": "Line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.7 },
+    { "type": "range", "id": "body_width", "label": "Max width", "min": 300, "max": 800, "step": 20, "unit": "px", "default": 520 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F5F3EF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#181818" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#3A3A3A" }
+  ],
+  "presets": [
+    { "name": "PW Story Hero" }
+  ]
+}
+{% endschema %}

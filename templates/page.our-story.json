@@ -1,23 +1,31 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
+    "story-hero": {
+      "type": "pravas-story-hero",
+      "settings": {}
+    },
+    "story-mechanical": {
+      "type": "pravas-story-mechanical",
+      "settings": {}
+    },
+    "story-intentionality": {
+      "type": "pravas-story-intentionality",
+      "blocks": {
+        "col1": { "type": "column", "settings": { "heading": "SINGLE BATCH FOCUS", "body": "We do not produce seasonal collections. We focus on one model at a time, perfecting the weight, the curve of the lugs, and the clarity of the crystal." } },
+        "col2": { "type": "column", "settings": { "heading": "WASTE REDUCTION", "body": "Overproduction is the enemy of luxury. By limiting our output to 500 numbered pieces per batch, we ensure that every watch finds a home." } },
+        "col3": { "type": "column", "settings": { "heading": "THE ARCHIVE", "body": "Once a batch is gone, it is retired to our archive. This preserves the rarity for those who were part of that specific journey." } }
+      },
+      "block_order": ["col1", "col2", "col3"],
+      "settings": {}
+    },
+    "story-heritage": {
+      "type": "pravas-story-heritage",
+      "settings": {}
+    },
+    "story-founder": {
+      "type": "pravas-story-founder",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["story-hero", "story-mechanical", "story-intentionality", "story-heritage", "story-founder"]
 }

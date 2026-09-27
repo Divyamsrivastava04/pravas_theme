@@ -1,0 +1,176 @@
+{{ 'pravas-story.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-story-mech" id="pw-story-mech-{{ section.id }}">
+  <div class="pw-story-mech__inner">
+    <div class="pw-story-mech__text" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-story-mech__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-story-mech__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pw-story-mech__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="pw-story-mech__cta">
+          {{ section.settings.cta_label }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="pw-story-mech__media" data-reveal>
+      <div class="pw-story-mech__image-wrap">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag:
+               alt: section.settings.image.alt | default: section.settings.heading,
+               class: 'pw-story-mech__image',
+               loading: 'lazy',
+               widths: '600,900,1200,1400'
+          }}
+        {%- else -%}
+          {{ 'detailed-apparel-1' | placeholder_svg_tag: 'pw-story-mech__image' }}
+        {%- endif -%}
+        {%- if section.settings.enable_overlay -%}
+          <div class="pw-story-mech__image-overlay"></div>
+        {%- endif -%}
+
+        {%- if section.settings.show_caliber -%}
+          <div class="pw-story-mech__caliber pw-story-mech__caliber--{{ section.settings.caliber_position }}">
+            {%- if section.settings.caliber_label != blank -%}
+              <span class="pw-story-mech__caliber-label">{{ section.settings.caliber_label }}</span>
+            {%- endif -%}
+            {%- if section.settings.caliber_text != blank -%}
+              <p class="pw-story-mech__caliber-text">{{ section.settings.caliber_text | newline_to_br }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #pw-story-mech-{{ section.id }} {
+    --story-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --story-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --story-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --story-body-color: {{ section.settings.body_color | default: '#C8C8CC' }};
+    --story-cta-color: {{ section.settings.cta_color | default: '#B5924A' }};
+    --story-cta-hover-color: {{ section.settings.cta_hover_color | default: '#F5F3EF' }};
+    --story-caliber-label-color: {{ section.settings.caliber_label_color | default: '#B5924A' }};
+    --story-caliber-text-color: {{ section.settings.caliber_text_color | default: '#F5F3EF' }};
+    --story-caliber-bg: {{ section.settings.caliber_bg_color | default: 'rgba(24,24,24,0.75)' }};
+    --story-caliber-border: {{ section.settings.caliber_border_color | default: 'rgba(181,146,74,0.4)' }};
+    --story-overlay-color: {{ section.settings.overlay_color | default: '#181818' }};
+    --story-overlay-opacity: {{ section.settings.overlay_opacity | default: 20 | divided_by: 100.0 }};
+    --story-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --story-image-border-width: {{ section.settings.image_border_width | default: 0 }}px;
+    --story-image-border-color: {{ section.settings.image_border_color | default: '#2E2E2E' }};
+
+    --story-eyebrow-size: {{ section.settings.eyebrow_size | default: 12 }}px;
+    --story-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --story-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --story-heading-size: {{ section.settings.heading_size_desktop | default: 40 }}px;
+    --story-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 28 }}px;
+    --story-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --story-heading-line-height: {{ section.settings.heading_line_height | default: 1.2 }};
+
+    --story-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --story-body-size: {{ section.settings.body_size_desktop | default: 15 }}px;
+    --story-body-size-mobile: {{ section.settings.body_size_mobile | default: 14 }}px;
+    --story-body-line-height: {{ section.settings.body_line_height | default: 1.75 }};
+
+    --story-text-max-width: {{ section.settings.text_max_width | default: 420 }}px;
+    --story-column-gap: {{ section.settings.column_gap | default: 64 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 120 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 64 }}px;
+    padding-right: {{ section.settings.padding_x | default: 64 }}px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #pw-story-mech-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+
+<script src="{{ 'pravas-story.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Story Mechanical",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "MECHANICAL SOUL" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why Automatic, Always" },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "We believe a timepiece should be alive. A quartz crystal vibrates with clinical indifference, but a balance wheel breathes with the motion of its wearer. Our commitment to purely automatic movements ensures that every Pravas is powered by you—a symbiotic relationship between man and machine that requires no batteries, only existence." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "EXPLORE ENGINEERING" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" },
+
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Movement image" },
+    { "type": "range", "id": "image_radius", "label": "Image radius (0 = sharp)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#2E2E2E" },
+    { "type": "checkbox", "id": "enable_overlay", "label": "Enable image overlay", "default": false },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#181818" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 20 },
+
+    { "type": "header", "content": "Caliber Overlay" },
+    { "type": "checkbox", "id": "show_caliber", "label": "Show caliber overlay", "default": true },
+    { "type": "text", "id": "caliber_label", "label": "Caliber label", "default": "CALIBER 01" },
+    { "type": "textarea", "id": "caliber_text", "label": "Caliber description", "default": "42-hour power reserve.\n21,600 vibrations per hour." },
+    { "type": "select", "id": "caliber_position", "label": "Position", "options": [{ "value": "bottom-left", "label": "Bottom left" }, { "value": "bottom-right", "label": "Bottom right" }, { "value": "top-left", "label": "Top left" }, { "value": "top-right", "label": "Top right" }], "default": "bottom-left" },
+    { "type": "color", "id": "caliber_label_color", "label": "Label color", "default": "#B5924A" },
+    { "type": "color", "id": "caliber_text_color", "label": "Text color", "default": "#F5F3EF" },
+    { "type": "color", "id": "caliber_bg_color", "label": "Background", "default": "rgba(24,24,24,0.75)" },
+    { "type": "color", "id": "caliber_border_color", "label": "Border", "default": "rgba(181,146,74,0.4)" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "text_max_width", "label": "Text column max-width", "min": 280, "max": 600, "step": 20, "unit": "px", "default": 420 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding — sides (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Eyebrow" },
+    { "type": "range", "id": "eyebrow_size", "label": "Size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Size — desktop", "min": 24, "max": 72, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 20, "max": 44, "step": 2, "unit": "px", "default": 28 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 0.9, "max": 1.6, "step": 0.1, "default": 1.2 },
+
+    { "type": "header", "content": "Typography — Body" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size_desktop", "label": "Size — desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "body_size_mobile", "label": "Size — mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "body_line_height", "label": "Line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.75 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#C8C8CC" },
+    { "type": "color", "id": "cta_color", "label": "CTA text", "default": "#B5924A" },
+    { "type": "color", "id": "cta_hover_color", "label": "CTA hover", "default": "#F5F3EF" }
+  ],
+  "presets": [
+    { "name": "PW Story Mechanical" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,146 @@
+{{ 'pravas-story.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-story-intent" id="pw-story-intent-{{ section.id }}">
+  <div class="pw-story-intent__inner">
+    <div class="pw-story-intent__head" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-story-intent__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-story-intent__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="pw-story-intent__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'column' -%}
+            <div class="pw-story-intent__col{% if section.settings.show_dividers %} pw-story-intent__col--divided{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}
+                <h3 class="pw-story-intent__col-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.body != blank -%}
+                <p class="pw-story-intent__col-body">{{ block.settings.body }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-story-intent-{{ section.id }} {
+    --story-bg: {{ section.settings.bg_color | default: '#F5F3EF' }};
+    --story-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --story-heading-color: {{ section.settings.heading_color | default: '#181818' }};
+    --story-col-heading-color: {{ section.settings.col_heading_color | default: '#181818' }};
+    --story-col-body-color: {{ section.settings.col_body_color | default: '#3A3A3A' }};
+    --story-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+
+    --story-eyebrow-size: {{ section.settings.eyebrow_size | default: 12 }}px;
+    --story-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --story-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --story-heading-size: {{ section.settings.heading_size_desktop | default: 36 }}px;
+    --story-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 26 }}px;
+    --story-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --story-heading-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+
+    --story-col-heading-size: {{ section.settings.col_heading_size | default: 12 }}px;
+    --story-col-heading-letter-spacing: {{ section.settings.col_heading_letter_spacing | default: 1 }}px;
+    --story-col-body-size: {{ section.settings.col_body_size | default: 14 }}px;
+    --story-col-body-line-height: {{ section.settings.col_body_line_height | default: 1.75 }};
+
+    --story-columns-desktop: {{ section.settings.columns_desktop | default: 3 }};
+    --story-column-gap: {{ section.settings.column_gap | default: 48 }}px;
+    --story-content-max-width: {{ section.settings.content_max_width | default: 1100 }}px;
+    --story-head-max-width: {{ section.settings.head_max_width | default: 560 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 120 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 64 }}px;
+    padding-right: {{ section.settings.padding_x | default: 64 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-story-intent-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+
+<script src="{{ 'pravas-story.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Story Intentionality",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "INTENTIONALITY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why We Make Less" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "columns_desktop", "label": "Columns — desktop", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "3" },
+    { "type": "checkbox", "id": "show_dividers", "label": "Show dividers between columns", "default": true },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 700, "max": 1400, "step": 20, "unit": "px", "default": 1100 },
+    { "type": "range", "id": "head_max_width", "label": "Heading block max-width", "min": 300, "max": 800, "step": 20, "unit": "px", "default": 560 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding — sides (desktop)", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding — sides (mobile)", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Eyebrow" },
+    { "type": "range", "id": "eyebrow_size", "label": "Size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Size — desktop", "min": 22, "max": 60, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 18, "max": 40, "step": 2, "unit": "px", "default": 26 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "heading_italic", "label": "Italic", "default": true },
+
+    { "type": "header", "content": "Typography — Columns" },
+    { "type": "range", "id": "col_heading_size", "label": "Column heading size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "col_heading_letter_spacing", "label": "Column heading letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 1 },
+    { "type": "range", "id": "col_body_size", "label": "Column body size", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "col_body_line_height", "label": "Column body line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.75 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F5F3EF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#181818" },
+    { "type": "color", "id": "col_heading_color", "label": "Column heading", "default": "#181818" },
+    { "type": "color", "id": "col_body_color", "label": "Column body text", "default": "#3A3A3A" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2E2E2E" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "SINGLE BATCH FOCUS" },
+        { "type": "textarea", "id": "body", "label": "Description", "default": "We do not produce seasonal collections. We focus on one model at a time, perfecting the weight, the curve of the lugs, and the clarity of the crystal." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Story Intentionality",
+      "blocks": [
+        { "type": "column", "settings": { "heading": "SINGLE BATCH FOCUS", "body": "We do not produce seasonal collections. We focus on one model at a time, perfecting the weight, the curve of the lugs, and the clarity of the crystal." } },
+        { "type": "column", "settings": { "heading": "WASTE REDUCTION", "body": "Overproduction is the enemy of luxury. By limiting our output to 500 numbered pieces per batch, we ensure that every watch finds a home." } },
+        { "type": "column", "settings": { "heading": "THE ARCHIVE", "body": "Once a batch is gone, it is retired to our archive. This preserves the rarity for those who were part of that specific journey." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
