@@ -9,7 +9,9 @@
  */
 {
   "current": {
+    "logo": "shopify://shop_images/PRAVAS_Banner_Logo_Silver_Mark.png",
     "logo_width": 90,
+    "favicon": "shopify://shop_images/PRAVAS_Banner_Logo_Silver_Mark.png",
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
     "type_body_font": "assistant_n4",
@@ -41,7 +43,7 @@
     "inputs_shadow_horizontal_offset": 0,
     "inputs_shadow_vertical_offset": 4,
     "inputs_shadow_blur": 5,
-    "card_style": "standard",
+    "card_style": "card",
     "card_image_padding": 0,
     "card_text_alignment": "left",
     "card_color_scheme": "scheme-2",
@@ -59,10 +61,10 @@
     "collection_card_border_thickness": 0,
     "collection_card_border_opacity": 10,
     "collection_card_corner_radius": 0,
-    "collection_card_shadow_opacity": 0,
+    "collection_card_shadow_opacity": 50,
     "collection_card_shadow_horizontal_offset": 0,
     "collection_card_shadow_vertical_offset": 4,
-    "collection_card_shadow_blur": 5,
+    "collection_card_shadow_blur": 10,
     "blog_card_style": "standard",
     "blog_card_image_padding": 0,
     "blog_card_text_alignment": "left",
@@ -121,11 +123,11 @@
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
     "currency_code_enabled": true,
-    "cart_type": "page",
+    "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "aarambh",
-    "cart_color_scheme": "scheme-1",
+    "cart_color_scheme": "scheme-4",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",

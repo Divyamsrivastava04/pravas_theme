@@ -21,7 +21,7 @@
     "pravas-header": {
       "type": "pravas-header",
       "settings": {
-        "logo_height": 24,
+        "logo_height": 16,
         "brand": "PRAVAS",
         "nav_label_1": "Shop",
         "nav_url_1": "shopify://products/sunburst-green",
