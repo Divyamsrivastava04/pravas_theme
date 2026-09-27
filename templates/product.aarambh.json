@@ -1,31 +1,248 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "pravas-product-main",
-      "settings": {}
-    },
-    "philosophy": {
-      "type": "pravas-product-philosophy",
-      "settings": {}
-    },
-    "specs": {
-      "type": "pravas-product-specs",
+      "type": "main-product",
       "blocks": {
-        "s1": { "type": "spec", "settings": { "label": "MOVEMENT", "value": "Miyota 8215 Automatic (21 Jewels)" } },
-        "s2": { "type": "spec", "settings": { "label": "CRYSTAL", "value": "Double-Domed Sapphire with AR Coating" } },
-        "s3": { "type": "spec", "settings": { "label": "POWER RESERVE", "value": "42 Hours" } },
-        "s4": { "type": "spec", "settings": { "label": "WATER RESISTANCE", "value": "50 Metres / 5 ATM (Screw-down Crown)" } },
-        "s5": { "type": "spec", "settings": { "label": "CASE DIAMETER", "value": "40mm" } },
-        "s6": { "type": "spec", "settings": { "label": "STRAP WIDTH", "value": "20mm (Integrated Steel Bracelet)" } },
-        "s7": { "type": "spec", "settings": { "label": "LUG-TO-LUG", "value": "47mm" } }
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7"],
-      "settings": {}
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
     },
-    "founder": {
+    "disclosures": {
+      "type": "disclosures",
+      "disabled": true,
+      "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "pravas_product_main_b7EqYG": {
+      "type": "pravas-product-main",
+      "blocks": {
+        "feature_DwPbDC": {
+          "type": "feature",
+          "settings": {
+            "label": "MOVEMENT",
+            "value": "MIYOTA 8215"
+          }
+        },
+        "feature_8gRTcn": {
+          "type": "feature",
+          "settings": {
+            "label": "SAPPHIRE",
+            "value": "Miyota 8215"
+          }
+        },
+        "feature_BBK8dd": {
+          "type": "feature",
+          "settings": {
+            "label": "FREE DELIVERY",
+            "value": "Miyota 8215"
+          }
+        }
+      },
+      "block_order": [
+        "feature_DwPbDC",
+        "feature_8gRTcn",
+        "feature_BBK8dd"
+      ],
+      "name": "PW Product Main",
+      "settings": {
+        "eyebrow": "THE FIRST CHAPTER",
+        "subtitle": "A testament to time and its measured movement. Designed in India, driven by Miyota.",
+        "atc_label": "ADD TO COLLECTION",
+        "sold_out_label": "SOLD OUT",
+        "reassurance": "Ships within 24–48 hours.",
+        "availability_label": "FIRST BATCH AVAILABILITY",
+        "units_left_label": "UNITS LEFT",
+        "low_stock_threshold": 15,
+        "enable_zoom": true,
+        "gallery_gap": 12,
+        "gallery_radius": 0,
+        "gallery_aspect_ratio": "4/5",
+        "content_max_width": 1440,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_x": 80,
+        "title_size_desktop": 40,
+        "title_size_mobile": 30,
+        "title_weight": "400",
+        "title_line_height": 1.1,
+        "color_bg": "#181818",
+        "color_text": "#F5F3EF",
+        "color_muted": "#888888",
+        "color_accent": "#B5924A",
+        "color_border": "#2E2E2E",
+        "color_panel_bg": "#F5F3EF",
+        "color_panel_text": "#181818",
+        "color_panel_muted": "#3A3A3A",
+        "color_eyebrow": "#B5924A",
+        "availability_color": "#3A3A3A",
+        "price_color": "#181818",
+        "price_compare_color": "#888888",
+        "swatch_size": 40,
+        "swatch_radius": 0,
+        "swatch_border_width": 1,
+        "swatch_border_color": "#C8C8CC",
+        "swatch_border_selected_color": "#B5924A",
+        "atc_bg": "#B5924A",
+        "atc_text_color": "#181818",
+        "atc_border_color": "#B5924A",
+        "atc_border_width": 0,
+        "atc_radius": 0,
+        "enable_sticky_bar": true,
+        "sticky_eyebrow": "CURRENTLY VIEWING",
+        "sticky_bg": "#F5F3EF",
+        "sticky_text_color": "#181818",
+        "sticky_price_color": "#181818"
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "pravas_product_philosophy_jXjEei": {
+      "type": "pravas-product-philosophy",
+      "name": "PW Product Philosophy",
+      "settings": {
+        "eyebrow": "THE PHILOSOPHY",
+        "heading": "The Art of the Start",
+        "body_1": "Every PRAVAS timepiece begins not with a blueprint, but with a belief: that precision and patience are not opposites, but companions.",
+        "body_2": "The Aarambh — meaning \"the beginning\" — carries this belief on the wrist. It is a first chapter, built to be worn for decades, not seasons.",
+        "max_width": 720,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "bg_color": "#181818",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#F5F3EF",
+        "body_color": "#C8C8CC"
+      }
+    },
+    "pravas_product_founder_bk6LUJ": {
       "type": "pravas-product-founder",
-      "settings": {}
+      "name": "PW Product Founder",
+      "settings": {
+        "eyebrow": "A PERSONAL TOUCH",
+        "heading": "The Founder's Hand",
+        "body": "Each Aarambh is inspected and signed off by hand before it leaves the workshop. If you'd like, we'll include a small note — written by us, for you.",
+        "image_grayscale": true,
+        "image_radius": 0,
+        "enable_serial_option": true,
+        "serial_label": "Include Limited Serial Number",
+        "serial_checked_by_default": false,
+        "enable_message": true,
+        "message_label": "A note to the founder (optional)",
+        "message_placeholder": "Tell us why this piece matters to you…",
+        "bg_color": "#181818",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#F5F3EF",
+        "body_color": "#C8C8CC",
+        "divider_color": "#2E2E2E"
+      }
     }
   },
-  "order": ["main", "philosophy", "specs", "founder"]
+  "order": [
+    "main",
+    "disclosures",
+    "pravas_product_main_b7EqYG",
+    "related-products",
+    "pravas_product_philosophy_jXjEei",
+    "pravas_product_founder_bk6LUJ"
+  ]
 }
