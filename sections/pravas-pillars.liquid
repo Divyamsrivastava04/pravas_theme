@@ -1,8 +1,18 @@
-<section class="pw-pillars">
+<section class="pw-pillars" id="pw-pillars">
   <span class="pw-eyebrow pw-pillars__eyebrow">{{ section.settings.eyebrow | default: 'WHAT WE STAND FOR' }}</span>
   <div class="pw-pillars__grid">
 
     <div class="pw-pillar">
+      {% if section.settings.p1_icon %}
+        <img src="{{ section.settings.p1_icon | image_url: width: 64 }}" alt="" class="pw-pillar__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+          <path d="M21 3v5h-5"/>
+          <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+          <path d="M3 21v-5h5"/>
+        </svg>
+      {% endif %}
       <h3 class="pw-pillar__h">{{ section.settings.p1_h | default: 'Automatic Only' }}</h3>
       <p  class="pw-pillar__p">{{ section.settings.p1_p | default: 'No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day.' }}</p>
     </div>
@@ -10,6 +20,14 @@
     <div class="pw-pillar-rule" aria-hidden="true"></div>
 
     <div class="pw-pillar">
+      {% if section.settings.p2_icon %}
+        <img src="{{ section.settings.p2_icon | image_url: width: 64 }}" alt="" class="pw-pillar__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/>
+          <circle cx="12" cy="9.5" r="2.5"/>
+        </svg>
+      {% endif %}
       <h3 class="pw-pillar__h">{{ section.settings.p2_h | default: 'Designed in India' }}</h3>
       <p  class="pw-pillar__p">{{ section.settings.p2_p | default: 'Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story.' }}</p>
     </div>
@@ -17,6 +35,14 @@
     <div class="pw-pillar-rule" aria-hidden="true"></div>
 
     <div class="pw-pillar">
+      {% if section.settings.p3_icon %}
+        <img src="{{ section.settings.p3_icon | image_url: width: 64 }}" alt="" class="pw-pillar__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-pillar__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 3v18"/>
+          <path d="M5 4h11l-2.5 4L16 12H5"/>
+        </svg>
+      {% endif %}
       <h3 class="pw-pillar__h">{{ section.settings.p3_h | default: 'Built for First Milestones' }}</h3>
       <p  class="pw-pillar__p">{{ section.settings.p3_p | default: 'The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming.' }}</p>
     </div>
@@ -24,17 +50,39 @@
   </div>
 </section>
 
+<style>
+  #pw-pillars {
+    --pillars-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --pillars-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --pillars-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --pillars-body: {{ section.settings.body_color | default: '#C8C8CC' }};
+    --pillars-divider: {{ section.settings.divider_color | default: '#B5924A' }};
+  }
+</style>
+
 {% schema %}
 {
   "name": "PW Brand Pillars",
   "settings": [
+    { "type": "header",  "content": "Content" },
     { "type": "text",     "id": "eyebrow", "label": "Eyebrow",         "default": "WHAT WE STAND FOR" },
     { "type": "text",     "id": "p1_h",    "label": "Pillar 1 heading","default": "Automatic Only" },
     { "type": "textarea", "id": "p1_p",    "label": "Pillar 1 body",   "default": "No quartz. No compromise. Every PRAVAS watch carries a self-winding movement — a small engine that runs on the energy of your day." },
+    { "type": "image_picker", "id": "p1_icon", "label": "Pillar 1 icon (optional — overrides default)" },
     { "type": "text",     "id": "p2_h",    "label": "Pillar 2 heading","default": "Designed in India" },
     { "type": "textarea", "id": "p2_p",    "label": "Pillar 2 body",   "default": "Every detail — the dial geometry, the case proportions, the hands — is considered here, for the Indian wrist and the Indian story." },
+    { "type": "image_picker", "id": "p2_icon", "label": "Pillar 2 icon (optional — overrides default)" },
     { "type": "text",     "id": "p3_h",    "label": "Pillar 3 heading","default": "Built for First Milestones" },
-    { "type": "textarea", "id": "p3_p",    "label": "Pillar 3 body",   "default": "The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming." }
+    { "type": "textarea", "id": "p3_p",    "label": "Pillar 3 body",   "default": "The first job. The first risk. The first city. PRAVAS marks the moments that define who you are becoming." },
+    { "type": "image_picker", "id": "p3_icon", "label": "Pillar 3 icon (optional — overrides default)" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color",       "label": "Background",       "default": "#181818" },
+    { "type": "color", "id": "icon_color",     "label": "Icon color (default icons only)", "default": "#B5924A" },
+    { "type": "color", "id": "eyebrow_color",  "label": "Eyebrow color",    "default": "#B5924A" },
+    { "type": "color", "id": "heading_color",  "label": "Heading color",   "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color",     "label": "Body text color", "default": "#C8C8CC" },
+    { "type": "color", "id": "divider_color",  "label": "Divider color",   "default": "#B5924A" }
   ],
   "presets": [{ "name": "PW Brand Pillars" }]
 }

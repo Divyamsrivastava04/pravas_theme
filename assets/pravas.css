@@ -583,46 +583,56 @@ button { font-family: inherit; cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .pw-ticker__inner { animation: none; } }
 
 /* BRAND PILLARS
-   CRITICAL: min-width:0 + overflow-wrap on every child — prevents vertical text bug */
+   Flexbox layout (not Grid) — flex: 1 1 0 + min-width: 0 is the more
+   battle-tested pattern for equal-width columns with wrapping text;
+   avoids the minmax(0,1fr) Grid-track edge cases entirely. */
 .pw-pillars {
-  background: var(--parchment);       /* MUST be light — never dark */
+  background: var(--pillars-bg, var(--midnight));
   padding: 96px 80px;
 }
 .pw-pillars__eyebrow {
   display: block;
   text-align: center;
-  color: var(--fog);
+  color: var(--pillars-eyebrow, var(--gold));
   margin-bottom: 56px;
 }
 .pw-pillars__grid {
   max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr) 1px minmax(0, 1fr);
+  display: flex;
+  align-items: stretch;
   gap: 0 48px;
-  align-items: start;
 }
 .pw-pillar {
-  /* THE TWO LINES THAT PREVENT THE BUG */
+  flex: 1 1 0%;
   min-width: 0;
   overflow: hidden;
-  /* text behaviour */
+  text-align: center;
   overflow-wrap: break-word;
   word-break: normal;
   hyphens: auto;
   padding: 0 8px;
 }
 .pw-pillar-rule {
+  flex: 0 0 1px;
   width: 1px;
-  background: var(--gold);
+  background: var(--pillars-divider, var(--gold));
   align-self: stretch;
   min-height: 100px;
+}
+.pw-pillar__icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 20px;
+  display: block;
 }
 .pw-pillar__h {
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 400;
-  color: var(--midnight);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--pillars-heading, var(--parchment));
   line-height: 1.25;
   margin: 0 0 16px 0;
   min-width: 0;
@@ -633,7 +643,7 @@ button { font-family: inherit; cursor: pointer; }
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 300;
-  color: var(--charcoal);
+  color: var(--pillars-body, var(--silver));
   line-height: 1.8;
   margin: 0;
   min-width: 0;
@@ -645,7 +655,7 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 767px) {
   .pw-pillars { padding: 60px 24px; }
   .pw-pillars__grid {
-    grid-template-columns: minmax(0, 1fr);
+    flex-direction: column;
     gap: 40px 0;
   }
   .pw-pillar-rule { display: none; }
@@ -771,7 +781,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* TRUST INDICATORS
-   CRITICAL: min-width:0 on every child — prevents vertical text bug */
+   Flexbox layout (not Grid) — same reasoning as Brand Pillars above. */
 .pw-trust {
   background: var(--midnight);
   padding: 96px 80px;
@@ -785,14 +795,13 @@ button { font-family: inherit; cursor: pointer; }
 .pw-trust__grid {
   max-width: 1100px;
   margin: 0 auto;
-  display: grid;
-  /* 4 content columns + 3 divider columns */
-  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr) 1px minmax(0, 1fr) 1px minmax(0, 1fr);
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
   gap: 0 40px;
-  align-items: start;
 }
 .pw-trust__item {
-  /* THESE PREVENT THE VERTICAL TEXT BUG */
+  flex: 1 1 0%;
   min-width: 0;
   overflow: hidden;
   overflow-wrap: break-word;
@@ -801,6 +810,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 0 8px;
 }
 .pw-trust__div {
+  flex: 0 0 1px;
   width: 1px;
   background: var(--gold);
   align-self: stretch;
@@ -839,15 +849,14 @@ button { font-family: inherit; cursor: pointer; }
   word-break: normal;
 }
 
-/* Mobile: 2×2 grid */
+/* Mobile: 2×2 wrap */
 @media (max-width: 767px) {
   .pw-trust { padding: 60px 24px; }
   .pw-trust__grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 40px 24px;
   }
   .pw-trust__div { display: none; }
-  .pw-trust__item { padding: 0; }
+  .pw-trust__item { flex: 1 1 40%; padding: 0; }
 }
 
 /* UGC COMMUNITY WALL */
