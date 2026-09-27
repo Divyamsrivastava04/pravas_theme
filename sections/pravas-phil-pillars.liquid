@@ -1,0 +1,236 @@
+{{ 'pravas-philosophy.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-phil-pillars" id="pw-phil-pillars-{{ section.id }}">
+  <div class="pw-phil-pillars__inner">
+    <div class="pw-phil-pillars__head" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-phil-pillars__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-phil-pillars__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.show_rule -%}
+        <hr class="pw-phil-pillars__rule">
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pw-phil-pillars__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="pw-phil-pillars__grid" data-reveal>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pillar' -%}
+            <div class="pw-phil-pillars__card" {{ block.shopify_attributes }}>
+              <div class="pw-phil-pillars__card-top">
+                {%- if block.settings.number != blank -%}
+                  <span class="pw-phil-pillars__card-number">{{ block.settings.number }}</span>
+                {%- endif -%}
+                {%- if block.settings.icon != 'none' -%}
+                  <span class="pw-phil-pillars__card-icon">
+                    {%- case block.settings.icon -%}
+                      {%- when 'shield' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 9.2 8 10 4.6-.8 8-5 8-10V6l-8-4z"/></svg>
+                      {%- when 'infinity' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.8 8.5a3.5 3.5 0 1 0 0 7c2.6 0 4-3.5 5.2-3.5s2.6 3.5 5.2 3.5a3.5 3.5 0 1 0 0-7c-2.6 0-4 3.5-5.2 3.5S9.4 8.5 6.8 8.5z"/></svg>
+                      {%- when 'compass' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5.5-5.5 2 2-5.5 5.5-2z"/></svg>
+                      {%- when 'gear' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                      {%- when 'diamond' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
+                    {%- endcase -%}
+                  </span>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.title != blank -%}
+                <h3 class="pw-phil-pillars__card-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <p class="pw-phil-pillars__card-desc">{{ block.settings.description }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.meta_label != blank or block.settings.meta_value != blank -%}
+                <div class="pw-phil-pillars__card-meta">
+                  <span class="pw-phil-pillars__card-meta-label">{{ block.settings.meta_label }}</span>
+                  <span class="pw-phil-pillars__card-meta-value">{{ block.settings.meta_value }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.footnote_left != blank or section.settings.footnote_right != blank -%}
+      <div class="pw-phil-pillars__footnote">
+        <span>{{ section.settings.footnote_left }}</span>
+        <span>{{ section.settings.footnote_right }}</span>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-phil-pillars-{{ section.id }} {
+    --philosophy-dark-bg: {{ section.settings.bg_color | default: '#141414' }};
+    --philosophy-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --philosophy-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --philosophy-body-color: {{ section.settings.body_color | default: '#9A9A9A' }};
+    --philosophy-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+    --philosophy-card-bg: {{ section.settings.card_bg_color | default: '#1B1B1B' }};
+    --philosophy-card-border: {{ section.settings.card_border_color | default: '#2E2E2E' }};
+    --philosophy-card-border-width: {{ section.settings.card_border_width | default: 1 }}px;
+    --philosophy-card-radius: {{ section.settings.card_radius | default: 0 }}px;
+    --philosophy-card-padding: {{ section.settings.card_padding | default: 28 }}px;
+    --philosophy-card-title-color: {{ section.settings.card_title_color | default: '#F5F3EF' }};
+    --philosophy-card-body-color: {{ section.settings.card_body_color | default: '#9A9A9A' }};
+    --philosophy-card-number-color: {{ section.settings.card_number_color | default: '#8A8A8A' }};
+    --philosophy-card-meta-label-color: {{ section.settings.card_meta_label_color | default: '#8A8A8A' }};
+    --philosophy-card-meta-value-color: {{ section.settings.card_meta_value_color | default: '#B5924A' }};
+    --philosophy-icon-color: {{ section.settings.icon_color | default: '#B5924A' }};
+    --philosophy-icon-size: {{ section.settings.icon_size | default: 16 }}px;
+    --philosophy-divider: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --philosophy-footnote-color: {{ section.settings.footnote_color | default: '#8A8A8A' }};
+
+    --philosophy-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --philosophy-heading-size: {{ section.settings.heading_size | default: 32 }}px;
+    --philosophy-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 28 }}px;
+    --philosophy-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 22 }}px;
+    --philosophy-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --philosophy-heading-line-height: {{ section.settings.heading_line_height | default: 1.2 }};
+
+    --philosophy-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --philosophy-body-size: {{ section.settings.body_size | default: 13 }}px;
+    --philosophy-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --philosophy-eyebrow-size: {{ section.settings.eyebrow_size | default: 10 }}px;
+    --philosophy-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+    --philosophy-card-title-size: {{ section.settings.card_title_size | default: 15 }}px;
+    --philosophy-card-title-spacing: {{ section.settings.card_title_letter_spacing | default: 1 }}px;
+    --philosophy-card-body-size: {{ section.settings.card_body_size | default: 12 }}px;
+    --philosophy-card-meta-size: {{ section.settings.card_meta_size | default: 9 }}px;
+
+    --philosophy-columns: {{ section.settings.columns | default: 3 }};
+    --philosophy-card-gap: {{ section.settings.card_gap | default: 20 }}px;
+    --philosophy-content-width: {{ section.settings.content_max_width | default: 1200 }}px;
+    --philosophy-head-width: {{ section.settings.head_max_width | default: 620 }}px;
+    --philosophy-rule-width: {{ section.settings.rule_width | default: 40 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 100 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 100 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-phil-pillars-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+<script src="{{ 'pravas-philosophy.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Phil Pillars",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PRINCIPLE 02" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not Fast Fashion. Not Fast Anything." },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider", "default": true },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "In an era of obsolescence, we choose permanence. A PRAVAS watch is an antidote to the disposable cycle of modern consumption." },
+    { "type": "text", "id": "footnote_left", "label": "Footnote — left", "default": "ENGINEERED FOR GENERATIONS" },
+    { "type": "text", "id": "footnote_right", "label": "Footnote — right", "default": "A lifetime pledge of mechanical restoration for every registered PRAVAS calibre." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "columns", "label": "Columns — desktop", "min": 1, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "card_gap", "label": "Card gap", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "card_padding", "label": "Card padding", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 800, "max": 1600, "step": 20, "unit": "px", "default": 1200 },
+    { "type": "range", "id": "head_max_width", "label": "Heading block max-width", "min": 400, "max": 900, "step": 20, "unit": "px", "default": 620 },
+    { "type": "range", "id": "rule_width", "label": "Divider width", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 100 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Cards — Borders" },
+    { "type": "range", "id": "card_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "card_border_color", "label": "Border color", "default": "#2E2E2E" },
+    { "type": "range", "id": "card_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Icons" },
+    { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#B5924A" },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 16 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Size — desktop", "min": 18, "max": 64, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "heading_size_tablet", "label": "Size — tablet", "min": 16, "max": 52, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 14, "max": 40, "step": 2, "unit": "px", "default": 22 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.2 },
+
+    { "type": "header", "content": "Typography — Body & Cards" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Supporting text size", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+    { "type": "range", "id": "card_title_size", "label": "Card title size", "min": 11, "max": 26, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "card_title_letter_spacing", "label": "Card title letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 1 },
+    { "type": "range", "id": "card_body_size", "label": "Card body size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "card_meta_size", "label": "Card metadata size", "min": 7, "max": 14, "step": 1, "unit": "px", "default": 9 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#141414" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Supporting text", "default": "#9A9A9A" },
+    { "type": "color", "id": "card_bg_color", "label": "Card background", "default": "#1B1B1B" },
+    { "type": "color", "id": "card_title_color", "label": "Card title", "default": "#F5F3EF" },
+    { "type": "color", "id": "card_body_color", "label": "Card body", "default": "#9A9A9A" },
+    { "type": "color", "id": "card_number_color", "label": "Card number", "default": "#8A8A8A" },
+    { "type": "color", "id": "card_meta_label_color", "label": "Card metadata label", "default": "#8A8A8A" },
+    { "type": "color", "id": "card_meta_value_color", "label": "Card metadata value", "default": "#B5924A" },
+    { "type": "color", "id": "divider_color", "label": "Dividers", "default": "#2E2E2E" },
+    { "type": "color", "id": "footnote_color", "label": "Footnote", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" }
+  ],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number / label", "default": "01 / PILLAR" },
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "shield", "label": "Shield" }, { "value": "infinity", "label": "Infinity" }, { "value": "compass", "label": "Compass" }, { "value": "gear", "label": "Gear" }, { "value": "diamond", "label": "Diamond" }, { "value": "none", "label": "None" }], "default": "shield" },
+        { "type": "text", "id": "title", "label": "Title", "default": "THE MATERIAL" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Surgical-grade steel and sapphire crystal are our baseline. We build for decades, not seasons." },
+        { "type": "text", "id": "meta_label", "label": "Metadata label", "default": "Durability Standard" },
+        { "type": "text", "id": "meta_value", "label": "Metadata value", "default": "316L / Sapphire" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Phil Pillars",
+      "blocks": [
+        { "type": "pillar", "settings": { "number": "01 / PILLAR", "icon": "shield", "title": "THE MATERIAL", "description": "Surgical-grade steel and sapphire crystal are our baseline. We build for decades, not seasons.", "meta_label": "Durability Standard", "meta_value": "316L / Sapphire" } },
+        { "type": "pillar", "settings": { "number": "02 / PILLAR", "icon": "infinity", "title": "THE MOTION", "description": "Automatic movements that derive energy from your movement. No batteries, no digital noise.", "meta_label": "Kinetic Energy", "meta_value": "21-Jewel / Self-Winding" } },
+        { "type": "pillar", "settings": { "number": "03 / PILLAR", "icon": "compass", "title": "THE MARK", "description": "We ignore trends. Our designs are balanced, symmetrical, and timeless in their simplicity.", "meta_label": "Visual Rhythm", "meta_value": "Golden Ratio Form" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

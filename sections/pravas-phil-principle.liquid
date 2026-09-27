@@ -1,0 +1,224 @@
+{{ 'pravas-philosophy.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-phil-principle pw-phil-principle--{{ section.settings.image_position }}" id="pw-phil-principle-{{ section.id }}">
+  <div class="pw-phil-principle__inner">
+    <div class="pw-phil-principle__text" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-phil-principle__eyebrow">
+          {{ section.settings.eyebrow }}
+          {%- if section.settings.show_eyebrow_rule -%}<i class="pw-phil-principle__eyebrow-rule"></i>{%- endif -%}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-phil-principle__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="pw-phil-principle__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="pw-phil-principle__meta">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'meta' -%}
+              <div class="pw-phil-principle__meta-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <span class="pw-phil-principle__meta-label">{{ block.settings.label }}</span>
+                {%- endif -%}
+                {%- if block.settings.value != blank -%}
+                  <span class="pw-phil-principle__meta-value">{{ block.settings.value }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pw-phil-principle__media" data-reveal>
+      <div class="pw-phil-principle__media-frame">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag:
+               alt: section.settings.image.alt | default: section.settings.heading,
+               class: 'pw-phil-principle__image',
+               loading: 'lazy',
+               widths: '500,800,1100,1400'
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'pw-phil-principle__image' }}
+        {%- endif -%}
+        {%- if section.settings.enable_image_overlay -%}
+          <div class="pw-phil-principle__image-overlay"></div>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.caption_left != blank or section.settings.caption_right != blank -%}
+        <div class="pw-phil-principle__caption">
+          <span>{{ section.settings.caption_left }}</span>
+          <span>{{ section.settings.caption_right }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #pw-phil-principle-{{ section.id }} {
+    --philosophy-section-bg: {{ section.settings.bg_color | default: '#F2F0EB' }};
+    --philosophy-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --philosophy-heading-color: {{ section.settings.heading_color | default: '#181818' }};
+    --philosophy-body-color: {{ section.settings.body_color | default: '#4A4A4A' }};
+    --philosophy-meta-label-color: {{ section.settings.meta_label_color | default: '#8A8A8A' }};
+    --philosophy-meta-value-color: {{ section.settings.meta_value_color | default: '#181818' }};
+    --philosophy-caption-color: {{ section.settings.caption_color | default: '#8A8A8A' }};
+    --philosophy-border: {{ section.settings.border_color | default: '#D8D4CC' }};
+    --philosophy-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+
+    --philosophy-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --philosophy-heading-size: {{ section.settings.heading_size | default: 32 }}px;
+    --philosophy-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 28 }}px;
+    --philosophy-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 24 }}px;
+    --philosophy-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --philosophy-heading-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+    --philosophy-heading-line-height: {{ section.settings.heading_line_height | default: 1.2 }};
+    --philosophy-heading-spacing: {{ section.settings.heading_letter_spacing | default: 0 }}px;
+
+    --philosophy-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --philosophy-body-size: {{ section.settings.body_size | default: 14 }}px;
+    --philosophy-body-size-mobile: {{ section.settings.body_size_mobile | default: 13 }}px;
+    --philosophy-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --philosophy-paragraph-gap: {{ section.settings.paragraph_gap | default: 16 }}px;
+
+    --philosophy-eyebrow-size: {{ section.settings.eyebrow_size | default: 10 }}px;
+    --philosophy-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 2 }}px;
+    --philosophy-meta-label-size: {{ section.settings.meta_label_size | default: 9 }}px;
+    --philosophy-meta-value-size: {{ section.settings.meta_value_size | default: 12 }}px;
+
+    --philosophy-text-width: {{ section.settings.text_max_width | default: 420 }}px;
+    --philosophy-column-gap: {{ section.settings.column_gap | default: 80 }}px;
+    --philosophy-content-width: {{ section.settings.content_max_width | default: 1200 }}px;
+    --philosophy-text-ratio: {{ section.settings.text_column_ratio | default: 1 }};
+    --philosophy-media-ratio: {{ section.settings.media_column_ratio | default: 1 }};
+
+    --philosophy-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --philosophy-image-border-width: {{ section.settings.image_border_width | default: 8 }}px;
+    --philosophy-image-border-color: {{ section.settings.image_border_color | default: '#FFFFFF' }};
+    --philosophy-image-aspect: {{ section.settings.image_aspect_ratio | default: '4/5' }};
+    --philosophy-image-fit: {{ section.settings.image_object_fit | default: 'cover' }};
+    --philosophy-image-position: {{ section.settings.image_object_position | default: 'center' }};
+    --philosophy-image-opacity: {{ section.settings.image_opacity | default: 100 | divided_by: 100.0 }};
+    --philosophy-image-overlay: {{ section.settings.image_overlay_color | default: '#181818' }};
+    --philosophy-image-overlay-opacity: {{ section.settings.image_overlay_opacity | default: 0 | divided_by: 100.0 }};
+
+    padding-top: {{ section.settings.padding_top | default: 120 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-phil-principle-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+<script src="{{ 'pravas-philosophy.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Phil Principle",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PRINCIPLE 01" },
+    { "type": "checkbox", "id": "show_eyebrow_rule", "label": "Show line after eyebrow", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "First Beginnings Matter" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Every PRAVAS timepiece is built on the belief that the initial intent determines the soul of the object. We do not retroactively apply \"luxury\" through marketing; it is forged into the base metal.</p><p>From the first sketch to the final regulation of the movement, the genesis is sacred. We choose movements not for their complexity, but for their character—reliable, rhythmic, and ready to outlast their owner.</p>" },
+
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "image_position", "label": "Image side", "options": [{ "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }], "default": "right" },
+    { "type": "select", "id": "image_aspect_ratio", "label": "Aspect ratio", "options": [{ "value": "4/5", "label": "Portrait 4:5" }, { "value": "1/1", "label": "Square" }, { "value": "3/4", "label": "Portrait 3:4" }, { "value": "4/3", "label": "Landscape 4:3" }], "default": "4/5" },
+    { "type": "select", "id": "image_object_fit", "label": "Object fit", "options": [{ "value": "cover", "label": "Cover" }, { "value": "contain", "label": "Contain" }], "default": "cover" },
+    { "type": "select", "id": "image_object_position", "label": "Object position", "options": [{ "value": "center", "label": "Center" }, { "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }], "default": "center" },
+    { "type": "range", "id": "image_opacity", "label": "Image opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "range", "id": "image_radius", "label": "Image radius (0 = sharp)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "image_border_width", "label": "Image frame width", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 8 },
+    { "type": "color", "id": "image_border_color", "label": "Image frame color", "default": "#FFFFFF" },
+    { "type": "checkbox", "id": "enable_image_overlay", "label": "Enable image overlay", "default": false },
+    { "type": "color", "id": "image_overlay_color", "label": "Overlay color", "default": "#181818" },
+    { "type": "range", "id": "image_overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 0 },
+    { "type": "text", "id": "caption_left", "label": "Caption — left", "default": "FIG 1.0 — THE SACRED GENESIS" },
+    { "type": "text", "id": "caption_right", "label": "Caption — right", "default": "MUMBAI HOROLOGY WORKSHOP" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 800, "max": 1600, "step": 20, "unit": "px", "default": 1200 },
+    { "type": "range", "id": "text_max_width", "label": "Text column max-width", "min": 280, "max": 700, "step": 20, "unit": "px", "default": 420 },
+    { "type": "range", "id": "text_column_ratio", "label": "Text column ratio", "min": 1, "max": 3, "step": 1, "default": 1 },
+    { "type": "range", "id": "media_column_ratio", "label": "Image column ratio", "min": 1, "max": 3, "step": 1, "default": 1 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "paragraph_gap", "label": "Paragraph spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Size — desktop", "min": 18, "max": 64, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "heading_size_tablet", "label": "Size — tablet", "min": 16, "max": 52, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 14, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "heading_italic", "label": "Italic", "default": false },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.2 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Typography — Body & Meta" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size — desktop", "min": 11, "max": 22, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "body_size_mobile", "label": "Body size — mobile", "min": 11, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 2 },
+    { "type": "range", "id": "meta_label_size", "label": "Metadata label size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "meta_value_size", "label": "Metadata value size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F2F0EB" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#181818" },
+    { "type": "color", "id": "body_color", "label": "Body", "default": "#4A4A4A" },
+    { "type": "color", "id": "meta_label_color", "label": "Metadata label", "default": "#8A8A8A" },
+    { "type": "color", "id": "meta_value_color", "label": "Metadata value", "default": "#181818" },
+    { "type": "color", "id": "caption_color", "label": "Image caption", "default": "#8A8A8A" },
+    { "type": "color", "id": "border_color", "label": "Dividers", "default": "#D8D4CC" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" }
+  ],
+  "blocks": [
+    {
+      "type": "meta",
+      "name": "Metadata Item",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "ATELIER LOCATION" },
+        { "type": "text", "id": "value", "label": "Value", "default": "South Mumbai" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Phil Principle",
+      "blocks": [
+        { "type": "meta", "settings": { "label": "ATELIER LOCATION", "value": "South Mumbai" } },
+        { "type": "meta", "settings": { "label": "GENESIS STANDARD", "value": "Hand Finished 316L Alloy" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

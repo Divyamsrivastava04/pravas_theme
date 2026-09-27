@@ -1,0 +1,474 @@
+/* pravas-philosophy.css — PRAVAS Philosophy page.
+   Every value reads a --philosophy-* custom property generated
+   per-section from Theme Editor settings. */
+
+[class^="pw-phil-"] * { min-width: 0; }
+[class^="pw-phil-"] [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+[class^="pw-phil-"] [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  [class^="pw-phil-"] [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* ===== HERO ===== */
+.pw-phil-hero {
+  position: relative;
+  background: var(--philosophy-dark-bg, #141414);
+  color: var(--philosophy-hero-text, #F5F3EF);
+  overflow: hidden;
+  min-height: var(--philosophy-hero-min-height, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pw-phil-hero__bg { position: absolute; inset: 0; pointer-events: none; }
+.pw-phil-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--philosophy-hero-image-position, center);
+  opacity: var(--philosophy-hero-image-opacity, 1);
+  display: block;
+}
+.pw-phil-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--philosophy-hero-overlay, #0F0F0F);
+  opacity: var(--philosophy-hero-overlay-opacity, 0.8);
+}
+.pw-phil-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--philosophy-hero-content-width, 1000px);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pw-phil-hero__eyebrow {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-hero-eyebrow-size, 10px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-hero-eyebrow-spacing, 3px);
+  text-transform: uppercase;
+  color: var(--philosophy-hero-eyebrow, #B5924A);
+  margin-bottom: 28px;
+}
+.pw-phil-hero__quote {
+  font-family: var(--philosophy-quote-font, var(--font-display));
+  font-size: var(--philosophy-quote-size-mobile, 26px);
+  font-weight: var(--philosophy-quote-weight, 400);
+  font-style: var(--philosophy-quote-style, italic);
+  line-height: var(--philosophy-quote-line-height, 1.3);
+  letter-spacing: var(--philosophy-quote-spacing, 0);
+  color: var(--philosophy-hero-quote-color, #F5F3EF);
+  max-width: var(--philosophy-quote-width, 900px);
+  margin: 0;
+}
+.pw-phil-hero__rule {
+  width: var(--philosophy-rule-width, 40px);
+  height: var(--philosophy-rule-thickness, 1px);
+  background: var(--philosophy-accent, #B5924A);
+  border: none;
+  margin: 32px 0;
+}
+.pw-phil-hero__subtext {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-subtext-size, 10px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-subtext-spacing, 3px);
+  text-transform: uppercase;
+  color: var(--philosophy-hero-subtext-color, #888);
+}
+.pw-phil-hero__strip {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--philosophy-strip-columns, 4), minmax(0, 1fr));
+  gap: var(--philosophy-strip-gap, 8px);
+  max-width: var(--philosophy-strip-max-width, 1200px);
+  width: 100%;
+  margin: 56px auto 0;
+}
+.pw-phil-hero__tile {
+  border-radius: var(--philosophy-strip-radius, 0);
+  border-width: var(--philosophy-strip-border-width, 0);
+  border-style: solid;
+  border-color: var(--philosophy-strip-border-color, #2E2E2E);
+  overflow: hidden;
+  background: #101010;
+}
+.pw-phil-hero__tile-media { position: relative; height: var(--philosophy-strip-height, 120px); overflow: hidden; }
+.pw-phil-hero__tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--philosophy-strip-image-position, center);
+  display: block;
+  transition: transform 500ms ease;
+}
+.pw-phil-hero__tile:hover .pw-phil-hero__tile-img { transform: scale(1.04); }
+.pw-phil-hero__tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--philosophy-strip-overlay, #0F0F0F);
+  opacity: var(--philosophy-strip-overlay-opacity, 0.45);
+  transition: opacity 300ms ease;
+}
+.pw-phil-hero__tile:hover .pw-phil-hero__tile-overlay { opacity: calc(var(--philosophy-strip-overlay-opacity, 0.45) * 0.6); }
+.pw-phil-hero__tile-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.pw-phil-hero__tile-label {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-strip-label-size, 9px);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--philosophy-strip-label-color, #C8C8CC);
+}
+.pw-phil-hero__tile-desc {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--philosophy-strip-desc-color, #888);
+}
+@media screen and (min-width: 750px) {
+  .pw-phil-hero__quote { font-size: var(--philosophy-quote-size-tablet, 36px); }
+}
+@media screen and (min-width: 990px) {
+  .pw-phil-hero__quote { font-size: var(--philosophy-quote-size, 46px); }
+}
+@media screen and (max-width: 749px) {
+  .pw-phil-hero__strip { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 36px; }
+}
+
+/* ===== PRINCIPLE (two column) ===== */
+.pw-phil-principle { background: var(--philosophy-section-bg, #F2F0EB); }
+.pw-phil-principle__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--philosophy-column-gap, 80px);
+  max-width: var(--philosophy-content-width, 1200px);
+  margin: 0 auto;
+}
+.pw-phil-principle--left .pw-phil-principle__inner { flex-direction: row-reverse; }
+.pw-phil-principle__text { flex: var(--philosophy-text-ratio, 1) 1 0%; min-width: 0; max-width: var(--philosophy-text-width, 420px); }
+.pw-phil-principle__media { flex: var(--philosophy-media-ratio, 1) 1 0%; min-width: 0; }
+.pw-phil-principle__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-eyebrow-size, 10px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-eyebrow-spacing, 2px);
+  text-transform: uppercase;
+  color: var(--philosophy-eyebrow-color, #B5924A);
+  margin-bottom: 18px;
+}
+.pw-phil-principle__eyebrow-rule { display: block; width: 36px; height: 1px; background: var(--philosophy-accent, #B5924A); opacity: 0.6; }
+.pw-phil-principle__heading {
+  font-family: var(--philosophy-heading-font, var(--font-display));
+  font-size: var(--philosophy-heading-size-mobile, 24px);
+  font-weight: var(--philosophy-heading-weight, 400);
+  font-style: var(--philosophy-heading-style, normal);
+  line-height: var(--philosophy-heading-line-height, 1.2);
+  letter-spacing: var(--philosophy-heading-spacing, 0);
+  color: var(--philosophy-heading-color, #181818);
+  margin: 0 0 24px 0;
+}
+.pw-phil-principle__body {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-body-size-mobile, 13px);
+  font-weight: 300;
+  line-height: var(--philosophy-body-line-height, 1.8);
+  color: var(--philosophy-body-color, #4A4A4A);
+}
+.pw-phil-principle__body p { margin: 0 0 var(--philosophy-paragraph-gap, 16px) 0; }
+.pw-phil-principle__body p:last-child { margin-bottom: 0; }
+.pw-phil-principle__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--philosophy-border, #D8D4CC);
+}
+.pw-phil-principle__meta-item { display: flex; flex-direction: column; gap: 5px; }
+.pw-phil-principle__meta-label {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-meta-label-size, 9px);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--philosophy-meta-label-color, #8A8A8A);
+}
+.pw-phil-principle__meta-value {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-meta-value-size, 12px);
+  font-weight: 400;
+  color: var(--philosophy-meta-value-color, #181818);
+}
+.pw-phil-principle__media-frame {
+  position: relative;
+  background: var(--philosophy-image-border-color, #FFFFFF);
+  padding: var(--philosophy-image-border-width, 8px);
+  border-radius: var(--philosophy-image-radius, 0);
+  overflow: hidden;
+}
+.pw-phil-principle__image {
+  width: 100%;
+  aspect-ratio: var(--philosophy-image-aspect, 4/5);
+  object-fit: var(--philosophy-image-fit, cover);
+  object-position: var(--philosophy-image-position, center);
+  opacity: var(--philosophy-image-opacity, 1);
+  display: block;
+  border-radius: var(--philosophy-image-radius, 0);
+}
+.pw-phil-principle__image-overlay {
+  position: absolute;
+  inset: var(--philosophy-image-border-width, 8px);
+  background: var(--philosophy-image-overlay, #181818);
+  opacity: var(--philosophy-image-overlay-opacity, 0);
+  pointer-events: none;
+}
+.pw-phil-principle__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--philosophy-caption-color, #8A8A8A);
+}
+@media screen and (min-width: 750px) {
+  .pw-phil-principle__heading { font-size: var(--philosophy-heading-size-tablet, 28px); }
+  .pw-phil-principle__body { font-size: var(--philosophy-body-size, 14px); }
+}
+@media screen and (min-width: 990px) {
+  .pw-phil-principle__heading { font-size: var(--philosophy-heading-size, 32px); }
+}
+@media screen and (max-width: 989px) {
+  .pw-phil-principle__inner,
+  .pw-phil-principle--left .pw-phil-principle__inner { flex-direction: column; align-items: stretch; }
+  .pw-phil-principle__text { max-width: none; }
+}
+
+/* ===== PILLARS ===== */
+.pw-phil-pillars { background: var(--philosophy-dark-bg, #141414); }
+.pw-phil-pillars__inner { max-width: var(--philosophy-content-width, 1200px); margin: 0 auto; }
+.pw-phil-pillars__head { text-align: center; max-width: var(--philosophy-head-width, 620px); margin: 0 auto 48px; }
+.pw-phil-pillars__eyebrow {
+  display: block;
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-eyebrow-size, 10px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-eyebrow-spacing, 3px);
+  text-transform: uppercase;
+  color: var(--philosophy-eyebrow-color, #B5924A);
+  margin-bottom: 18px;
+}
+.pw-phil-pillars__heading {
+  font-family: var(--philosophy-heading-font, var(--font-display));
+  font-size: var(--philosophy-heading-size-mobile, 22px);
+  font-weight: var(--philosophy-heading-weight, 400);
+  line-height: var(--philosophy-heading-line-height, 1.2);
+  color: var(--philosophy-heading-color, #F5F3EF);
+  margin: 0;
+}
+.pw-phil-pillars__rule {
+  width: var(--philosophy-rule-width, 40px);
+  height: 1px;
+  background: var(--philosophy-accent, #B5924A);
+  border: none;
+  margin: 24px auto;
+}
+.pw-phil-pillars__body {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-body-size, 13px);
+  font-weight: 300;
+  line-height: var(--philosophy-body-line-height, 1.8);
+  color: var(--philosophy-body-color, #9A9A9A);
+  margin: 0;
+}
+.pw-phil-pillars__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--philosophy-columns, 3), minmax(0, 1fr));
+  gap: var(--philosophy-card-gap, 20px);
+}
+.pw-phil-pillars__card {
+  background: var(--philosophy-card-bg, #1B1B1B);
+  border-width: var(--philosophy-card-border-width, 1px);
+  border-style: solid;
+  border-color: var(--philosophy-card-border, #2E2E2E);
+  border-radius: var(--philosophy-card-radius, 0);
+  padding: var(--philosophy-card-padding, 28px);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 300ms ease;
+}
+.pw-phil-pillars__card:hover { border-color: var(--philosophy-accent, #B5924A); }
+.pw-phil-pillars__card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 44px; }
+.pw-phil-pillars__card-number {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-card-meta-size, 9px);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--philosophy-card-number-color, #8A8A8A);
+}
+.pw-phil-pillars__card-icon { display: flex; color: var(--philosophy-icon-color, #B5924A); }
+.pw-phil-pillars__card-icon svg { width: var(--philosophy-icon-size, 16px); height: var(--philosophy-icon-size, 16px); }
+.pw-phil-pillars__card-title {
+  font-family: var(--philosophy-heading-font, var(--font-display));
+  font-size: var(--philosophy-card-title-size, 15px);
+  font-weight: 400;
+  letter-spacing: var(--philosophy-card-title-spacing, 1px);
+  text-transform: uppercase;
+  color: var(--philosophy-card-title-color, #F5F3EF);
+  margin: 0 0 14px 0;
+}
+.pw-phil-pillars__card-desc {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-card-body-size, 12px);
+  font-weight: 300;
+  line-height: var(--philosophy-body-line-height, 1.8);
+  color: var(--philosophy-card-body-color, #9A9A9A);
+  margin: 0 0 28px 0;
+  flex-grow: 1;
+}
+.pw-phil-pillars__card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--philosophy-divider, #2E2E2E);
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-card-meta-size, 9px);
+  letter-spacing: 0.5px;
+}
+.pw-phil-pillars__card-meta-label { color: var(--philosophy-card-meta-label-color, #8A8A8A); }
+.pw-phil-pillars__card-meta-value { color: var(--philosophy-card-meta-value-color, #B5924A); text-align: right; }
+.pw-phil-pillars__footnote {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--philosophy-divider, #2E2E2E);
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--philosophy-footnote-color, #8A8A8A);
+}
+.pw-phil-pillars__footnote span:last-child { text-transform: none; letter-spacing: 0; }
+@media screen and (min-width: 750px) {
+  .pw-phil-pillars__heading { font-size: var(--philosophy-heading-size-tablet, 28px); }
+}
+@media screen and (min-width: 990px) {
+  .pw-phil-pillars__heading { font-size: var(--philosophy-heading-size, 32px); }
+}
+@media screen and (max-width: 749px) {
+  .pw-phil-pillars__grid { grid-template-columns: minmax(0, 1fr); }
+  .pw-phil-pillars__card-top { margin-bottom: 24px; }
+}
+
+/* ===== CLOSING ===== */
+.pw-phil-closing { background: var(--philosophy-section-bg, #F2F0EB); }
+.pw-phil-closing__inner {
+  max-width: var(--philosophy-content-width, 760px);
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pw-phil-closing__rule {
+  width: var(--philosophy-rule-width, 40px);
+  height: var(--philosophy-rule-thickness, 1px);
+  background: var(--philosophy-divider, #D8D4CC);
+  border: none;
+  margin: 0;
+}
+.pw-phil-closing__rule--top { margin-bottom: 36px; }
+.pw-phil-closing__rule--bottom { width: 100%; margin: 48px 0 20px; }
+.pw-phil-closing__eyebrow {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-eyebrow-size, 9px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-eyebrow-spacing, 3px);
+  text-transform: uppercase;
+  color: var(--philosophy-eyebrow-color, #8A8A8A);
+  margin-bottom: 28px;
+}
+.pw-phil-closing__quote {
+  font-family: var(--philosophy-quote-font, var(--font-display));
+  font-size: var(--philosophy-quote-size-mobile, 22px);
+  font-weight: var(--philosophy-quote-weight, 400);
+  font-style: var(--philosophy-quote-style, italic);
+  line-height: var(--philosophy-quote-line-height, 1.3);
+  color: var(--philosophy-quote-color, #181818);
+  max-width: var(--philosophy-quote-width, 680px);
+  margin: 0 0 20px 0;
+}
+.pw-phil-closing__body {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-body-size, 13px);
+  font-weight: 300;
+  line-height: var(--philosophy-body-line-height, 1.8);
+  color: var(--philosophy-body-color, #4A4A4A);
+  margin: 0;
+}
+.pw-phil-closing__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--philosophy-cta-margin, 32px);
+  padding: var(--philosophy-cta-padding-y, 14px) var(--philosophy-cta-padding-x, 32px);
+  background: var(--philosophy-cta-bg, #B5924A);
+  color: var(--philosophy-cta-text, #FFFFFF);
+  border-width: var(--philosophy-cta-border-width, 0);
+  border-style: solid;
+  border-color: var(--philosophy-cta-border-color, #B5924A);
+  border-radius: var(--philosophy-cta-radius, 0);
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-cta-size, 10px);
+  font-weight: 600;
+  letter-spacing: var(--philosophy-cta-spacing, 2px);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 250ms ease, color 250ms ease;
+}
+.pw-phil-closing__cta:hover {
+  background: var(--philosophy-cta-hover-bg, #9E7E3D);
+  color: var(--philosophy-cta-hover-text, #FFFFFF);
+}
+.pw-phil-closing__footnote {
+  font-family: var(--philosophy-body-font, var(--font-body));
+  font-size: var(--philosophy-footnote-size, 9px);
+  font-weight: 500;
+  letter-spacing: var(--philosophy-footnote-spacing, 2px);
+  text-transform: uppercase;
+  color: var(--philosophy-footnote-color, #8A8A8A);
+}
+@media screen and (min-width: 750px) {
+  .pw-phil-closing__quote { font-size: var(--philosophy-quote-size-tablet, 30px); }
+}
+@media screen and (min-width: 990px) {
+  .pw-phil-closing__quote { font-size: var(--philosophy-quote-size, 36px); }
+}

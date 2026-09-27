@@ -1,0 +1,229 @@
+{{ 'pravas-philosophy.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-phil-hero" id="pw-phil-hero-{{ section.id }}">
+  <div class="pw-phil-hero__bg" aria-hidden="true">
+    {%- if section.settings.bg_image != blank -%}
+      {{ section.settings.bg_image | image_url: width: 2400 | image_tag:
+           alt: '',
+           class: 'pw-phil-hero__bg-img',
+           loading: 'eager',
+           widths: '800,1200,1800,2400'
+      }}
+    {%- endif -%}
+    <div class="pw-phil-hero__overlay"></div>
+  </div>
+
+  <div class="pw-phil-hero__inner" data-reveal>
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-phil-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="pw-phil-hero__quote">{{ section.settings.quote }}</blockquote>
+    {%- endif -%}
+    {%- if section.settings.show_rule -%}
+      <hr class="pw-phil-hero__rule">
+    {%- endif -%}
+    {%- if section.settings.subtext != blank -%}
+      <span class="pw-phil-hero__subtext">{{ section.settings.subtext }}</span>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_strip and section.blocks.size > 0 -%}
+    <div class="pw-phil-hero__strip" data-reveal>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'tile' -%}
+          <div class="pw-phil-hero__tile" {{ block.shopify_attributes }}>
+            <div class="pw-phil-hero__tile-media">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 800 | image_tag:
+                     alt: block.settings.label,
+                     class: 'pw-phil-hero__tile-img',
+                     loading: 'lazy',
+                     widths: '300,500,800'
+                }}
+              {%- else -%}
+                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'pw-phil-hero__tile-img' }}
+              {%- endif -%}
+              <div class="pw-phil-hero__tile-overlay"></div>
+            </div>
+            <div class="pw-phil-hero__tile-caption">
+              {%- if block.settings.label != blank -%}
+                <span class="pw-phil-hero__tile-label">{{ block.settings.label }}</span>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <span class="pw-phil-hero__tile-desc">{{ block.settings.description }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+<style>
+  #pw-phil-hero-{{ section.id }} {
+    --philosophy-dark-bg: {{ section.settings.bg_color | default: '#141414' }};
+    --philosophy-hero-text: {{ section.settings.text_color | default: '#F5F3EF' }};
+    --philosophy-hero-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --philosophy-hero-quote-color: {{ section.settings.quote_color | default: '#F5F3EF' }};
+    --philosophy-hero-subtext-color: {{ section.settings.subtext_color | default: '#888888' }};
+    --philosophy-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+    --philosophy-hero-overlay: {{ section.settings.overlay_color | default: '#0F0F0F' }};
+    --philosophy-hero-overlay-opacity: {{ section.settings.overlay_opacity | default: 80 | divided_by: 100.0 }};
+    --philosophy-hero-image-opacity: {{ section.settings.bg_image_opacity | default: 100 | divided_by: 100.0 }};
+    --philosophy-hero-image-position: {{ section.settings.bg_image_position | default: 'center' }};
+
+    --philosophy-hero-eyebrow-size: {{ section.settings.eyebrow_size | default: 10 }}px;
+    --philosophy-hero-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --philosophy-quote-font: {{ section.settings.quote_font.family }}, {{ section.settings.quote_font.fallback_families }};
+    --philosophy-quote-size: {{ section.settings.quote_size | default: 46 }}px;
+    --philosophy-quote-size-tablet: {{ section.settings.quote_size_tablet | default: 36 }}px;
+    --philosophy-quote-size-mobile: {{ section.settings.quote_size_mobile | default: 26 }}px;
+    --philosophy-quote-weight: {{ section.settings.quote_weight | default: '400' }};
+    --philosophy-quote-style: {% if section.settings.quote_italic %}italic{% else %}normal{% endif %};
+    --philosophy-quote-line-height: {{ section.settings.quote_line_height | default: 1.3 }};
+    --philosophy-quote-spacing: {{ section.settings.quote_letter_spacing | default: 0 }}px;
+    --philosophy-quote-width: {{ section.settings.quote_max_width | default: 900 }}px;
+
+    --philosophy-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --philosophy-subtext-size: {{ section.settings.subtext_size | default: 10 }}px;
+    --philosophy-subtext-spacing: {{ section.settings.subtext_letter_spacing | default: 3 }}px;
+
+    --philosophy-hero-min-height: {{ section.settings.min_height | default: 0 }}vh;
+    --philosophy-hero-content-width: {{ section.settings.content_max_width | default: 1000 }}px;
+    --philosophy-rule-width: {{ section.settings.rule_width | default: 40 }}px;
+    --philosophy-rule-thickness: {{ section.settings.rule_thickness | default: 1 }}px;
+
+    --philosophy-strip-columns: {{ section.settings.strip_columns | default: 4 }};
+    --philosophy-strip-gap: {{ section.settings.strip_gap | default: 8 }}px;
+    --philosophy-strip-height: {{ section.settings.strip_height | default: 120 }}px;
+    --philosophy-strip-radius: {{ section.settings.strip_radius | default: 0 }}px;
+    --philosophy-strip-border-width: {{ section.settings.strip_border_width | default: 0 }}px;
+    --philosophy-strip-border-color: {{ section.settings.strip_border_color | default: '#2E2E2E' }};
+    --philosophy-strip-overlay: {{ section.settings.strip_overlay_color | default: '#0F0F0F' }};
+    --philosophy-strip-overlay-opacity: {{ section.settings.strip_overlay_opacity | default: 45 | divided_by: 100.0 }};
+    --philosophy-strip-label-color: {{ section.settings.strip_label_color | default: '#C8C8CC' }};
+    --philosophy-strip-label-size: {{ section.settings.strip_label_size | default: 9 }}px;
+    --philosophy-strip-desc-color: {{ section.settings.strip_desc_color | default: '#888888' }};
+    --philosophy-strip-max-width: {{ section.settings.strip_max_width | default: 1200 }}px;
+    --philosophy-strip-image-position: {{ section.settings.strip_image_position | default: 'center' }};
+
+    padding-top: {{ section.settings.padding_top | default: 96 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 48 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-phil-hero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 56 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 32 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+<script src="{{ 'pravas-philosophy.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Phil Hero",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR PHILOSOPHY · THE ESSENCE OF TIME" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"Time is not an asset. It is the medium through which you become who you are.\"" },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider under quote", "default": true },
+    { "type": "text", "id": "subtext", "label": "Supporting text", "default": "HOROLOGY IN PURSUIT OF PERMANENCE" },
+
+    { "type": "header", "content": "Background Image" },
+    { "type": "image_picker", "id": "bg_image", "label": "Background image" },
+    { "type": "select", "id": "bg_image_position", "label": "Image position", "options": [{ "value": "center", "label": "Center" }, { "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }], "default": "center" },
+    { "type": "range", "id": "bg_image_opacity", "label": "Image opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 100 },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#0F0F0F" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 80 },
+
+    { "type": "header", "content": "Image Strip" },
+    { "type": "checkbox", "id": "show_strip", "label": "Show image strip", "default": true },
+    { "type": "range", "id": "strip_columns", "label": "Columns — desktop", "min": 2, "max": 6, "step": 1, "default": 4 },
+    { "type": "range", "id": "strip_gap", "label": "Gap", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 8 },
+    { "type": "range", "id": "strip_height", "label": "Tile height", "min": 60, "max": 320, "step": 10, "unit": "px", "default": 120 },
+    { "type": "range", "id": "strip_max_width", "label": "Strip max-width", "min": 600, "max": 1600, "step": 20, "unit": "px", "default": 1200 },
+    { "type": "select", "id": "strip_image_position", "label": "Tile image position", "options": [{ "value": "center", "label": "Center" }, { "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }], "default": "center" },
+    { "type": "range", "id": "strip_radius", "label": "Tile radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "strip_border_width", "label": "Tile border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "strip_border_color", "label": "Tile border color", "default": "#2E2E2E" },
+    { "type": "color", "id": "strip_overlay_color", "label": "Tile overlay color", "default": "#0F0F0F" },
+    { "type": "range", "id": "strip_overlay_opacity", "label": "Tile overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 45 },
+    { "type": "color", "id": "strip_label_color", "label": "Tile label color", "default": "#C8C8CC" },
+    { "type": "range", "id": "strip_label_size", "label": "Tile label size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "color", "id": "strip_desc_color", "label": "Tile description color", "default": "#888888" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "min_height", "label": "Minimum height (0 = auto)", "min": 0, "max": 100, "step": 5, "unit": "vh", "default": 0 },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 600, "max": 1400, "step": 20, "unit": "px", "default": 1000 },
+    { "type": "range", "id": "quote_max_width", "label": "Quote max-width", "min": 400, "max": 1200, "step": 20, "unit": "px", "default": 900 },
+    { "type": "range", "id": "rule_width", "label": "Divider width", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "rule_thickness", "label": "Divider thickness", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Quote" },
+    { "type": "font_picker", "id": "quote_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "quote_size", "label": "Size — desktop", "min": 24, "max": 80, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "quote_size_tablet", "label": "Size — tablet", "min": 20, "max": 64, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "quote_size_mobile", "label": "Size — mobile", "min": 16, "max": 48, "step": 2, "unit": "px", "default": 26 },
+    { "type": "select", "id": "quote_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "quote_italic", "label": "Italic", "default": true },
+    { "type": "range", "id": "quote_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.3 },
+    { "type": "range", "id": "quote_letter_spacing", "label": "Letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Typography — Eyebrow & Supporting" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+    { "type": "range", "id": "subtext_size", "label": "Supporting text size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "subtext_letter_spacing", "label": "Supporting letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#141414" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "quote_color", "label": "Quote", "default": "#F5F3EF" },
+    { "type": "color", "id": "subtext_color", "label": "Supporting text", "default": "#888888" },
+    { "type": "color", "id": "accent_color", "label": "Accent / divider", "default": "#B5924A" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Image Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "label", "label": "Label", "default": "CALIBRE 01" },
+        { "type": "text", "id": "description", "label": "Description (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Phil Hero",
+      "blocks": [
+        { "type": "tile", "settings": { "label": "CALIBRE 01" } },
+        { "type": "tile", "settings": { "label": "ENERGY & SPRING" } },
+        { "type": "tile", "settings": { "label": "21 JEWELS" } },
+        { "type": "tile", "settings": { "label": "HAND-REGULATED" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,172 @@
+{{ 'pravas-philosophy.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-phil-closing" id="pw-phil-closing-{{ section.id }}">
+  <div class="pw-phil-closing__inner" data-reveal>
+    {%- if section.settings.show_top_rule -%}
+      <hr class="pw-phil-closing__rule pw-phil-closing__rule--top">
+    {%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-phil-closing__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="pw-phil-closing__quote">{{ section.settings.quote }}</blockquote>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pw-phil-closing__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="pw-phil-closing__cta">
+        {{ section.settings.cta_label }}
+        {%- if section.settings.cta_show_arrow -%}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        {%- endif -%}
+      </a>
+    {%- endif -%}
+    {%- if section.settings.show_bottom_rule -%}
+      <hr class="pw-phil-closing__rule pw-phil-closing__rule--bottom">
+    {%- endif -%}
+    {%- if section.settings.footnote != blank -%}
+      <span class="pw-phil-closing__footnote">{{ section.settings.footnote }}</span>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-phil-closing-{{ section.id }} {
+    --philosophy-section-bg: {{ section.settings.bg_color | default: '#F2F0EB' }};
+    --philosophy-eyebrow-color: {{ section.settings.eyebrow_color | default: '#8A8A8A' }};
+    --philosophy-quote-color: {{ section.settings.quote_color | default: '#181818' }};
+    --philosophy-body-color: {{ section.settings.body_color | default: '#4A4A4A' }};
+    --philosophy-footnote-color: {{ section.settings.footnote_color | default: '#8A8A8A' }};
+    --philosophy-divider: {{ section.settings.divider_color | default: '#D8D4CC' }};
+    --philosophy-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+
+    --philosophy-cta-bg: {{ section.settings.cta_bg_color | default: '#B5924A' }};
+    --philosophy-cta-text: {{ section.settings.cta_text_color | default: '#FFFFFF' }};
+    --philosophy-cta-hover-bg: {{ section.settings.cta_hover_bg_color | default: '#9E7E3D' }};
+    --philosophy-cta-hover-text: {{ section.settings.cta_hover_text_color | default: '#FFFFFF' }};
+    --philosophy-cta-border-color: {{ section.settings.cta_border_color | default: '#B5924A' }};
+    --philosophy-cta-border-width: {{ section.settings.cta_border_width | default: 0 }}px;
+    --philosophy-cta-radius: {{ section.settings.cta_radius | default: 0 }}px;
+    --philosophy-cta-padding-y: {{ section.settings.cta_padding_y | default: 14 }}px;
+    --philosophy-cta-padding-x: {{ section.settings.cta_padding_x | default: 32 }}px;
+    --philosophy-cta-size: {{ section.settings.cta_size | default: 10 }}px;
+    --philosophy-cta-spacing: {{ section.settings.cta_letter_spacing | default: 2 }}px;
+    --philosophy-cta-margin: {{ section.settings.cta_margin_top | default: 32 }}px;
+
+    --philosophy-quote-font: {{ section.settings.quote_font.family }}, {{ section.settings.quote_font.fallback_families }};
+    --philosophy-quote-size: {{ section.settings.quote_size | default: 36 }}px;
+    --philosophy-quote-size-tablet: {{ section.settings.quote_size_tablet | default: 30 }}px;
+    --philosophy-quote-size-mobile: {{ section.settings.quote_size_mobile | default: 22 }}px;
+    --philosophy-quote-weight: {{ section.settings.quote_weight | default: '400' }};
+    --philosophy-quote-style: {% if section.settings.quote_italic %}italic{% else %}normal{% endif %};
+    --philosophy-quote-line-height: {{ section.settings.quote_line_height | default: 1.3 }};
+    --philosophy-quote-width: {{ section.settings.quote_max_width | default: 680 }}px;
+
+    --philosophy-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --philosophy-body-size: {{ section.settings.body_size | default: 13 }}px;
+    --philosophy-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --philosophy-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+    --philosophy-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+    --philosophy-footnote-size: {{ section.settings.footnote_size | default: 9 }}px;
+    --philosophy-footnote-spacing: {{ section.settings.footnote_letter_spacing | default: 2 }}px;
+
+    --philosophy-content-width: {{ section.settings.content_max_width | default: 760 }}px;
+    --philosophy-rule-width: {{ section.settings.rule_width | default: 40 }}px;
+    --philosophy-rule-thickness: {{ section.settings.rule_thickness | default: 1 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 120 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-phil-closing-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 64 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+<script src="{{ 'pravas-philosophy.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Phil Closing",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "checkbox", "id": "show_top_rule", "label": "Show divider above", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE PRAVAS COMMITMENT" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "\"We promise a product that respects your time by existing outside of it.\"" },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "Craft is our prayer. Precision is our practice. Heritage is our guide." },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "EXPLORE THE COLLECTION" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" },
+    { "type": "checkbox", "id": "cta_show_arrow", "label": "Show arrow on CTA", "default": true },
+    { "type": "checkbox", "id": "show_bottom_rule", "label": "Show divider below CTA", "default": true },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "LIMITED ANNUAL PRODUCTION · INDIVIDUALLY NUMBERED" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 400, "max": 1200, "step": 20, "unit": "px", "default": 760 },
+    { "type": "range", "id": "quote_max_width", "label": "Quote max-width", "min": 320, "max": 1000, "step": 20, "unit": "px", "default": 680 },
+    { "type": "range", "id": "rule_width", "label": "Divider width", "min": 0, "max": 400, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "rule_thickness", "label": "Divider thickness", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "CTA Button" },
+    { "type": "color", "id": "cta_bg_color", "label": "Background", "default": "#B5924A" },
+    { "type": "color", "id": "cta_text_color", "label": "Text", "default": "#FFFFFF" },
+    { "type": "color", "id": "cta_hover_bg_color", "label": "Hover background", "default": "#9E7E3D" },
+    { "type": "color", "id": "cta_hover_text_color", "label": "Hover text", "default": "#FFFFFF" },
+    { "type": "color", "id": "cta_border_color", "label": "Border", "default": "#B5924A" },
+    { "type": "range", "id": "cta_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "cta_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 40, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "cta_padding_y", "label": "Vertical padding", "min": 6, "max": 30, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "cta_padding_x", "label": "Horizontal padding", "min": 8, "max": 80, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "cta_size", "label": "Font size", "min": 8, "max": 18, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "cta_letter_spacing", "label": "Letter spacing", "min": 0, "max": 6, "step": 0.5, "unit": "px", "default": 2 },
+    { "type": "range", "id": "cta_margin_top", "label": "Spacing above CTA", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 32 },
+
+    { "type": "header", "content": "Typography — Quote" },
+    { "type": "font_picker", "id": "quote_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "quote_size", "label": "Size — desktop", "min": 18, "max": 72, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "quote_size_tablet", "label": "Size — tablet", "min": 16, "max": 56, "step": 2, "unit": "px", "default": 30 },
+    { "type": "range", "id": "quote_size_mobile", "label": "Size — mobile", "min": 14, "max": 40, "step": 2, "unit": "px", "default": 22 },
+    { "type": "select", "id": "quote_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "quote_italic", "label": "Italic", "default": true },
+    { "type": "range", "id": "quote_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.3 },
+
+    { "type": "header", "content": "Typography — Body & Small Text" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+    { "type": "range", "id": "footnote_size", "label": "Footnote size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "footnote_letter_spacing", "label": "Footnote letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 2 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#F2F0EB" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#8A8A8A" },
+    { "type": "color", "id": "quote_color", "label": "Quote", "default": "#181818" },
+    { "type": "color", "id": "body_color", "label": "Body", "default": "#4A4A4A" },
+    { "type": "color", "id": "footnote_color", "label": "Footnote", "default": "#8A8A8A" },
+    { "type": "color", "id": "divider_color", "label": "Dividers", "default": "#D8D4CC" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" }
+  ],
+  "presets": [
+    { "name": "PW Phil Closing" }
+  ]
+}
+{% endschema %}

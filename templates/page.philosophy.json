@@ -1,23 +1,39 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      }
+    "phil-hero": {
+      "type": "pravas-phil-hero",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "label": "CALIBRE 01" } },
+        "t2": { "type": "tile", "settings": { "label": "ENERGY & SPRING" } },
+        "t3": { "type": "tile", "settings": { "label": "21 JEWELS" } },
+        "t4": { "type": "tile", "settings": { "label": "HAND-REGULATED" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {}
+    },
+    "phil-principle-01": {
+      "type": "pravas-phil-principle",
+      "blocks": {
+        "m1": { "type": "meta", "settings": { "label": "ATELIER LOCATION", "value": "South Mumbai" } },
+        "m2": { "type": "meta", "settings": { "label": "GENESIS STANDARD", "value": "Hand Finished 316L Alloy" } }
+      },
+      "block_order": ["m1", "m2"],
+      "settings": {}
+    },
+    "phil-pillars": {
+      "type": "pravas-phil-pillars",
+      "blocks": {
+        "p1": { "type": "pillar", "settings": { "number": "01 / PILLAR", "icon": "shield", "title": "THE MATERIAL", "description": "Surgical-grade steel and sapphire crystal are our baseline. We build for decades, not seasons.", "meta_label": "Durability Standard", "meta_value": "316L / Sapphire" } },
+        "p2": { "type": "pillar", "settings": { "number": "02 / PILLAR", "icon": "infinity", "title": "THE MOTION", "description": "Automatic movements that derive energy from your movement. No batteries, no digital noise.", "meta_label": "Kinetic Energy", "meta_value": "21-Jewel / Self-Winding" } },
+        "p3": { "type": "pillar", "settings": { "number": "03 / PILLAR", "icon": "compass", "title": "THE MARK", "description": "We ignore trends. Our designs are balanced, symmetrical, and timeless in their simplicity.", "meta_label": "Visual Rhythm", "meta_value": "Golden Ratio Form" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    },
+    "phil-closing": {
+      "type": "pravas-phil-closing",
+      "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["phil-hero", "phil-principle-01", "phil-pillars", "phil-closing"]
 }
