@@ -35,6 +35,61 @@
     }, 6000);
   }
 
+  /* Featured colourway drag-to-compare slider */
+  (function initFeatCompare() {
+    const wrap = document.getElementById('pw-feat-compare');
+    if (!wrap) return;
+    const overlay = document.getElementById('pw-feat-overlay');
+    const divider = document.getElementById('pw-feat-divider');
+    const handle = document.getElementById('pw-feat-handle');
+    if (!overlay || !divider || !handle) return;
+
+    let dragging = false;
+
+    function setPosition(clientX) {
+      const rect = wrap.getBoundingClientRect();
+      if (!rect.width) return;
+      let pct = ((clientX - rect.left) / rect.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      overlay.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      divider.style.left = pct + '%';
+      handle.style.left = pct + '%';
+      handle.setAttribute('aria-valuenow', Math.round(pct));
+    }
+
+    handle.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      handle.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+    wrap.addEventListener('pointermove', (e) => {
+      if (dragging) setPosition(e.clientX);
+    });
+    handle.addEventListener('pointerup', () => { dragging = false; });
+    handle.addEventListener('pointercancel', () => { dragging = false; });
+
+    /* Click/tap anywhere in the compare area jumps the handle there */
+    wrap.addEventListener('pointerdown', (e) => {
+      if (e.target === handle) return;
+      setPosition(e.clientX);
+    });
+
+    /* Keyboard accessibility */
+    handle.setAttribute('tabindex', '0');
+    handle.addEventListener('keydown', (e) => {
+      const current = parseFloat(handle.style.left) || 50;
+      let next = current;
+      if (e.key === 'ArrowLeft')  next = Math.max(0, current - 5);
+      else if (e.key === 'ArrowRight') next = Math.min(100, current + 5);
+      else return;
+      e.preventDefault();
+      overlay.style.clipPath = `inset(0 0 0 ${next}%)`;
+      divider.style.left = next + '%';
+      handle.style.left = next + '%';
+      handle.setAttribute('aria-valuenow', Math.round(next));
+    });
+  })();
+
   /* Header mobile drawer */
   const burger   = document.getElementById('pw-burger');
   const navDrawer= document.getElementById('pw-nav-drawer');

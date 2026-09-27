@@ -664,7 +664,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* FEATURED PRODUCT */
 .pw-feat {
-  background: var(--midnight);
+  background: var(--feat-bg, var(--midnight));
   padding-top: 80px;
 }
 .pw-feat__head {
@@ -672,11 +672,11 @@ button { font-family: inherit; cursor: pointer; }
   padding: 0 40px 48px;
   min-width: 0;
 }
-.pw-feat__eyebrow { margin-bottom: 16px; }
+.pw-feat__eyebrow { margin-bottom: 16px; color: var(--feat-eyebrow, var(--gold)); }
 .pw-feat__h2 {
   font-family: var(--font-display);
   font-size: 44px; font-weight: 300;
-  color: var(--parchment); margin: 0; line-height: 1.1;
+  color: var(--feat-heading, var(--parchment)); margin: 0; line-height: 1.1;
   min-width: 0;
   overflow-wrap: break-word;
   word-break: normal;
@@ -684,24 +684,69 @@ button { font-family: inherit; cursor: pointer; }
 .pw-feat__h2 em { font-style: italic; font-weight: 400; }
 .pw-feat__vs { color: var(--fog); font-size: 0.65em; font-style: normal; font-weight: 300; }
 
-/* Split */
-.pw-feat__split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+/* Drag-to-compare slider */
+.pw-feat__compare {
+  position: relative;
+  width: 100%;
+  height: var(--feat-compare-height, 600px);
   overflow: hidden;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
-.pw-feat__half { position: relative; overflow: hidden; min-width: 0; }
-.pw-feat__img {
-  width: 100%; height: 580px;
-  object-fit: cover; display: block;
-  transition: transform 500ms ease;
+.pw-feat__compare-layer {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
 }
-.pw-feat__half:hover .pw-feat__img { transform: scale(1.03); }
-.pw-feat__divider { width: 1px; background: var(--gold); z-index: 2; }
+.pw-feat__compare-layer--overlay {
+  clip-path: inset(0 0 0 50%);
+  will-change: clip-path;
+}
+.pw-feat__compare-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .pw-feat__ph {
-  width: 100%; height: 580px; background: #1a1a1a;
+  width: 100%; height: 100%; background: #1a1a1a;
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-body); font-size: 12px; color: var(--fog);
+}
+.pw-feat__compare-divider {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--feat-divider, var(--gold));
+  z-index: 2;
+  pointer-events: none;
+}
+.pw-feat__compare-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: var(--feat-handle-bg, var(--gold));
+  color: var(--feat-handle-icon, var(--midnight));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: ew-resize;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  z-index: 3;
+  touch-action: none;
+}
+.pw-feat__compare-handle:focus-visible {
+  outline: 2px solid var(--feat-handle-bg, var(--gold));
+  outline-offset: 3px;
 }
 
 /* Corner labels on images */
@@ -709,7 +754,8 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute; top: 20px; z-index: 3;
   font-family: var(--font-body); font-size: 9px;
   font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--parchment); background: rgba(var(--midnight-rgb),0.65);
+  color: var(--feat-label-text, var(--parchment));
+  background: var(--feat-label-bg, rgba(24, 24, 24, 0.65));
   padding: 5px 10px; backdrop-filter: blur(4px);
   white-space: nowrap;
 }
@@ -733,9 +779,8 @@ button { font-family: inherit; cursor: pointer; }
   .pw-feat { padding-top: 60px; }
   .pw-feat__h2 { font-size: 28px; }
   .pw-feat__head { padding: 0 20px 32px; }
-  .pw-feat__split { grid-template-columns: minmax(0, 1fr); }
-  .pw-feat__divider { display: none; }
-  .pw-feat__img, .pw-feat__ph { height: 320px; }
+  .pw-feat__compare { height: var(--feat-compare-height-mobile, 380px); }
+  .pw-feat__compare-handle { width: 36px; height: 36px; }
 }
 
 /* BRAND PHILOSOPHY */
@@ -783,13 +828,13 @@ button { font-family: inherit; cursor: pointer; }
 /* TRUST INDICATORS
    Flexbox layout (not Grid) — same reasoning as Brand Pillars above. */
 .pw-trust {
-  background: var(--midnight);
+  background: var(--trust-bg, var(--midnight));
   padding: 96px 80px;
 }
 .pw-trust__eyebrow {
   display: block;
   text-align: center;
-  color: var(--gold);
+  color: var(--trust-eyebrow, var(--gold));
   margin-bottom: 56px;
 }
 .pw-trust__grid {
@@ -812,22 +857,25 @@ button { font-family: inherit; cursor: pointer; }
 .pw-trust__div {
   flex: 0 0 1px;
   width: 1px;
-  background: var(--gold);
+  background: var(--trust-divider, var(--gold));
   align-self: stretch;
   min-height: 100px;
 }
 .pw-trust__icon {
   width: 32px; height: 32px;
-  object-fit: contain;
   margin: 0 auto 16px;
   display: block;
-  /* Tint icon to gold */
+}
+img.pw-trust__icon {
+  object-fit: contain;
+  /* Tint an uploaded raster icon toward gold (inline SVG icons are
+     coloured directly via the icon_color setting instead) */
   filter: invert(68%) sepia(25%) saturate(700%) hue-rotate(5deg) brightness(90%);
 }
 .pw-trust__h {
   font-family: var(--font-display);
   font-size: 18px; font-weight: 400;
-  color: var(--parchment); line-height: 1.25;
+  color: var(--trust-heading, var(--parchment)); line-height: 1.25;
   margin: 0 0 6px 0;
   min-width: 0;
   overflow-wrap: break-word;
@@ -837,13 +885,13 @@ button { font-family: inherit; cursor: pointer; }
   font-family: var(--font-body);
   font-size: 10px; font-weight: 600;
   letter-spacing: 2px; text-transform: uppercase;
-  color: var(--gold); margin: 0 0 12px 0;
+  color: var(--trust-sub, var(--gold)); margin: 0 0 12px 0;
   min-width: 0; overflow-wrap: break-word;
 }
 .pw-trust__p {
   font-family: var(--font-body);
   font-size: 13px; font-weight: 300;
-  color: var(--silver); line-height: 1.7; margin: 0;
+  color: var(--trust-body, var(--silver)); line-height: 1.7; margin: 0;
   min-width: 0;
   overflow-wrap: break-word;
   word-break: normal;

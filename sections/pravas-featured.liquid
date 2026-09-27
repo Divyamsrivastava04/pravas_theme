@@ -1,4 +1,4 @@
-<section class="pw-feat">
+<section class="pw-feat" id="pw-feat">
 
   <div class="pw-feat__head">
     <span class="pw-eyebrow pw-feat__eyebrow">{{ section.settings.eyebrow | default: 'LAUNCH COLLECTION · TWO COLOURWAYS' }}</span>
@@ -9,37 +9,56 @@
     </h2>
   </div>
 
-  <div class="pw-feat__split">
+  <!-- Drag-to-compare slider: base layer (Sapphire Green) sits underneath,
+       overlay layer (Midnight Black) is clipped to reveal the base layer
+       as the handle is dragged. Vanilla JS in pravas.js drives the clip. -->
+  <div class="pw-feat__compare" id="pw-feat-compare">
 
-    <div class="pw-feat__half">
+    <div class="pw-feat__compare-layer pw-feat__compare-layer--base">
       <span class="pw-feat__label pw-feat__label--left">{{ section.settings.label_green | default: 'Sapphire Green' }}</span>
       {% if section.settings.img_green %}
-        {{ section.settings.img_green | image_url: width: 1000 | image_tag:
+        {{ section.settings.img_green | image_url: width: 1400 | image_tag:
              alt: section.settings.alt_green | default: 'PRAVAS AARAMBH Sapphire Green',
-             class: 'pw-feat__img',
+             class: 'pw-feat__compare-img',
              loading: 'lazy',
-             widths: '500,750,1000'
+             widths: '700,1000,1400'
         }}
       {% else %}
         <div class="pw-feat__ph">Upload Sapphire Green image</div>
       {% endif %}
     </div>
 
-    <div class="pw-feat__divider" aria-hidden="true"></div>
-
-    <div class="pw-feat__half">
+    <div class="pw-feat__compare-layer pw-feat__compare-layer--overlay" id="pw-feat-overlay">
       <span class="pw-feat__label pw-feat__label--right">{{ section.settings.label_black | default: 'Midnight Black' }}</span>
       {% if section.settings.img_black %}
-        {{ section.settings.img_black | image_url: width: 1000 | image_tag:
+        {{ section.settings.img_black | image_url: width: 1400 | image_tag:
              alt: section.settings.alt_black | default: 'PRAVAS AARAMBH Midnight Black',
-             class: 'pw-feat__img',
+             class: 'pw-feat__compare-img',
              loading: 'lazy',
-             widths: '500,750,1000'
+             widths: '700,1000,1400'
         }}
       {% else %}
         <div class="pw-feat__ph">Upload Midnight Black image</div>
       {% endif %}
     </div>
+
+    <div class="pw-feat__compare-divider" id="pw-feat-divider" aria-hidden="true"></div>
+
+    <button
+      type="button"
+      class="pw-feat__compare-handle"
+      id="pw-feat-handle"
+      aria-label="Drag to compare Sapphire Green and Midnight Black"
+      role="slider"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="50"
+    >
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="7 8 3 12 7 16"/>
+        <polyline points="17 8 21 12 17 16"/>
+      </svg>
+    </button>
 
   </div>
 
@@ -54,25 +73,55 @@
 
 </section>
 
+<style>
+  #pw-feat {
+    --feat-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --feat-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --feat-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --feat-divider: {{ section.settings.divider_color | default: '#B5924A' }};
+    --feat-handle-bg: {{ section.settings.handle_color | default: '#B5924A' }};
+    --feat-handle-icon: {{ section.settings.handle_icon_color | default: '#181818' }};
+    --feat-label-bg: {{ section.settings.label_bg_color | default: 'rgba(24,24,24,0.65)' }};
+    --feat-label-text: {{ section.settings.label_text_color | default: '#F5F3EF' }};
+    --feat-compare-height: {{ section.settings.compare_height | default: 600 }}px;
+    --feat-compare-height-mobile: {{ section.settings.compare_height_mobile | default: 380 }}px;
+  }
+</style>
+
 {% schema %}
 {
-  "name": "PW Featured Colourways",
+  "name": "PW Colourways",
   "settings": [
+    { "type": "header",       "content": "Content" },
     { "type": "text",         "id": "eyebrow",    "label": "Eyebrow",              "default": "LAUNCH COLLECTION · TWO COLOURWAYS" },
     { "type": "text",         "id": "h2_italic",  "label": "Heading — italic part","default": "Sapphire Green" },
     { "type": "text",         "id": "h2_plain",   "label": "Heading — plain part", "default": "Midnight Black" },
     { "type": "text",         "id": "h2_connector","label": "Heading connector word", "default": "vs" },
-    { "type": "image_picker", "id": "img_green",  "label": "Sapphire Green image" },
+    { "type": "image_picker", "id": "img_green",  "label": "Sapphire Green image (base layer)" },
     { "type": "text",         "id": "alt_green",  "label": "Green alt text",       "default": "PRAVAS AARAMBH Sapphire Green" },
     { "type": "text",         "id": "label_green","label": "Green corner label",   "default": "Sapphire Green" },
-    { "type": "image_picker", "id": "img_black",  "label": "Midnight Black image" },
+    { "type": "image_picker", "id": "img_black",  "label": "Midnight Black image (overlay layer)" },
     { "type": "text",         "id": "alt_black",  "label": "Black alt text",       "default": "PRAVAS AARAMBH Midnight Black" },
     { "type": "text",         "id": "label_black","label": "Black corner label",   "default": "Midnight Black" },
     { "type": "text",         "id": "meaning",    "label": "Italic meaning line",  "default": "The Beginning — in two expressions." },
     { "type": "text",         "id": "pricing",    "label": "Pricing line",         "default": "₹8,499 · 50 pieces each colourway · Individually numbered." },
     { "type": "text",         "id": "cta_text",   "label": "CTA button text",      "default": "EXPLORE AARAMBH →" },
-    { "type": "url",          "id": "cta_url",    "label": "CTA URL" }
+    { "type": "url",          "id": "cta_url",    "label": "CTA URL" },
+
+    { "type": "header", "content": "Slider" },
+    { "type": "range", "id": "compare_height", "label": "Slider height (desktop)", "min": 300, "max": 800, "step": 10, "unit": "px", "default": 600 },
+    { "type": "range", "id": "compare_height_mobile", "label": "Slider height (mobile)", "min": 200, "max": 600, "step": 10, "unit": "px", "default": 380 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color",         "label": "Section background",     "default": "#181818" },
+    { "type": "color", "id": "eyebrow_color",    "label": "Eyebrow color",          "default": "#B5924A" },
+    { "type": "color", "id": "heading_color",    "label": "Heading color",          "default": "#F5F3EF" },
+    { "type": "color", "id": "divider_color",    "label": "Divider line color",     "default": "#B5924A" },
+    { "type": "color", "id": "handle_color",     "label": "Drag handle background", "default": "#B5924A" },
+    { "type": "color", "id": "handle_icon_color","label": "Drag handle icon",       "default": "#181818" },
+    { "type": "color", "id": "label_bg_color",   "label": "Corner label background","default": "#181818" },
+    { "type": "color", "id": "label_text_color", "label": "Corner label text",      "default": "#F5F3EF" }
   ],
-  "presets": [{ "name": "PW Featured Colourways" }]
+  "presets": [{ "name": "PW Colourways" }]
 }
 {% endschema %}

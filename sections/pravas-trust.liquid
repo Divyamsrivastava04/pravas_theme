@@ -1,77 +1,122 @@
-<section class="pw-trust">
+<section class="pw-trust" id="pw-trust">
   <span class="pw-eyebrow pw-trust__eyebrow">{{ section.settings.eyebrow | default: 'WHY PRAVAS' }}</span>
   <div class="pw-trust__grid">
 
     <div class="pw-trust__item">
       {% if section.settings.icon1 %}
-        <img src="{{ section.settings.icon1 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+        <img src="{{ section.settings.icon1 | image_url: width: 64 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-trust__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
       {% endif %}
       <h4 class="pw-trust__h">{{ section.settings.h1 | default: 'Japanese Movement' }}</h4>
       <p  class="pw-trust__sub">{{ section.settings.s1 | default: 'Miyota 8215' }}</p>
-      <p  class="pw-trust__p">{{ section.settings.p1 | default: 'Miyota 8215 automatic — reliable, serviceable, honest.' }}</p>
+      {% if section.settings.show_body %}<p class="pw-trust__p">{{ section.settings.p1 | default: 'Miyota 8215 automatic — reliable, serviceable, honest.' }}</p>{% endif %}
     </div>
 
     <div class="pw-trust__div" aria-hidden="true"></div>
 
     <div class="pw-trust__item">
       {% if section.settings.icon2 %}
-        <img src="{{ section.settings.icon2 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+        <img src="{{ section.settings.icon2 | image_url: width: 64 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-trust__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+          <line x1="12" y1="2" x2="12" y2="22"/>
+          <line x1="2" y1="8.5" x2="22" y2="8.5"/>
+        </svg>
       {% endif %}
       <h4 class="pw-trust__h">{{ section.settings.h2 | default: 'Sapphire Crystal' }}</h4>
-      <p  class="pw-trust__sub">{{ section.settings.s2 | default: 'Scratch Resistant' }}</p>
-      <p  class="pw-trust__p">{{ section.settings.p2 | default: 'Scratch-resistant sapphire on the front. No compromises on the face of the watch.' }}</p>
+      <p  class="pw-trust__sub">{{ section.settings.s2 | default: 'Scratch Resistant AR Coating' }}</p>
+      {% if section.settings.show_body %}<p class="pw-trust__p">{{ section.settings.p2 | default: 'Scratch-resistant sapphire on the front. No compromises on the face of the watch.' }}</p>{% endif %}
     </div>
 
     <div class="pw-trust__div" aria-hidden="true"></div>
 
     <div class="pw-trust__item">
       {% if section.settings.icon3 %}
-        <img src="{{ section.settings.icon3 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+        <img src="{{ section.settings.icon3 | image_url: width: 64 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-trust__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2C6 2 3 8 3 12s3 10 9 10 9-4 9-10S18 2 12 2z"/>
+        </svg>
       {% endif %}
-      <h4 class="pw-trust__h">{{ section.settings.h3 | default: 'Limited Production' }}</h4>
-      <p  class="pw-trust__sub">{{ section.settings.s3 | default: '100 Pieces Total' }}</p>
-      <p  class="pw-trust__p">{{ section.settings.p3 | default: 'Each collection is capped. Your number is yours.' }}</p>
+      <h4 class="pw-trust__h">{{ section.settings.h3 | default: '50M Waterproof/5ATM' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s3 | default: 'Screw Down Crown' }}</p>
+      {% if section.settings.show_body %}<p class="pw-trust__p">{{ section.settings.p3 | default: 'Rated to 50 metres / 5 ATM — safe for rain, washing your hands, and everyday wear.' }}</p>{% endif %}
     </div>
 
     <div class="pw-trust__div" aria-hidden="true"></div>
 
     <div class="pw-trust__item">
       {% if section.settings.icon4 %}
-        <img src="{{ section.settings.icon4 | image_url: width: 48 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+        <img src="{{ section.settings.icon4 | image_url: width: 64 }}" alt="" class="pw-trust__icon" loading="lazy" width="32" height="32">
+      {% else %}
+        <svg class="pw-trust__icon" viewBox="0 0 24 24" fill="none" stroke="{{ section.settings.icon_color | default: '#B5924A' }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke-dasharray="1.5 3.2"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
       {% endif %}
-      <h4 class="pw-trust__h">{{ section.settings.h4 | default: 'Transparent Pricing' }}</h4>
-      <p  class="pw-trust__sub">{{ section.settings.s4 | default: '₹8,499 — One Price' }}</p>
-      <p  class="pw-trust__p">{{ section.settings.p4 | default: 'One honest price. No hidden costs, no inflated MRPs.' }}</p>
+      <h4 class="pw-trust__h">{{ section.settings.h4 | default: 'Designed in India' }}</h4>
+      <p  class="pw-trust__sub">{{ section.settings.s4 | default: 'Crafted By Hand' }}</p>
+      {% if section.settings.show_body %}<p class="pw-trust__p">{{ section.settings.p4 | default: 'Every detail considered here, for the Indian wrist and the Indian story.' }}</p>{% endif %}
     </div>
 
   </div>
 </section>
+
+<style>
+  #pw-trust {
+    --trust-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --trust-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --trust-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --trust-sub: {{ section.settings.sub_color | default: '#B5924A' }};
+    --trust-body: {{ section.settings.body_color | default: '#C8C8CC' }};
+    --trust-divider: {{ section.settings.divider_color | default: '#B5924A' }};
+  }
+</style>
 
 {% schema %}
 {
   "name": "PW Trust Indicators",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Section eyebrow", "default": "WHY PRAVAS" },
+    { "type": "checkbox", "id": "show_body", "label": "Show body copy line under each sub-label", "default": false },
+
     { "type": "header", "content": "Column 1 — Japanese Movement" },
-    { "type": "image_picker", "id": "icon1", "label": "Icon image" },
+    { "type": "image_picker", "id": "icon1", "label": "Icon image (optional — overrides default)" },
     { "type": "text",     "id": "h1", "label": "Heading",    "default": "Japanese Movement" },
     { "type": "text",     "id": "s1", "label": "Sub-label",  "default": "Miyota 8215" },
-    { "type": "textarea", "id": "p1", "label": "Body copy",  "default": "Miyota 8215 automatic — reliable, serviceable, honest." },
+    { "type": "textarea", "id": "p1", "label": "Body copy (if shown above)",  "default": "Miyota 8215 automatic — reliable, serviceable, honest." },
+
     { "type": "header", "content": "Column 2 — Sapphire Crystal" },
-    { "type": "image_picker", "id": "icon2", "label": "Icon image" },
+    { "type": "image_picker", "id": "icon2", "label": "Icon image (optional — overrides default)" },
     { "type": "text",     "id": "h2", "label": "Heading",    "default": "Sapphire Crystal" },
-    { "type": "text",     "id": "s2", "label": "Sub-label",  "default": "Scratch Resistant" },
-    { "type": "textarea", "id": "p2", "label": "Body copy",  "default": "Scratch-resistant sapphire on the front. No compromises on the face of the watch." },
-    { "type": "header", "content": "Column 3 — Limited Production" },
-    { "type": "image_picker", "id": "icon3", "label": "Icon image" },
-    { "type": "text",     "id": "h3", "label": "Heading",    "default": "Limited Production" },
-    { "type": "text",     "id": "s3", "label": "Sub-label",  "default": "100 Pieces Total" },
-    { "type": "textarea", "id": "p3", "label": "Body copy",  "default": "Each collection is capped. Your number is yours." },
-    { "type": "header", "content": "Column 4 — Transparent Pricing" },
-    { "type": "image_picker", "id": "icon4", "label": "Icon image" },
-    { "type": "text",     "id": "h4", "label": "Heading",    "default": "Transparent Pricing" },
-    { "type": "text",     "id": "s4", "label": "Sub-label",  "default": "₹8,499 — One Price" },
-    { "type": "textarea", "id": "p4", "label": "Body copy",  "default": "One honest price. No hidden costs, no inflated MRPs." }
+    { "type": "text",     "id": "s2", "label": "Sub-label",  "default": "Scratch Resistant AR Coating" },
+    { "type": "textarea", "id": "p2", "label": "Body copy (if shown above)",  "default": "Scratch-resistant sapphire on the front. No compromises on the face of the watch." },
+
+    { "type": "header", "content": "Column 3 — Water Resistance" },
+    { "type": "image_picker", "id": "icon3", "label": "Icon image (optional — overrides default)" },
+    { "type": "text",     "id": "h3", "label": "Heading",    "default": "50M Waterproof/5ATM" },
+    { "type": "text",     "id": "s3", "label": "Sub-label",  "default": "Screw Down Crown" },
+    { "type": "textarea", "id": "p3", "label": "Body copy (if shown above)",  "default": "Rated to 50 metres / 5 ATM — safe for rain, washing your hands, and everyday wear." },
+
+    { "type": "header", "content": "Column 4 — Designed in India" },
+    { "type": "image_picker", "id": "icon4", "label": "Icon image (optional — overrides default)" },
+    { "type": "text",     "id": "h4", "label": "Heading",    "default": "Designed in India" },
+    { "type": "text",     "id": "s4", "label": "Sub-label",  "default": "Crafted By Hand" },
+    { "type": "textarea", "id": "p4", "label": "Body copy (if shown above)",  "default": "Every detail considered here, for the Indian wrist and the Indian story." },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color",      "label": "Background",      "default": "#181818" },
+    { "type": "color", "id": "icon_color",    "label": "Icon color (default icons only)", "default": "#B5924A" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color",   "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading color",  "default": "#F5F3EF" },
+    { "type": "color", "id": "sub_color",     "label": "Sub-label color","default": "#B5924A" },
+    { "type": "color", "id": "body_color",    "label": "Body text color","default": "#C8C8CC" },
+    { "type": "color", "id": "divider_color", "label": "Divider color",  "default": "#B5924A" }
   ],
   "presets": [{ "name": "PW Trust Indicators" }]
 }
