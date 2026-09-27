@@ -1,0 +1,164 @@
+{% comment %} resync-marker: 2026-09-27-v2 {% endcomment %}
+{{ 'pravas-story.css' | asset_url | stylesheet_tag }}
+
+<section class="pw-story-heritage" id="pw-story-heritage-{{ section.id }}">
+  <div class="pw-story-heritage__inner">
+    <div class="pw-story-heritage__media" data-reveal>
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag:
+             alt: section.settings.image.alt | default: section.settings.heading,
+             class: 'pw-story-heritage__image',
+             loading: 'lazy',
+             widths: '600,900,1200,1400'
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'pw-story-heritage__image' }}
+      {%- endif -%}
+      {%- if section.settings.enable_overlay -%}
+        <div class="pw-story-heritage__overlay"></div>
+      {%- endif -%}
+    </div>
+
+    <div class="pw-story-heritage__text" data-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pw-story-heritage__eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pw-story-heritage__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pw-story-heritage__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.location_value != blank or section.settings.est_value != blank -%}
+        <div class="pw-story-heritage__meta">
+          {%- if section.settings.location_value != blank -%}
+            <div class="pw-story-heritage__meta-block">
+              <span class="pw-story-heritage__meta-label">{{ section.settings.location_label | default: 'Location' }}</span>
+              <span class="pw-story-heritage__meta-value">{{ section.settings.location_value }}</span>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.est_value != blank -%}
+            <div class="pw-story-heritage__meta-block">
+              <span class="pw-story-heritage__meta-label">{{ section.settings.est_label | default: 'Est.' }}</span>
+              <span class="pw-story-heritage__meta-value">{{ section.settings.est_value }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #pw-story-heritage-{{ section.id }} {
+    --story-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --story-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --story-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --story-body-color: {{ section.settings.body_color | default: '#C8C8CC' }};
+    --story-meta-label-color: {{ section.settings.meta_label_color | default: '#B5924A' }};
+    --story-meta-value-color: {{ section.settings.meta_value_color | default: '#F5F3EF' }};
+    --story-divider-color: {{ section.settings.divider_color | default: '#2E2E2E' }};
+    --story-overlay-color: {{ section.settings.overlay_color | default: '#181818' }};
+    --story-overlay-opacity: {{ section.settings.overlay_opacity | default: 25 | divided_by: 100.0 }};
+    --story-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --story-image-border-width: {{ section.settings.image_border_width | default: 0 }}px;
+    --story-image-border-color: {{ section.settings.image_border_color | default: '#2E2E2E' }};
+
+    --story-eyebrow-size: {{ section.settings.eyebrow_size | default: 12 }}px;
+    --story-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --story-heading-font: {% if section.settings.heading_font %}{{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }}{% else %}var(--font-display){% endif %};
+    --story-heading-size: {{ section.settings.heading_size_desktop | default: 36 }}px;
+    --story-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 26 }}px;
+    --story-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --story-heading-line-height: {{ section.settings.heading_line_height | default: 1.2 }};
+
+    --story-body-font: {% if section.settings.body_font %}{{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }}{% else %}var(--font-body){% endif %};
+    --story-body-size: {{ section.settings.body_size_desktop | default: 15 }}px;
+    --story-body-size-mobile: {{ section.settings.body_size_mobile | default: 14 }}px;
+    --story-body-line-height: {{ section.settings.body_line_height | default: 1.75 }};
+
+    --story-text-max-width: {{ section.settings.text_max_width | default: 440 }}px;
+    --story-column-gap: {{ section.settings.column_gap | default: 64 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 0 }}px;
+    padding-left: {{ section.settings.padding_x | default: 0 }}px;
+    padding-right: {{ section.settings.padding_x | default: 0 }}px;
+  }
+
+  #pw-story-heritage-{{ section.id }} .pw-story-heritage__text {
+    padding: {{ section.settings.text_padding | default: 64 }}px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #pw-story-heritage-{{ section.id }} .pw-story-heritage__text {
+      padding: {{ section.settings.text_padding_mobile | default: 40 }}px 20px;
+    }
+  }
+</style>
+
+<script src="{{ 'pravas-story.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW Story Heritage",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HERITAGE REIMAGINED" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Designed in India" },
+    { "type": "textarea", "id": "body", "label": "Body text", "default": "Our studio is located in the heart of Bangalore, a city where ancient tradition meets technological futurism. We draw inspiration from the geometric precision of Jantar Mantar and the brutalist architecture of modern India. PRAVAS is a declaration that Indian craftsmanship belongs on the global stage of luxury." },
+
+    { "type": "header", "content": "Metadata" },
+    { "type": "text", "id": "location_label", "label": "Location label", "default": "Location" },
+    { "type": "text", "id": "location_value", "label": "Location value", "default": "BANGALORE, IN" },
+    { "type": "text", "id": "est_label", "label": "Established label", "default": "Est." },
+    { "type": "text", "id": "est_value", "label": "Established value", "default": "MMXXIV" },
+
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Studio image" },
+    { "type": "range", "id": "image_radius", "label": "Image radius (0 = sharp)", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "image_border_width", "label": "Image border width", "min": 0, "max": 6, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "image_border_color", "label": "Image border color", "default": "#2E2E2E" },
+    { "type": "checkbox", "id": "enable_overlay", "label": "Enable image overlay", "default": false },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#181818" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 25 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "text_max_width", "label": "Text column max-width", "min": 300, "max": 600, "step": 20, "unit": "px", "default": 440 },
+    { "type": "range", "id": "text_padding", "label": "Text column padding — desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "text_padding_mobile", "label": "Text column padding — mobile", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 64 },
+
+    { "type": "header", "content": "Typography — Eyebrow" },
+    { "type": "range", "id": "eyebrow_size", "label": "Size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Size — desktop", "min": 22, "max": 60, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 18, "max": 40, "step": 2, "unit": "px", "default": 26 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 0.9, "max": 1.6, "step": 0.1, "default": 1.2 },
+
+    { "type": "header", "content": "Typography — Body" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size_desktop", "label": "Size — desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "body_size_mobile", "label": "Size — mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "body_line_height", "label": "Line height", "min": 1.2, "max": 2.2, "step": 0.1, "default": 1.75 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Body text", "default": "#C8C8CC" },
+    { "type": "color", "id": "meta_label_color", "label": "Metadata label", "default": "#B5924A" },
+    { "type": "color", "id": "meta_value_color", "label": "Metadata value", "default": "#F5F3EF" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2E2E2E" }
+  ],
+  "presets": [
+    { "name": "PW Story Heritage" }
+  ]
+}
+{% endschema %}
