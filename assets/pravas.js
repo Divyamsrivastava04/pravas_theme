@@ -135,19 +135,43 @@
   document.getElementById('pw-qb-atc')?.addEventListener('click', function() {
     const active = document.querySelector('.pw-qb-tile.active');
     if (!active?.dataset.variant) return;
-    this.textContent = 'Adding...';
-    this.disabled = true;
+    const btn = this;
+    const originalText = btn.textContent;
+    btn.textContent = 'Adding...';
+    btn.disabled = true;
+
+    const cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+    const formData = new FormData();
+    formData.append('id', active.dataset.variant);
+    formData.append('quantity', 1);
+    if (cart) {
+      formData.append('sections', cart.getSectionsToRender().map((s) => s.id));
+      formData.append('sections_url', window.location.pathname);
+    }
+
     fetch('/cart/add.js', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: active.dataset.variant, quantity: 1 })
-    }).then(() => {
-      closeQB();
-      fetch('/cart.js').then(r => r.json()).then(cart => {
-        const b = document.querySelector('.pw-hdr__cart-count');
-        if (b) b.textContent = cart.item_count;
+      headers: { Accept: 'application/javascript' },
+      body: formData,
+    })
+      .then((r) => r.json())
+      .then((response) => {
+        if (response.status) throw new Error(response.description || response.message);
+        closeQB();
+        if (cart) {
+          cart.renderContents(response);
+        } else {
+          fetch('/cart.js').then((r) => r.json()).then((cartData) => {
+            const b = document.querySelector('.pw-hdr__cart-count');
+            if (b) b.textContent = cartData.item_count;
+          });
+        }
+      })
+      .catch(() => { btn.textContent = 'Error — try again'; })
+      .finally(() => {
+        btn.disabled = false;
+        if (btn.textContent === 'Adding...') btn.textContent = originalText;
       });
-    }).catch(() => { this.textContent = 'Error — try again'; this.disabled = false; });
   });
 
   /* UGC lightbox */

@@ -1,0 +1,115 @@
+/* pravas-cart-drawer.css — brand polish for Dawn's native AJAX cart drawer.
+   Structure/behavior stay entirely native (cart-drawer.js, cart.js,
+   quantity-popover.js); this only restyles it to match the PRAVAS
+   dark/gold editorial look on top of the scheme-4 color scheme. */
+
+.cart-drawer .drawer__inner {
+  border-left: 1px solid var(--dark-border, #2E2E2E);
+  border-top: none;
+  border-bottom: none;
+}
+
+.cart-drawer .drawer__header {
+  border-bottom: 1px solid var(--dark-border, #2E2E2E);
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.cart-drawer .drawer__heading {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.cart-drawer .drawer__close {
+  color: var(--silver, #C8C8CC);
+  transition: color 200ms ease;
+}
+.cart-drawer .drawer__close:hover {
+  color: var(--gold, #B5924A);
+}
+
+.cart-drawer .cart-items thead th {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fog, #888888);
+  border-bottom-color: var(--dark-border, #2E2E2E);
+}
+
+.cart-drawer .cart-item__name {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+}
+
+.cart-drawer .cart-remove-button {
+  color: var(--fog, #888888);
+  transition: color 200ms ease;
+}
+.cart-drawer .cart-remove-button:hover {
+  color: var(--gold, #B5924A);
+}
+
+.cart-drawer .drawer__footer {
+  border-top: 1px solid var(--dark-border, #2E2E2E);
+}
+
+.cart-drawer .totals__total {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.4rem;
+}
+
+.cart-drawer .totals__total-value {
+  font-family: var(--font-heading-family);
+  font-size: 1.6rem;
+}
+
+.cart-drawer .cart__checkout-button {
+  background-color: var(--gold, #B5924A);
+  color: var(--midnight, #181818);
+  border: none;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  transition: background-color 200ms ease;
+}
+.cart-drawer .cart__checkout-button:hover:not([disabled]) {
+  background-color: var(--gold-hover, #C7A25E);
+}
+
+.cart-drawer .cart__empty-text {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cart-drawer .drawer__inner-empty .button {
+  border-radius: 0;
+  background-color: var(--gold, #B5924A);
+  color: var(--midnight, #181818);
+  border-color: var(--gold, #B5924A);
+}
+.cart-drawer .drawer__inner-empty .button:hover {
+  background-color: var(--gold-hover, #C7A25E);
+  border-color: var(--gold-hover, #C7A25E);
+}
+
+.cart-drawer .quantity {
+  border-radius: 0;
+  border-color: var(--dark-border, #2E2E2E);
+}
+
+.cart-drawer .quantity__button {
+  color: var(--silver, #C8C8CC);
+}
+.cart-drawer .quantity__button:hover {
+  color: var(--gold, #B5924A);
+}

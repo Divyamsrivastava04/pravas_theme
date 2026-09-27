@@ -1,15 +1,9 @@
-{% if cart == empty %}
-  <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-{% else %}
-  <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-{% endif %}
-
-<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-{%- if cart != empty -%}
-  <div class="cart-count-bubble">
-    {%- if cart.item_count < 100 -%}
-      <span aria-hidden="true">{{ cart.item_count }}</span>
-    {%- endif -%}
-    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-  </div>
-{%- endif -%}
+{% comment %}
+  Rendered inline in the PRAVAS header (sections/pravas-header.liquid) and
+  re-rendered via the Section Rendering API into #cart-icon-bubble after
+  every AJAX cart change (see assets/cart-drawer.js renderContents). Markup
+  here must stay in sync with pravas-header.liquid's cart icon so the icon
+  doesn't change after an add-to-cart.
+{% endcomment %}
+<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+{% if cart.item_count > 0 %}<span class="pw-hdr__cart-count">{{ cart.item_count }}</span>{% endif %}
