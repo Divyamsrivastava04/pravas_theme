@@ -182,6 +182,12 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 18px; font-weight: 400;
   letter-spacing: 3px; text-transform: uppercase;
   color: var(--parchment);
+  display: flex;
+  align-items: center;
+}
+.pw-hdr__logo-img {
+  width: auto;
+  display: block;
 }
 .pw-hdr__nav {
   display: flex; justify-content: center;
@@ -1034,67 +1040,70 @@ img.pw-trust__icon {
   }
 }
 
-/* FOOTER */
+/* FOOTER
+   Flexbox layout (not Grid) — same reasoning as Brand Pillars/Trust. */
 .pw-footer {
-  background: var(--midnight);
-  border-top: 1px solid var(--dark-border);
+  background: var(--footer-bg, var(--midnight));
+  border-top: 1px solid var(--footer-border, var(--dark-border));
   padding: 64px 80px 32px;
 }
 .pw-footer__top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 48px;
   margin-bottom: 48px;
   min-width: 0;
 }
-.pw-footer__brand { min-width: 0; }
+.pw-footer__brand { flex: 1.5 1 0%; min-width: 0; }
+.pw-footer__col { flex: 1 1 0%; min-width: 0; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
 .pw-footer__wordmark {
   display: block;
   font-family: var(--font-display);
   font-size: 18px; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--parchment);
+  text-transform: uppercase; color: var(--footer-wordmark, var(--parchment));
   margin-bottom: 8px;
+}
+.pw-footer__logo-img {
+  width: auto;
+  display: block;
+  margin-bottom: 12px;
 }
 .pw-footer__tagline {
   font-family: var(--font-display);
   font-size: 13px; font-style: italic;
-  color: var(--fog); margin: 0 0 8px 0;
+  color: var(--footer-tagline, var(--fog)); margin: 0 0 8px 0;
 }
 .pw-footer__desc {
   font-family: var(--font-body);
   font-size: 12px; font-weight: 300;
-  color: var(--fog); margin: 0;
+  color: var(--footer-desc, var(--fog)); margin: 0;
   line-height: 1.6;
   overflow-wrap: break-word; word-break: normal; min-width: 0;
-}
-.pw-footer__col {
-  min-width: 0; overflow: hidden;
-  display: flex; flex-direction: column; gap: 10px;
 }
 .pw-footer__col-title {
   font-family: var(--font-body);
   font-size: 10px; font-weight: 600;
   letter-spacing: 3px; text-transform: uppercase;
-  color: var(--fog); margin: 0 0 6px 0;
+  color: var(--footer-col-title, var(--fog)); margin: 0 0 6px 0;
   white-space: nowrap;
 }
 .pw-footer__link {
   font-family: var(--font-body);
   font-size: 13px; font-weight: 300;
-  color: var(--fog);
+  color: var(--footer-link, var(--fog));
   transition: color 200ms ease;
   overflow-wrap: break-word; min-width: 0;
 }
-.pw-footer__link:hover { color: var(--parchment); }
+.pw-footer__link:hover { color: var(--footer-link-hover, var(--parchment)); }
 .pw-footer__placeholder {
   font-family: var(--font-body);
   font-size: 12px; font-weight: 300;
-  color: var(--charcoal); font-style: italic;
+  color: var(--footer-placeholder, var(--charcoal)); font-style: italic;
 }
 
 /* Bottom bar */
 .pw-footer__bottom {
-  border-top: 1px solid var(--dark-border);
+  border-top: 1px solid var(--footer-border, var(--dark-border));
   padding-top: 24px;
   display: flex;
   justify-content: space-between;
@@ -1103,18 +1112,20 @@ img.pw-trust__icon {
 }
 .pw-footer__copy {
   font-family: var(--font-body);
-  font-size: 11px; color: var(--fog); margin: 0;
+  font-size: 11px; color: var(--footer-copy, var(--fog)); margin: 0;
 }
 .pw-footer__legal { display: flex; gap: 20px; }
 .pw-footer__legal a {
   font-family: var(--font-body);
-  font-size: 11px; color: var(--fog);
+  font-size: 11px; color: var(--footer-legal, var(--fog));
+  transition: color 200ms ease;
 }
-.pw-footer__legal a:hover { color: var(--parchment); }
+.pw-footer__legal a:hover { color: var(--footer-legal-hover, var(--parchment)); }
 
 @media (max-width: 767px) {
   .pw-footer { padding: 48px 20px 24px; }
-  .pw-footer__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
-  .pw-footer__brand { grid-column: 1 / -1; }
+  .pw-footer__top { gap: 32px; }
+  .pw-footer__col { flex: 1 1 40%; }
+  .pw-footer__brand { flex: 1 1 100%; }
   .pw-footer__bottom { flex-direction: column; align-items: flex-start; }
 }

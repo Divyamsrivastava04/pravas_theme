@@ -1,8 +1,17 @@
-<footer class="pw-footer">
+<footer class="pw-footer" id="pw-footer">
   <div class="pw-footer__top">
 
     <div class="pw-footer__brand">
-      <span class="pw-footer__wordmark">{{ section.settings.brand | default: 'PRAVAS' }}</span>
+      {% if section.settings.logo %}
+        {{ section.settings.logo | image_url: width: 300 | image_tag:
+             alt: section.settings.brand | default: 'PRAVAS',
+             class: 'pw-footer__logo-img',
+             loading: 'lazy',
+             style: 'height:' | append: section.settings.logo_height | append: 'px;'
+        }}
+      {% else %}
+        <span class="pw-footer__wordmark">{{ section.settings.brand | default: 'PRAVAS' }}</span>
+      {% endif %}
       <p class="pw-footer__tagline">{{ section.settings.tagline | default: 'Wear Your Journey.' }}</p>
       <p class="pw-footer__desc">{{ section.settings.desc | default: 'Premium Indian automatic watches.' }}</p>
     </div>
@@ -45,18 +54,40 @@
   </div>
 </footer>
 
+<style>
+  #pw-footer {
+    --footer-bg: {{ section.settings.bg_color | default: '#181818' }};
+    --footer-border: {{ section.settings.border_color | default: '#2E2E2E' }};
+    --footer-wordmark: {{ section.settings.wordmark_color | default: '#F5F3EF' }};
+    --footer-tagline: {{ section.settings.tagline_color | default: '#F5F3EF' }};
+    --footer-desc: {{ section.settings.desc_color | default: '#888888' }};
+    --footer-col-title: {{ section.settings.col_title_color | default: '#888888' }};
+    --footer-link: {{ section.settings.link_color | default: '#888888' }};
+    --footer-link-hover: {{ section.settings.link_hover_color | default: '#F5F3EF' }};
+    --footer-placeholder: {{ section.settings.placeholder_color | default: '#3A3A3A' }};
+    --footer-copy: {{ section.settings.copy_color | default: '#888888' }};
+    --footer-legal: {{ section.settings.legal_color | default: '#888888' }};
+    --footer-legal-hover: {{ section.settings.legal_hover_color | default: '#F5F3EF' }};
+  }
+</style>
+
 {% schema %}
 {
   "name": "PW Footer",
   "settings": [
-    { "type": "text", "id": "brand",    "label": "Brand name",   "default": "PRAVAS" },
+    { "type": "header", "content": "Brand" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (SVG or PNG — overrides brand name text)" },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 64, "step": 2, "unit": "px", "default": 20 },
+    { "type": "text", "id": "brand",    "label": "Brand name (used if no logo uploaded, and as logo alt text)",   "default": "PRAVAS" },
     { "type": "text", "id": "tagline",  "label": "Tagline",      "default": "Wear Your Journey." },
     { "type": "text", "id": "desc",     "label": "Brand description", "default": "Premium Indian automatic watches." },
+
     { "type": "header", "content": "Collections Column" },
     { "type": "text", "id": "col1_title",       "label": "Column title",   "default": "COLLECTIONS" },
     { "type": "text", "id": "col1_l1",          "label": "Link 1 text",    "default": "The Aarambh" },
     { "type": "url",  "id": "col1_l1_url",      "label": "Link 1 URL" },
     { "type": "text", "id": "col1_placeholder", "label": "Placeholder text","default": "More Coming" },
+
     { "type": "header", "content": "Company Column" },
     { "type": "text", "id": "col2_title",  "label": "Column title", "default": "COMPANY" },
     { "type": "text", "id": "col2_l1",    "label": "Link 1 text",  "default": "Our Story" },
@@ -65,6 +96,7 @@
     { "type": "url",  "id": "col2_l2_url","label": "Link 2 URL" },
     { "type": "text", "id": "col2_l3",    "label": "Link 3 text",  "default": "Contact" },
     { "type": "url",  "id": "col2_l3_url","label": "Link 3 URL" },
+
     { "type": "header", "content": "Support Column" },
     { "type": "text", "id": "col3_title",  "label": "Column title", "default": "SUPPORT" },
     { "type": "text", "id": "col3_l1",    "label": "Link 1 text",  "default": "FAQ" },
@@ -75,12 +107,27 @@
     { "type": "url",  "id": "col3_l3_url","label": "Link 3 URL" },
     { "type": "text", "id": "col3_l4",    "label": "Link 4 text",  "default": "Privacy Policy" },
     { "type": "url",  "id": "col3_l4_url","label": "Link 4 URL" },
+
     { "type": "header", "content": "Bottom Bar" },
     { "type": "text", "id": "copyright",    "label": "Copyright line",  "default": "© 2025 PRAVAS Timepieces. All rights reserved." },
     { "type": "text", "id": "privacy_label","label": "Privacy link text","default": "Privacy Policy" },
     { "type": "url",  "id": "privacy_url",  "label": "Privacy link URL" },
     { "type": "text", "id": "refund_label", "label": "Refund link text", "default": "Refund Policy" },
-    { "type": "url",  "id": "refund_url",   "label": "Refund link URL" }
+    { "type": "url",  "id": "refund_url",   "label": "Refund link URL" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color",           "label": "Background",              "default": "#181818" },
+    { "type": "color", "id": "border_color",       "label": "Top/bottom border",       "default": "#2E2E2E" },
+    { "type": "color", "id": "wordmark_color",     "label": "Wordmark (if no logo)",   "default": "#F5F3EF" },
+    { "type": "color", "id": "tagline_color",      "label": "Tagline",                 "default": "#F5F3EF" },
+    { "type": "color", "id": "desc_color",         "label": "Brand description",       "default": "#888888" },
+    { "type": "color", "id": "col_title_color",    "label": "Column titles",           "default": "#888888" },
+    { "type": "color", "id": "link_color",         "label": "Links",                   "default": "#888888" },
+    { "type": "color", "id": "link_hover_color",   "label": "Links — hover",           "default": "#F5F3EF" },
+    { "type": "color", "id": "placeholder_color",  "label": "\"More Coming\" placeholder", "default": "#3A3A3A" },
+    { "type": "color", "id": "copy_color",         "label": "Copyright text",          "default": "#888888" },
+    { "type": "color", "id": "legal_color",        "label": "Legal links (bottom bar)","default": "#888888" },
+    { "type": "color", "id": "legal_hover_color",  "label": "Legal links — hover",     "default": "#F5F3EF" }
   ],
   "presets": [{ "name": "PW Footer" }]
 }
