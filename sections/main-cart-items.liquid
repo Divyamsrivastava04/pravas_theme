@@ -561,6 +561,7 @@
     --cart-qty-border-color: {{ section.settings.qty_border_color | default: '#2E2E2E' }};
     --cart-qty-radius: {{ section.settings.qty_radius | default: 0 }}px;
     --cart-qty-height: {{ section.settings.qty_height | default: 36 }}px;
+    --cart-qty-width: {{ section.settings.qty_width | default: 112 }}px;
 
     --cart-price-font: {% if section.settings.price_font %}{{ section.settings.price_font.family }}, {{ section.settings.price_font.fallback_families }}{% else %}var(--font-display){% endif %};
     --cart-price-size: {{ section.settings.price_size | default: 16 }}px;
@@ -632,6 +633,7 @@
     { "type": "color", "id": "qty_border_color", "label": "Border", "default": "#2E2E2E" },
     { "type": "range", "id": "qty_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
     { "type": "range", "id": "qty_height", "label": "Height", "min": 28, "max": 52, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "qty_width", "label": "Width", "min": 80, "max": 180, "step": 4, "unit": "px", "default": 112 },
 
     { "type": "header", "content": "Cart Item — Colors" },
     { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },

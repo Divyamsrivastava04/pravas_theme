@@ -131,20 +131,34 @@
   font-weight: var(--cart-title-weight, 400);
   color: var(--cart-title-color, #F5F3EF);
 }
+/* Dawn wraps each option in its own .product-option div, so the separator
+   has to hang off those wrappers rather than sibling <dd> elements. */
 .pw-cart-items .cart-item__details dl {
   display: flex;
   flex-wrap: wrap;
-  gap: 0;
+  align-items: baseline;
+  gap: 0 6px;
   margin: 4px 0 0;
 }
-.pw-cart-items .cart-item__details dl dt { display: none; }
-.pw-cart-items .cart-item__details dl dd {
+.pw-cart-items .cart-item__details dl .product-option {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
   font-family: var(--cart-variant-font, var(--font-body));
   font-size: var(--cart-variant-size, 13px);
   color: var(--cart-variant-color, #B5924A);
-  margin: 0;
 }
-.pw-cart-items .cart-item__details dl dd:not(:last-child)::after { content: ' \00b7 '; color: var(--cart-variant-color, #B5924A); }
+.pw-cart-items .cart-item__details dl .product-option:not(:last-child)::after {
+  content: '\00b7';
+  color: var(--cart-variant-color, #B5924A);
+  opacity: 0.7;
+}
+.pw-cart-items .cart-item__details dl dt { display: none; }
+.pw-cart-items .cart-item__details dl dd { margin: 0; font-size: inherit; color: inherit; }
+/* The per-unit price directly under the title duplicates the line total
+   shown on the right of the row. */
+.pw-cart-items .cart-item__details > .product-option,
+.pw-cart-items .cart-item__details > .cart-item__discounted-prices { display: none; }
 .pw-cart-item__edition {
   font-family: var(--cart-variant-font, var(--font-body));
   font-size: var(--cart-variant-size, 13px);
@@ -161,29 +175,40 @@
   color: var(--cart-note-color, #888888);
   margin: 8px 0 0;
 }
-.pw-cart-items .cart-item__details .product-option {
-  font-family: var(--font-body);
-  font-size: 13px;
-  color: var(--cart-muted, #888888);
-}
 
 .pw-cart-items .cart-item__quantity {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 .pw-cart-items .quantity.cart-quantity {
-  background: var(--cart-qty-bg, transparent);
-  border: 1px solid var(--cart-qty-border-color, #2E2E2E);
+  background: var(--cart-qty-bg, #00000000);
   border-radius: var(--cart-qty-radius, 0);
   height: var(--cart-qty-height, 36px);
+  min-height: var(--cart-qty-height, 36px);
+  width: var(--cart-qty-width, 112px);
+  color: var(--cart-qty-text, #F5F3EF);
+}
+/* Dawn paints the control's fill and border with pseudo-elements, so the
+   background/border must be overridden there rather than on .quantity. */
+.pw-cart-items .quantity.cart-quantity::before {
+  background: var(--cart-qty-bg, #00000000);
+  border-radius: var(--cart-qty-radius, 0);
+  box-shadow: none;
+}
+.pw-cart-items .quantity.cart-quantity::after {
+  border-radius: var(--cart-qty-radius, 0);
+  box-shadow: 0 0 0 1px var(--cart-qty-border-color, #2E2E2E);
 }
 .pw-cart-items .quantity__button,
 .pw-cart-items .quantity__input {
   color: var(--cart-qty-text, #F5F3EF);
-  background: transparent;
+  background-color: transparent;
 }
+.pw-cart-items .quantity__input { opacity: 1; font-size: 13px; }
+.pw-cart-items .quantity__button { width: 32px; }
+.pw-cart-items .quantity__button svg { width: 10px; height: 10px; }
 .pw-cart-items .cart-remove-button { color: var(--cart-remove-color, #888888); transition: color 200ms ease; }
 .pw-cart-items .cart-remove-button:hover { color: var(--cart-remove-hover-color, #B5924A); }
 
@@ -220,7 +245,17 @@
 @media screen and (max-width: 989px) {
   .pw-cart-summary__panel { max-width: none; margin-top: 32px; }
 }
-.pw-cart-summary__inner { padding: var(--cart-summary-padding, 32px) !important; }
+/* Dawn turns .cart__footer into a two-column flex row with fixed 35rem
+   children on desktop, which splits the heading away from the rows.
+   The summary panel is a single stacked column. */
+.pw-cart-summary__inner {
+  display: block;
+  padding: var(--cart-summary-padding, 32px) !important;
+}
+.pw-cart-summary__inner > * { width: auto; }
+.pw-cart-summary__inner > * + * { margin-top: 0; }
+.pw-cart-summary .cart__blocks { display: block; }
+.pw-cart-summary .cart__blocks > * + * { margin-top: 0; }
 .pw-cart-summary__heading {
   font-family: var(--cart-summary-heading-font, var(--font-display));
   font-size: var(--cart-summary-heading-size, 20px);
