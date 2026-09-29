@@ -12,6 +12,38 @@
     "main": {
       "type": "pravas-product-main",
       "blocks": {
+        "swatch_color_XUCLPF": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "Black",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
+        "swatch_color_tzXjKW": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "BURGUNDY",
+            "color": "#470B0B",
+            "text_color": "#f5f3ef"
+          }
+        },
+        "swatch_color_VGhi9R": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "SUNBURST GREEN",
+            "color": "#1E3925",
+            "text_color": "#f5f3ef"
+          }
+        },
+        "swatch_color_jGdzb9": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "Midnight Black",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
         "feature_1": {
           "type": "feature",
           "settings": {
@@ -35,6 +67,10 @@
         }
       },
       "block_order": [
+        "swatch_color_XUCLPF",
+        "swatch_color_tzXjKW",
+        "swatch_color_VGhi9R",
+        "swatch_color_jGdzb9",
         "feature_1",
         "feature_2",
         "feature_3"
@@ -51,7 +87,13 @@
         "enable_zoom": true,
         "gallery_gap": 12,
         "gallery_radius": 0,
+        "image_fit": "contain",
+        "gallery_bg": "#101010",
+        "gallery_padding": 0,
         "gallery_aspect_ratio": "4/5",
+        "thumb_columns": 3,
+        "thumb_columns_mobile": 3,
+        "thumb_aspect_ratio": "1/1",
         "content_max_width": 1440,
         "padding_top": 0,
         "padding_bottom": 0,
@@ -74,9 +116,9 @@
         "price_compare_color": "#888888",
         "swatch_size": 40,
         "swatch_radius": 0,
-        "swatch_border_width": 1,
+        "swatch_border_width": 0,
         "swatch_border_color": "#000000",
-        "swatch_border_selected_color": "#000000",
+        "swatch_border_selected_color": "#B5924A",
         "atc_bg": "#b5924a",
         "atc_text_color": "#181818",
         "atc_border_color": "#b5924a",
