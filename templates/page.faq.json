@@ -1,0 +1,296 @@
+{
+  "sections": {
+    "faq-hero": {
+      "type": "pravas-faq-hero",
+      "settings": {}
+    },
+    "faq": {
+      "type": "pravas-faq",
+      "blocks": {
+        "cat1": {
+          "type": "category",
+          "settings": {
+            "title": "THE TIMEPIECE"
+          }
+        },
+        "c1q1": {
+          "type": "question",
+          "settings": {
+            "question": "What movement powers the PRAVAS Aarambh?",
+            "answer": "<p>The Aarambh is powered by the Miyota 8215 automatic movement, a mechanical movement that winds itself through the natural motion of your wrist. It is designed to be worn, experienced, and maintained over time.</p>",
+            "open_by_default": true
+          }
+        },
+        "c1q2": {
+          "type": "question",
+          "settings": {
+            "question": "Is the Aarambh a mechanical or quartz watch?",
+            "answer": "<p>The Aarambh is an automatic mechanical timepiece. It requires no battery and is powered by the movement of the wearer.</p>"
+          }
+        },
+        "c1q3": {
+          "type": "question",
+          "settings": {
+            "question": "How much power reserve does the watch have?",
+            "answer": "<p>The Aarambh has approximately 42 hours of power reserve.</p>"
+          }
+        },
+        "c1q4": {
+          "type": "question",
+          "settings": {
+            "question": "What is the case diameter?",
+            "answer": "<p>The Aarambh features a 40mm case diameter, designed to maintain a balanced presence on the wrist.</p>"
+          }
+        },
+        "c1q5": {
+          "type": "question",
+          "settings": {
+            "question": "What crystal does PRAVAS use?",
+            "answer": "<p>The Aarambh uses double-domed sapphire crystal with anti-reflective coating.</p>"
+          }
+        },
+        "c1q6": {
+          "type": "question",
+          "settings": {
+            "question": "Is the watch water resistant?",
+            "answer": "<p>The Aarambh is designed with 50-metre water resistance. Water resistance is not permanent and should be checked periodically.</p>"
+          }
+        },
+        "cat2": {
+          "type": "category",
+          "settings": {
+            "title": "ORDERING"
+          }
+        },
+        "c2q1": {
+          "type": "question",
+          "settings": {
+            "question": "How do I place an order?",
+            "answer": "<p>Select your preferred PRAVAS timepiece, choose the available configuration, and proceed through checkout. Once your order is confirmed, you will receive an order confirmation.</p>"
+          }
+        },
+        "c2q2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I modify or cancel my order after placing it?",
+            "answer": "<p>If you need to modify or cancel an order, contact us as soon as possible. We will do our best to accommodate the request before fulfilment.</p>"
+          }
+        },
+        "c2q3": {
+          "type": "question",
+          "settings": {
+            "question": "Will I receive an order confirmation?",
+            "answer": "<p>Yes. Once your order is successfully placed, an order confirmation will be sent to the email address provided during checkout.</p>"
+          }
+        },
+        "c2q4": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order?",
+            "answer": "<p>Once your order has been dispatched, you will receive tracking information through the contact details provided at checkout.</p>"
+          }
+        },
+        "cat3": {
+          "type": "category",
+          "settings": {
+            "title": "SHIPPING &amp; DELIVERY"
+          }
+        },
+        "c3q1": {
+          "type": "question",
+          "settings": {
+            "question": "Where does PRAVAS ship?",
+            "answer": "<p>PRAVAS ships across India and supports international shipping where available.</p>"
+          }
+        },
+        "c3q2": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Delivery timelines depend on your location and shipping method. Your dispatch and tracking information will provide the most accurate estimate.</p>"
+          }
+        },
+        "c3q3": {
+          "type": "question",
+          "settings": {
+            "question": "Is shipping complimentary?",
+            "answer": "<p>PRAVAS currently offers complimentary delivery across India.</p>"
+          }
+        },
+        "c3q4": {
+          "type": "question",
+          "settings": {
+            "question": "Do international orders incur customs or duties?",
+            "answer": "<p>International orders may be subject to customs duties, taxes, or import charges imposed by the destination country. Where applicable, these are the responsibility of the recipient.</p>"
+          }
+        },
+        "cat4": {
+          "type": "category",
+          "settings": {
+            "title": "CARE &amp; MAINTENANCE"
+          }
+        },
+        "c4q1": {
+          "type": "question",
+          "settings": {
+            "question": "How should I care for my PRAVAS watch?",
+            "answer": "<p>Keep the watch away from unnecessary impacts, extreme temperatures, magnetic fields and chemicals. Wipe the case and bracelet or strap gently with a soft, dry cloth after wearing.</p>"
+          }
+        },
+        "c4q2": {
+          "type": "question",
+          "settings": {
+            "question": "How often should an automatic watch be serviced?",
+            "answer": "<p>Mechanical watches benefit from periodic professional servicing. The appropriate interval depends on usage, environment and movement condition.</p>"
+          }
+        },
+        "c4q3": {
+          "type": "question",
+          "settings": {
+            "question": "What should I do if my watch stops?",
+            "answer": "<p>If the watch has not been worn for some time, the movement may simply have run down. Gently winding the movement according to the instructions supplied with your watch can restart it.</p>"
+          }
+        },
+        "c4q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I wear my PRAVAS while swimming?",
+            "answer": "<p>The Aarambh has 50-metre water resistance, but water resistance does not mean the watch is invulnerable to water. Ensure the crown is properly secured.</p>"
+          }
+        },
+        "cat5": {
+          "type": "category",
+          "settings": {
+            "title": "WARRANTY &amp; SERVICE"
+          }
+        },
+        "c5q1": {
+          "type": "question",
+          "settings": {
+            "question": "Does PRAVAS offer a warranty?",
+            "answer": "<p>PRAVAS provides a limited warranty covering eligible manufacturing defects for the period specified with your purchase.</p>"
+          }
+        },
+        "c5q2": {
+          "type": "question",
+          "settings": {
+            "question": "What does the warranty cover?",
+            "answer": "<p>The warranty covers eligible manufacturing defects under normal use. Damage resulting from accidents, misuse, unauthorised modifications or normal wear may not be covered.</p>"
+          }
+        },
+        "c5q3": {
+          "type": "question",
+          "settings": {
+            "question": "How do I request warranty service?",
+            "answer": "<p>Contact the PRAVAS concierge team with your order details and a description of the issue. Our team will guide you through the next steps.</p>"
+          }
+        },
+        "c5q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get my watch serviced after the warranty period?",
+            "answer": "<p>Yes. Contact PRAVAS for service options and availability.</p>"
+          }
+        },
+        "cat6": {
+          "type": "category",
+          "settings": {
+            "title": "THE PRAVAS EXPERIENCE"
+          }
+        },
+        "c6q1": {
+          "type": "question",
+          "settings": {
+            "question": "Are PRAVAS watches individually numbered?",
+            "answer": "<p>PRAVAS timepieces are produced in limited batches and individually numbered where specified for the collection.</p>"
+          }
+        },
+        "c6q2": {
+          "type": "question",
+          "settings": {
+            "question": "Why does PRAVAS produce limited quantities?",
+            "answer": "<p>We believe mechanical watches should be made with intention rather than produced for volume. Limited production allows us to focus on the details, materials, finishing and experience behind each timepiece.</p>"
+          }
+        },
+        "c6q3": {
+          "type": "question",
+          "settings": {
+            "question": "Where is PRAVAS designed?",
+            "answer": "<p>PRAVAS is an Indian watch brand with its design and creative roots in India. Our philosophy combines Indian perspective with the traditions and precision of mechanical horology.</p>"
+          }
+        },
+        "c6q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I arrange a private viewing?",
+            "answer": "<p>Private viewings may be available by appointment. Contact the PRAVAS concierge team for availability.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat1",
+        "c1q1",
+        "c1q2",
+        "c1q3",
+        "c1q4",
+        "c1q5",
+        "c1q6",
+        "cat2",
+        "c2q1",
+        "c2q2",
+        "c2q3",
+        "c2q4",
+        "cat3",
+        "c3q1",
+        "c3q2",
+        "c3q3",
+        "c3q4",
+        "cat4",
+        "c4q1",
+        "c4q2",
+        "c4q3",
+        "c4q4",
+        "cat5",
+        "c5q1",
+        "c5q2",
+        "c5q3",
+        "c5q4",
+        "cat6",
+        "c6q1",
+        "c6q2",
+        "c6q3",
+        "c6q4"
+      ],
+      "settings": {}
+    },
+    "faq-cta": {
+      "type": "pravas-faq-cta",
+      "blocks": {
+        "d1": {
+          "type": "detail",
+          "settings": {
+            "icon": "clock",
+            "text": "Mon–Sat, 10:00–19:00 IST"
+          }
+        },
+        "d2": {
+          "type": "detail",
+          "settings": {
+            "icon": "mail",
+            "text": "concierge@pravas.in"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "faq-hero",
+    "faq",
+    "faq-cta"
+  ]
+}

@@ -1,0 +1,107 @@
+{{ 'pravas-faq.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-faq-hero" id="pw-faq-hero-{{ section.id }}">
+  <div class="pw-faq-hero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-faq-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="pw-faq-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pw-faq-hero__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.show_rule -%}
+      <hr class="pw-faq-hero__rule">
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-faq-hero-{{ section.id }} {
+    --faq-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --faq-eyebrow-color: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --faq-heading-color: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --faq-body-color: {{ section.settings.body_color | default: '#8A8A8A' }};
+    --faq-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+
+    --faq-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --faq-heading-size: {{ section.settings.heading_size | default: 52 }}px;
+    --faq-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 40 }}px;
+    --faq-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 30 }}px;
+    --faq-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --faq-heading-line-height: {{ section.settings.heading_line_height | default: 1.1 }};
+
+    --faq-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --faq-body-size: {{ section.settings.body_size | default: 13 }}px;
+    --faq-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --faq-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+    --faq-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --faq-hero-width: {{ section.settings.content_max_width | default: 620 }}px;
+    --faq-rule-width: {{ section.settings.rule_width | default: 40 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 96 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 64 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    #pw-faq-hero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 56 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW FAQ Hero",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE PRAVAS GUIDE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Questions, Answered." },
+    { "type": "textarea", "id": "body", "label": "Description", "default": "Everything you need to know about your timepiece, from choosing your PRAVAS to caring for it for years to come." },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider below", "default": true },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 400, "max": 1000, "step": 20, "unit": "px", "default": 620 },
+    { "type": "range", "id": "rule_width", "label": "Divider width", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Size — desktop", "min": 24, "max": 88, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "heading_size_tablet", "label": "Size — tablet", "min": 20, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 18, "max": 48, "step": 2, "unit": "px", "default": 30 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.1 },
+
+    { "type": "header", "content": "Typography — Body & Eyebrow" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Description", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Accent / divider", "default": "#B5924A" }
+  ],
+  "presets": [{ "name": "PW FAQ Hero" }]
+}
+{% endschema %}

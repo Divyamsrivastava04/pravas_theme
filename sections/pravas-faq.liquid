@@ -1,0 +1,276 @@
+{{ 'pravas-faq.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+{%- liquid
+  comment
+    Blocks are flat in Shopify, so each 'question' belongs to the most recent
+    'category' above it. Counting them up front lets the index show topic
+    counts and lets each category render its own anchor id.
+  endcomment
+  assign cat_count = 0
+-%}
+
+<section class="pw-faq" id="pw-faq-{{ section.id }}">
+  <div class="pw-faq__inner">
+
+    {%- if section.settings.show_index -%}
+      <aside class="pw-faq__index" aria-label="{{ section.settings.index_title | default: 'Categories' }}">
+        <div class="pw-faq__index-sticky">
+          {%- if section.settings.index_title != blank -%}
+            <span class="pw-faq__index-title">{{ section.settings.index_title }}</span>
+          {%- endif -%}
+          <nav class="pw-faq__index-list">
+            {%- assign i = 0 -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'category' -%}
+                {%- assign i = i | plus: 1 -%}
+                {%- assign num = i | prepend: '0' | slice: -2, 2 -%}
+                <a class="pw-faq__index-link" href="#pw-faq-cat-{{ block.id }}" data-faq-index="{{ block.id }}">
+                  <span class="pw-faq__index-num">{{ num }}</span>
+                  <span class="pw-faq__index-label">{{ block.settings.title }}</span>
+                  <svg class="pw-faq__index-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </nav>
+
+          {%- if section.settings.help_heading != blank or section.settings.help_body != blank -%}
+            <div class="pw-faq__help">
+              {%- if section.settings.help_heading != blank -%}
+                <span class="pw-faq__help-heading">{{ section.settings.help_heading }}</span>
+              {%- endif -%}
+              {%- if section.settings.help_body != blank -%}
+                <p class="pw-faq__help-body">{{ section.settings.help_body }}</p>
+              {%- endif -%}
+              {%- if section.settings.help_link_label != blank -%}
+                <a class="pw-faq__help-link" href="{{ section.settings.help_link_url | default: '/pages/contact' }}">
+                  {{ section.settings.help_link_label }}
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </aside>
+    {%- endif -%}
+
+    <div class="pw-faq__content">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'category' -%}
+          {%- liquid
+            assign cat_count = cat_count | plus: 1
+            assign cat_num = cat_count | prepend: '0' | slice: -2, 2
+            assign cat_index = forloop.index0
+
+            # questions belonging to this category are the blocks after it,
+            # up to the next category block
+            assign q_total = 0
+            for b in section.blocks
+              if forloop.index0 > cat_index
+                if b.type == 'category'
+                  break
+                elsif b.type == 'question'
+                  assign q_total = q_total | plus: 1
+                endif
+              endif
+            endfor
+          -%}
+
+          <div class="pw-faq__category" id="pw-faq-cat-{{ block.id }}" data-faq-category="{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="pw-faq__category-head">
+              <div class="pw-faq__category-meta">
+                {%- if section.settings.show_category_number -%}
+                  <span class="pw-faq__category-num">{{ section.settings.category_label | default: 'CATEGORY' }} {{ cat_num }}</span>
+                {%- endif -%}
+                <h2 class="pw-faq__category-title">{{ block.settings.title }}</h2>
+              </div>
+              {%- if section.settings.show_topic_count and q_total > 0 -%}
+                <span class="pw-faq__category-count">{{ q_total }} {% if q_total == 1 %}{{ section.settings.topic_singular | default: 'Topic' }}{% else %}{{ section.settings.topic_plural | default: 'Topics' }}{% endif %}</span>
+              {%- endif -%}
+            </div>
+
+            {%- for qb in section.blocks -%}
+              {%- if forloop.index0 > cat_index -%}
+                {%- if qb.type == 'category' -%}
+                  {%- break -%}
+                {%- elsif qb.type == 'question' -%}
+                  <details class="pw-faq__item"{% if qb.settings.open_by_default %} open{% endif %} {{ qb.shopify_attributes }}>
+                    <summary class="pw-faq__question">
+                      <span class="pw-faq__question-text">{{ qb.settings.question }}</span>
+                      <span class="pw-faq__icon" aria-hidden="true"></span>
+                    </summary>
+                    <div class="pw-faq__answer-wrap">
+                      <div class="pw-faq__answer">{{ qb.settings.answer }}</div>
+                    </div>
+                  </details>
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #pw-faq-{{ section.id }} {
+    --faq-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --faq-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+    --faq-index-label: {{ section.settings.index_label_color | default: '#8A8A8A' }};
+    --faq-index-active: {{ section.settings.index_active_color | default: '#B5924A' }};
+    --faq-index-title-color: {{ section.settings.index_title_color | default: '#8A8A8A' }};
+    --faq-category-num-color: {{ section.settings.category_num_color | default: '#8A8A8A' }};
+    --faq-category-title-color: {{ section.settings.category_title_color | default: '#F5F3EF' }};
+    --faq-count-color: {{ section.settings.count_color | default: '#8A8A8A' }};
+    --faq-question-color: {{ section.settings.question_color | default: '#F5F3EF' }};
+    --faq-answer-color: {{ section.settings.answer_color | default: '#9A9A9A' }};
+    --faq-divider: {{ section.settings.divider_color | default: '#2A2A2A' }};
+    --faq-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+    --faq-category-rule-color: {{ section.settings.category_rule_color | default: '#B5924A' }};
+    --faq-icon-color: {{ section.settings.icon_color | default: '#8A8A8A' }};
+    --faq-help-bg: {{ section.settings.help_bg_color | default: '#1A1A1A' }};
+    --faq-help-border: {{ section.settings.help_border_color | default: '#2A2A2A' }};
+    --faq-help-heading-color: {{ section.settings.help_heading_color | default: '#B5924A' }};
+    --faq-help-body-color: {{ section.settings.help_body_color | default: '#8A8A8A' }};
+
+    --faq-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --faq-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --faq-category-size: {{ section.settings.category_size | default: 22 }}px;
+    --faq-category-size-mobile: {{ section.settings.category_size_mobile | default: 18 }}px;
+    --faq-category-spacing: {{ section.settings.category_letter_spacing | default: 1 }}px;
+    --faq-question-size: {{ section.settings.question_size | default: 13 }}px;
+    --faq-question-size-mobile: {{ section.settings.question_size_mobile | default: 13 }}px;
+    --faq-question-weight: {{ section.settings.question_weight | default: '500' }};
+    --faq-answer-size: {{ section.settings.answer_size | default: 12 }}px;
+    --faq-answer-line-height: {{ section.settings.answer_line_height | default: 1.8 }};
+    --faq-index-size: {{ section.settings.index_size | default: 10 }}px;
+    --faq-index-spacing: {{ section.settings.index_letter_spacing | default: 1 }}px;
+
+    --faq-content-width: {{ section.settings.content_max_width | default: 1100 }}px;
+    --faq-index-width: {{ section.settings.index_width | default: 240 }}px;
+    --faq-column-gap: {{ section.settings.column_gap | default: 64 }}px;
+    --faq-category-gap: {{ section.settings.category_gap | default: 72 }}px;
+    --faq-item-padding: {{ section.settings.item_padding | default: 18 }}px;
+    --faq-sticky-offset: {{ section.settings.sticky_offset | default: 80 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 24 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 120 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #pw-faq-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 16 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 64 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+<script src="{{ 'pravas-faq.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "PW FAQ",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Category Index" },
+    { "type": "checkbox", "id": "show_index", "label": "Show sticky category index", "default": true },
+    { "type": "text", "id": "index_title", "label": "Index title", "default": "INDEX / CATEGORIES" },
+    { "type": "range", "id": "index_width", "label": "Index column width", "min": 160, "max": 360, "step": 10, "unit": "px", "default": 240 },
+    { "type": "range", "id": "sticky_offset", "label": "Sticky offset from top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
+
+    { "type": "header", "content": "Index Help Box" },
+    { "type": "text", "id": "help_heading", "label": "Heading", "default": "HOROLOGIST DESK" },
+    { "type": "textarea", "id": "help_body", "label": "Body", "default": "Need bespoke assistance? Reach our Mumbai atelier directly for technical consultation or private enquiries." },
+    { "type": "text", "id": "help_link_label", "label": "Link label", "default": "DIRECT ENQUIRIES" },
+    { "type": "url", "id": "help_link_url", "label": "Link URL" },
+
+    { "type": "header", "content": "Categories" },
+    { "type": "checkbox", "id": "show_category_number", "label": "Show category number", "default": true },
+    { "type": "text", "id": "category_label", "label": "Category label prefix", "default": "CATEGORY" },
+    { "type": "checkbox", "id": "show_topic_count", "label": "Show topic count", "default": true },
+    { "type": "text", "id": "topic_singular", "label": "Topic label (singular)", "default": "Topic" },
+    { "type": "text", "id": "topic_plural", "label": "Topic label (plural)", "default": "Topics" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 800, "max": 1500, "step": 20, "unit": "px", "default": 1100 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "category_gap", "label": "Space between categories", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "item_padding", "label": "Question vertical padding", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Category heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "category_size", "label": "Category size — desktop", "min": 14, "max": 44, "step": 1, "unit": "px", "default": 22 },
+    { "type": "range", "id": "category_size_mobile", "label": "Category size — mobile", "min": 12, "max": 32, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "category_letter_spacing", "label": "Category letter spacing", "min": 0, "max": 6, "step": 0.5, "unit": "px", "default": 1 },
+    { "type": "font_picker", "id": "body_font", "label": "Question & answer font", "default": "inter_n4" },
+    { "type": "range", "id": "question_size", "label": "Question size — desktop", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "question_size_mobile", "label": "Question size — mobile", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "select", "id": "question_weight", "label": "Question weight", "options": [{ "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }, { "value": "600", "label": "Semibold" }], "default": "500" },
+    { "type": "range", "id": "answer_size", "label": "Answer size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "answer_line_height", "label": "Answer line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "index_size", "label": "Index link size", "min": 8, "max": 16, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "index_letter_spacing", "label": "Index letter spacing", "min": 0, "max": 4, "step": 0.5, "unit": "px", "default": 1 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" },
+    { "type": "color", "id": "index_title_color", "label": "Index title", "default": "#8A8A8A" },
+    { "type": "color", "id": "index_label_color", "label": "Index link", "default": "#8A8A8A" },
+    { "type": "color", "id": "index_active_color", "label": "Index link — active", "default": "#B5924A" },
+    { "type": "color", "id": "category_num_color", "label": "Category number", "default": "#8A8A8A" },
+    { "type": "color", "id": "category_title_color", "label": "Category title", "default": "#F5F3EF" },
+    { "type": "color", "id": "category_rule_color", "label": "Category underline", "default": "#B5924A" },
+    { "type": "color", "id": "count_color", "label": "Topic count", "default": "#8A8A8A" },
+    { "type": "color", "id": "question_color", "label": "Question", "default": "#F5F3EF" },
+    { "type": "color", "id": "answer_color", "label": "Answer", "default": "#9A9A9A" },
+    { "type": "color", "id": "icon_color", "label": "Plus/minus icon", "default": "#8A8A8A" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2A2A2A" },
+    { "type": "range", "id": "divider_width", "label": "Divider thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "help_bg_color", "label": "Help box background", "default": "#1A1A1A" },
+    { "type": "color", "id": "help_border_color", "label": "Help box border", "default": "#2A2A2A" },
+    { "type": "color", "id": "help_heading_color", "label": "Help box heading", "default": "#B5924A" },
+    { "type": "color", "id": "help_body_color", "label": "Help box body", "default": "#8A8A8A" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "paragraph", "content": "Questions added below this block belong to this category, until the next Category block." },
+        { "type": "text", "id": "title", "label": "Category title", "default": "THE TIMEPIECE" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What movement powers the PRAVAS Aarambh?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>The Aarambh is powered by the Miyota 8215 automatic movement.</p>" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW FAQ",
+      "blocks": [
+        { "type": "category", "settings": { "title": "THE TIMEPIECE" } },
+        { "type": "question", "settings": { "question": "What movement powers the PRAVAS Aarambh?", "answer": "<p>The Aarambh is powered by the Miyota 8215 automatic movement, a mechanical movement that winds itself through the natural motion of your wrist. It is designed to be worn, experienced, and maintained over time.</p>", "open_by_default": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}
