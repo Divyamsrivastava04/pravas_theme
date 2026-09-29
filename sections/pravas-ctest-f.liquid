@@ -1,0 +1,239 @@
+<section>x</section>
+{% schema %}
+{
+  "name": "CTest F",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Information Column"
+    },
+    {
+      "type": "text",
+      "id": "info_eyebrow",
+      "label": "Column eyebrow",
+      "default": "ATELIER DIRECTORY"
+    },
+    {
+      "type": "text",
+      "id": "info_location",
+      "label": "Column location line",
+      "info": "Leave blank if you do not want to show a location.",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Form — Content"
+    },
+    {
+      "type": "text",
+      "id": "form_eyebrow",
+      "label": "Form eyebrow",
+      "default": "DIRECT INQUIRY"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Speak with PRAVAS."
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form description",
+      "default": "Please share your inquiry details below. Our concierge will review your message and respond personally."
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Name label",
+      "default": "FULL NAME"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "EMAIL ADDRESS"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "name@domain.com"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "PHONE NUMBER"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Optional"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subject",
+      "label": "Show inquiry subject dropdown",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subject_label",
+      "label": "Subject label",
+      "default": "INQUIRY SUBJECT"
+    },
+    {
+      "type": "textarea",
+      "id": "subject_options",
+      "label": "Subject options",
+      "info": "Separate with a pipe ( | ).",
+      "default": "Timepiece & Caliber Inquiry|Order & Delivery|Warranty & Service|Private Viewing|Other"
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Message label",
+      "default": "YOUR MESSAGE / INQUIRY"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Message placeholder",
+      "default": "Tell us how we can assist you…"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button text",
+      "default": "SEND INQUIRY"
+    },
+    {
+      "type": "checkbox",
+      "id": "submit_show_arrow",
+      "label": "Show arrow on button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "form_note",
+      "label": "Note below button",
+      "info": "Leave blank to hide. Only state what your store actually offers.",
+      "default": ""
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you. Our concierge will be in touch shortly."
+    },
+    {
+      "type": "textarea",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Please check the highlighted field and try again."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max-width",
+      "min": 800,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1140
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "field_gap",
+      "label": "Form field spacing",
+      "min": 6,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "panel_padding",
+      "label": "Form panel padding",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Padding sides — desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Padding sides — mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Form Panel"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,139 @@
+<section>x</section>
+{% schema %}
+{
+  "name": "CTest E",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Contact Detail",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Show this block",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "CONCIERGE DESK"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "select",
+          "id": "kind",
+          "label": "Type",
+          "info": "Email and Phone fall back to your Shopify store contact details when the value is left blank, and link automatically.",
+          "options": [
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "text",
+              "label": "Plain text"
+            }
+          ],
+          "default": "email"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "info": "Leave blank to use your Shopify store email/phone."
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Custom link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Small note below (optional)"
+        }
+      ]
+    },
+    {
+      "type": "viewing",
+      "name": "Private Viewing",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Show this block",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "PRIVATE VIEWINGS"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Private viewings are available by appointment."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "REQUEST A PRIVATE VIEWING"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL",
+          "info": "Leave blank to jump to the form on this page."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Contact",
+      "blocks": [
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "CONCIERGE DESK",
+            "kind": "email"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "ORDERS & DELIVERY",
+            "kind": "email",
+            "description": "Questions regarding dispatch, transit, or order modifications."
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "WARRANTY & SERVICE",
+            "kind": "email",
+            "description": "Servicing, repairs, caliber maintenance and warranty enquiries."
+          }
+        },
+        {
+          "type": "viewing",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
