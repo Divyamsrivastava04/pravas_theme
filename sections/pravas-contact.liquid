@@ -1,0 +1,906 @@
+{{ 'pravas-contact.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-contact" id="pw-contact-{{ section.id }}">
+  <div class="pw-contact__inner">
+
+    <aside class="pw-contact__info">
+      {%- if section.settings.info_eyebrow != blank or section.settings.info_location != blank -%}
+        <div class="pw-contact__info-head">
+          {%- if section.settings.info_eyebrow != blank -%}
+            <span class="pw-contact__info-eyebrow">{{ section.settings.info_eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.info_location != blank -%}
+            <span class="pw-contact__info-location">{{ section.settings.info_location }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.settings.enabled -%}
+          {%- case block.type -%}
+
+            {%- when 'detail' -%}
+              {%- liquid
+                # Fall back to the store's real Shopify contact details rather
+                # than shipping invented ones.
+                assign detail_value = block.settings.value
+                if detail_value == blank
+                  if block.settings.kind == 'email'
+                    assign detail_value = shop.email
+                  elsif block.settings.kind == 'phone'
+                    assign detail_value = shop.phone
+                  endif
+                endif
+
+                assign detail_href = block.settings.link_url
+                if detail_href == blank and detail_value != blank
+                  if block.settings.kind == 'email'
+                    assign detail_href = detail_value | prepend: 'mailto:'
+                  elsif block.settings.kind == 'phone'
+                    assign detail_href = detail_value | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | prepend: 'tel:'
+                  endif
+                endif
+              -%}
+
+              <div class="pw-contact__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.eyebrow != blank -%}
+                  <span class="pw-contact__item-eyebrow">{{ block.settings.eyebrow }}</span>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="pw-contact__item-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+                {%- if detail_value != blank -%}
+                  {%- if detail_href != blank -%}
+                    <a class="pw-contact__item-value pw-contact__item-value--link" href="{{ detail_href }}">{{ detail_value }}</a>
+                  {%- else -%}
+                    <span class="pw-contact__item-value">{{ detail_value }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+                {%- if block.settings.note != blank -%}
+                  <span class="pw-contact__item-note">{{ block.settings.note }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'viewing' -%}
+              <div class="pw-contact__viewing" {{ block.shopify_attributes }}>
+                {%- if block.settings.eyebrow != blank -%}
+                  <span class="pw-contact__viewing-eyebrow">{{ block.settings.eyebrow }}</span>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="pw-contact__viewing-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+                {%- if block.settings.link_label != blank -%}
+                  <a class="pw-contact__viewing-link" href="{{ block.settings.link_url | default: '#pw-contact-form' }}">
+                    {{ block.settings.link_label }}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                {%- endif -%}
+              </div>
+
+          {%- endcase -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </aside>
+
+    <div class="pw-contact__form-panel" id="pw-contact-form">
+      {%- if section.settings.form_eyebrow != blank -%}
+        <span class="pw-contact__form-eyebrow">{{ section.settings.form_eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.form_heading != blank -%}
+        <h2 class="pw-contact__form-heading">{{ section.settings.form_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.form_description != blank -%}
+        <p class="pw-contact__form-desc">{{ section.settings.form_description }}</p>
+      {%- endif -%}
+
+      {%- comment -%}
+        Shopify's native contact form. Field names match the theme's existing
+        contact-form section exactly, so submissions keep reaching the same
+        destination configured in the store.
+      {%- endcomment -%}
+      {%- form 'contact', id: 'PravasContactForm', class: 'pw-contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="pw-contact__form-status pw-contact__form-status--success" role="status" tabindex="-1" autofocus>
+            {{ section.settings.success_message | default: 'Thank you. Our concierge will be in touch shortly.' }}
+          </p>
+        {%- elsif form.errors -%}
+          <div class="pw-contact__form-status pw-contact__form-status--error" role="alert" tabindex="-1" autofocus>
+            <p>{{ section.settings.error_message | default: 'Please check the highlighted field and try again.' }}</p>
+            <ul class="pw-contact__form-errors" role="list">
+              <li>
+                <a href="#PravasContactForm-email">
+                  {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="pw-contact__field">
+          <label class="pw-contact__label" for="PravasContactForm-name">{{ section.settings.name_label | default: 'FULL NAME' }}</label>
+          <input
+            class="pw-contact__input"
+            type="text"
+            id="PravasContactForm-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            autocomplete="name"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="{{ section.settings.name_placeholder }}"
+          >
+        </div>
+
+        <div class="pw-contact__field-row">
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-email">
+              {{ section.settings.email_label | default: 'EMAIL ADDRESS' }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              class="pw-contact__input{% if form.errors contains 'email' %} pw-contact__input--error{% endif %}"
+              type="email"
+              id="PravasContactForm-email"
+              name="contact[email]"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              required
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              placeholder="{{ section.settings.email_placeholder }}"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="PravasContactForm-email-error"
+              {% endif %}
+            >
+            {%- if form.errors contains 'email' -%}
+              <span class="pw-contact__field-error" id="PravasContactForm-email-error">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-phone">{{ section.settings.phone_label | default: 'PHONE NUMBER' }}</label>
+            <input
+              class="pw-contact__input"
+              type="tel"
+              id="PravasContactForm-phone"
+              name="contact[{{ 'templates.contact.form.phone' | t }}]"
+              autocomplete="tel"
+              pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="{{ section.settings.phone_placeholder }}"
+            >
+          </div>
+        </div>
+
+        {%- if section.settings.show_subject -%}
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-subject">{{ section.settings.subject_label | default: 'INQUIRY SUBJECT' }}</label>
+            <div class="pw-contact__select-wrap">
+              <select class="pw-contact__input pw-contact__select" id="PravasContactForm-subject" name="contact[Subject]">
+                {%- assign subjects = section.settings.subject_options | split: '|' -%}
+                {%- for subject in subjects -%}
+                  <option value="{{ subject | strip | escape }}">{{ subject | strip }}</option>
+                {%- endfor -%}
+              </select>
+              <svg class="pw-contact__select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="pw-contact__field">
+          <label class="pw-contact__label" for="PravasContactForm-body">{{ section.settings.message_label | default: 'YOUR MESSAGE' }}</label>
+          <textarea
+            class="pw-contact__input pw-contact__textarea"
+            rows="6"
+            id="PravasContactForm-body"
+            name="contact[{{ 'templates.contact.form.comment' | t }}]"
+            placeholder="{{ section.settings.message_placeholder }}"
+          >{{ form.body }}</textarea>
+        </div>
+
+        <button type="submit" class="pw-contact__submit">
+          {{ section.settings.submit_label | default: 'SEND INQUIRY' }}
+          {%- if section.settings.submit_show_arrow -%}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          {%- endif -%}
+        </button>
+
+        {%- if section.settings.form_note != blank -%}
+          <p class="pw-contact__form-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 9.2 8 10 4.6-.8 8-5 8-10V6l-8-4z"/></svg>
+            {{ section.settings.form_note }}
+          </p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #pw-contact-{{ section.id }} {
+    --contact-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --contact-accent: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --contact-text: {{ section.settings.text_color | default: '#F5F3EF' }};
+    --contact-muted: {{ section.settings.muted_color | default: '#8A8A8A' }};
+    --contact-link: {{ section.settings.text_color | default: '#F5F3EF' }};
+    --contact-link-hover: {{ section.settings.link_hover_color | default: '#B5924A' }};
+    --contact-divider: {{ section.settings.divider_color | default: '#2A2A2A' }};
+    --contact-divider-width: 1px;
+    --contact-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+
+    --contact-panel-bg: {{ section.settings.panel_bg_color | default: '#1A1A1A' }};
+    --contact-panel-border: {{ section.settings.panel_border_color | default: '#2A2A2A' }};
+    --contact-panel-border-width: 1px;
+    --contact-panel-radius: {{ section.settings.panel_radius | default: 0 }}px;
+    --contact-panel-padding: {{ section.settings.panel_padding | default: 36 }}px;
+
+    --contact-input-bg: {{ section.settings.input_bg_color | default: '#131313' }};
+    --contact-input-text: {{ section.settings.input_text_color | default: '#F5F3EF' }};
+    --contact-input-placeholder: {{ section.settings.input_placeholder_color | default: '#6A6A6A' }};
+    --contact-input-border: {{ section.settings.input_border_color | default: '#2E2E2E' }};
+    --contact-input-focus-border: {{ section.settings.input_focus_border_color | default: '#B5924A' }};
+    --contact-input-border-width: {{ section.settings.input_border_width | default: 1 }}px;
+    --contact-input-radius: {{ section.settings.input_radius | default: 0 }}px;
+    --contact-input-padding: {{ section.settings.input_padding | default: 13 }}px;
+    --contact-label-color: {{ section.settings.label_color | default: '#8A8A8A' }};
+    --contact-error: {{ section.settings.error_color | default: '#C0564B' }};
+    --contact-success: {{ section.settings.success_color | default: '#6E9E7E' }};
+
+    --contact-btn-bg: {{ section.settings.btn_bg_color | default: '#B5924A' }};
+    --contact-btn-text: {{ section.settings.btn_text_color | default: '#131313' }};
+    --contact-btn-hover-bg: {{ section.settings.btn_hover_bg_color | default: '#C7A25E' }};
+    --contact-btn-hover-text: {{ section.settings.btn_hover_text_color | default: '#131313' }};
+    
+    
+    --contact-btn-radius: {{ section.settings.btn_radius | default: 0 }}px;
+    --contact-btn-padding: {{ section.settings.btn_padding | default: 14 }}px;
+    --contact-btn-size: {{ section.settings.btn_size | default: 10 }}px;
+    --contact-btn-spacing: 2px;
+
+    --contact-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --contact-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --contact-form-heading-size: {{ section.settings.form_heading_size | default: 28 }}px;
+    --contact-form-heading-size-mobile: 22px;
+    --contact-label-size: 9px;
+    --contact-label-spacing: 1.5px;
+    --contact-input-size: 13px;
+    --contact-body-size: {{ section.settings.body_size | default: 12 }}px;
+    --contact-body-line-height: 1.8;
+    --contact-eyebrow-size: 9px;
+    --contact-eyebrow-spacing: 2px;
+    --contact-item-value-size: 13px;
+
+    --contact-max-width: {{ section.settings.content_max_width | default: 1140 }}px;
+    --contact-info-width: 300px;
+    --contact-column-gap: {{ section.settings.column_gap | default: 56 }}px;
+    --contact-field-gap: {{ section.settings.field_gap | default: 18 }}px;
+    --contact-label-gap: 8px;
+    --contact-item-gap: 26px;
+
+    padding-top: {{ section.settings.padding_top | default: 8 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+  @media screen and (max-width: 989px) {
+    #pw-contact-{{ section.id }} {
+      padding-top: 8px;
+      padding-bottom: 56px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW Contact",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Information Column"
+    },
+    {
+      "type": "text",
+      "id": "info_eyebrow",
+      "label": "Column eyebrow",
+      "default": "ATELIER DIRECTORY"
+    },
+    {
+      "type": "text",
+      "id": "info_location",
+      "label": "Column location line",
+      "info": "Leave blank if you do not want to show a location.",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Form — Content"
+    },
+    {
+      "type": "text",
+      "id": "form_eyebrow",
+      "label": "Form eyebrow",
+      "default": "DIRECT INQUIRY"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Speak with PRAVAS."
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form description",
+      "default": "Please share your inquiry details below. Our concierge will review your message and respond personally."
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Name label",
+      "default": "FULL NAME"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "EMAIL ADDRESS"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "name@domain.com"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "PHONE NUMBER"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Optional"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subject",
+      "label": "Show inquiry subject dropdown",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subject_label",
+      "label": "Subject label",
+      "default": "INQUIRY SUBJECT"
+    },
+    {
+      "type": "textarea",
+      "id": "subject_options",
+      "label": "Subject options",
+      "info": "Separate with a pipe ( | ).",
+      "default": "Timepiece & Caliber Inquiry|Order & Delivery|Warranty & Service|Private Viewing|Other"
+    },
+    {
+      "type": "text",
+      "id": "message_label",
+      "label": "Message label",
+      "default": "YOUR MESSAGE / INQUIRY"
+    },
+    {
+      "type": "text",
+      "id": "message_placeholder",
+      "label": "Message placeholder",
+      "default": "Tell us how we can assist you…"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button text",
+      "default": "SEND INQUIRY"
+    },
+    {
+      "type": "checkbox",
+      "id": "submit_show_arrow",
+      "label": "Show arrow on button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "form_note",
+      "label": "Note below button",
+      "info": "Leave blank to hide. Only state what your store actually offers.",
+      "default": ""
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you. Our concierge will be in touch shortly."
+    },
+    {
+      "type": "textarea",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Please check the highlighted field and try again."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content max-width",
+      "min": 800,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1140
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "field_gap",
+      "label": "Form field spacing",
+      "min": 6,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "panel_padding",
+      "label": "Form panel padding",
+      "min": 0,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top — desktop",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom — desktop",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Padding sides — desktop",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Padding sides — mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Form Panel"
+    },
+    {
+      "type": "color",
+      "id": "panel_bg_color",
+      "label": "Panel background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "panel_border_color",
+      "label": "Panel border",
+      "default": "#2A2A2A"
+    },
+    {
+      "type": "range",
+      "id": "panel_radius",
+      "label": "Panel radius (0 = sharp)",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Inputs"
+    },
+    {
+      "type": "color",
+      "id": "input_bg_color",
+      "label": "Input background",
+      "default": "#131313"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "Input text",
+      "default": "#F5F3EF"
+    },
+    {
+      "type": "color",
+      "id": "input_placeholder_color",
+      "label": "Input placeholder",
+      "default": "#6A6A6A"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "Input border",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "input_focus_border_color",
+      "label": "Input border — focus",
+      "default": "#B5924A"
+    },
+    {
+      "type": "range",
+      "id": "input_border_width",
+      "label": "Input border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "input_radius",
+      "label": "Input radius (0 = sharp)",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "input_padding",
+      "label": "Input padding",
+      "min": 6,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label",
+      "default": "#8A8A8A"
+    },
+    {
+      "type": "color",
+      "id": "error_color",
+      "label": "Error",
+      "default": "#C0564B"
+    },
+    {
+      "type": "color",
+      "id": "success_color",
+      "label": "Success",
+      "default": "#6E9E7E"
+    },
+    {
+      "type": "header",
+      "content": "Submit Button"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Background",
+      "default": "#B5924A"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Text",
+      "default": "#131313"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg_color",
+      "label": "Hover background",
+      "default": "#C7A25E"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_text_color",
+      "label": "Hover text",
+      "default": "#131313"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "label": "Radius (0 = sharp)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "btn_padding",
+      "label": "Button padding",
+      "min": 6,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "btn_size",
+      "label": "Font size",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font",
+      "default": "playfair_display_n4"
+    },
+    {
+      "type": "range",
+      "id": "form_heading_size",
+      "label": "Form heading — desktop",
+      "min": 16,
+      "max": 52,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "font_picker",
+      "id": "body_font",
+      "label": "Body / form font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#131313"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Primary text",
+      "default": "#F5F3EF"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#8A8A8A"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow",
+      "default": "#B5924A"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover",
+      "default": "#B5924A"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider",
+      "default": "#2A2A2A"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Contact Detail",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Show this block",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "CONCIERGE DESK"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "select",
+          "id": "kind",
+          "label": "Type",
+          "info": "Email and Phone fall back to your Shopify store contact details when the value is left blank, and link automatically.",
+          "options": [
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "text",
+              "label": "Plain text"
+            }
+          ],
+          "default": "email"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "info": "Leave blank to use your Shopify store email/phone."
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Custom link (optional)"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Small note below (optional)"
+        }
+      ]
+    },
+    {
+      "type": "viewing",
+      "name": "Private Viewing",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enabled",
+          "label": "Show this block",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "PRIVATE VIEWINGS"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Private viewings are available by appointment."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "REQUEST A PRIVATE VIEWING"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL",
+          "info": "Leave blank to jump to the form on this page."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PW Contact",
+      "blocks": [
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "CONCIERGE DESK",
+            "kind": "email"
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "ORDERS & DELIVERY",
+            "kind": "email",
+            "description": "Questions regarding dispatch, transit, or order modifications."
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "eyebrow": "WARRANTY & SERVICE",
+            "kind": "email",
+            "description": "Servicing, repairs, caliber maintenance and warranty enquiries."
+          }
+        },
+        {
+          "type": "viewing",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
