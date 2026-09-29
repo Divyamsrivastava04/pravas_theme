@@ -1,0 +1,140 @@
+<section class="pw-contact"><div class="pw-contact__form-panel" id="pw-contact-form">
+      {%- if section.settings.form_eyebrow != blank -%}
+        <span class="pw-contact__form-eyebrow">{{ section.settings.form_eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.form_heading != blank -%}
+        <h2 class="pw-contact__form-heading">{{ section.settings.form_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.form_description != blank -%}
+        <p class="pw-contact__form-desc">{{ section.settings.form_description }}</p>
+      {%- endif -%}
+
+      {%- comment -%}
+        Shopify's native contact form. Field names match the theme's existing
+        contact-form section exactly, so submissions keep reaching the same
+        destination configured in the store.
+      {%- endcomment -%}
+      {%- form 'contact', id: 'PravasContactForm', class: 'pw-contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="pw-contact__form-status pw-contact__form-status--success" role="status" tabindex="-1" autofocus>
+            {{ section.settings.success_message | default: 'Thank you. Our concierge will be in touch shortly.' }}
+          </p>
+        {%- elsif form.errors -%}
+          <div class="pw-contact__form-status pw-contact__form-status--error" role="alert" tabindex="-1" autofocus>
+            <p>{{ section.settings.error_message | default: 'Please check the highlighted field and try again.' }}</p>
+            <ul class="pw-contact__form-errors" role="list">
+              <li>
+                <a href="#PravasContactForm-email">
+                  {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="pw-contact__field">
+          <label class="pw-contact__label" for="PravasContactForm-name">{{ section.settings.name_label | default: 'FULL NAME' }}</label>
+          <input
+            class="pw-contact__input"
+            type="text"
+            id="PravasContactForm-name"
+            name="contact[{{ 'templates.contact.form.name' | t }}]"
+            autocomplete="name"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+            placeholder="{{ section.settings.name_placeholder }}"
+          >
+        </div>
+
+        <div class="pw-contact__field-row">
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-email">
+              {{ section.settings.email_label | default: 'EMAIL ADDRESS' }} <span aria-hidden="true">*</span>
+            </label>
+            <input
+              class="pw-contact__input{% if form.errors contains 'email' %} pw-contact__input--error{% endif %}"
+              type="email"
+              id="PravasContactForm-email"
+              name="contact[email]"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              required
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              placeholder="{{ section.settings.email_placeholder }}"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="PravasContactForm-email-error"
+              {% endif %}
+            >
+            {%- if form.errors contains 'email' -%}
+              <span class="pw-contact__field-error" id="PravasContactForm-email-error">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-phone">{{ section.settings.phone_label | default: 'PHONE NUMBER' }}</label>
+            <input
+              class="pw-contact__input"
+              type="tel"
+              id="PravasContactForm-phone"
+              name="contact[{{ 'templates.contact.form.phone' | t }}]"
+              autocomplete="tel"
+              pattern="[0-9\-]*"
+              value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              placeholder="{{ section.settings.phone_placeholder }}"
+            >
+          </div>
+        </div>
+
+        {%- if section.settings.show_subject -%}
+          <div class="pw-contact__field">
+            <label class="pw-contact__label" for="PravasContactForm-subject">{{ section.settings.subject_label | default: 'INQUIRY SUBJECT' }}</label>
+            <div class="pw-contact__select-wrap">
+              <select class="pw-contact__input pw-contact__select" id="PravasContactForm-subject" name="contact[Subject]">
+                {%- assign subjects = section.settings.subject_options | split: '|' -%}
+                {%- for subject in subjects -%}
+                  <option value="{{ subject | strip | escape }}">{{ subject | strip }}</option>
+                {%- endfor -%}
+              </select>
+              <svg class="pw-contact__select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="pw-contact__field">
+          <label class="pw-contact__label" for="PravasContactForm-body">{{ section.settings.message_label | default: 'YOUR MESSAGE' }}</label>
+          <textarea
+            class="pw-contact__input pw-contact__textarea"
+            rows="6"
+            id="PravasContactForm-body"
+            name="contact[{{ 'templates.contact.form.comment' | t }}]"
+            placeholder="{{ section.settings.message_placeholder }}"
+          >{{ form.body }}</textarea>
+        </div>
+
+        <button type="submit" class="pw-contact__submit">
+          {{ section.settings.submit_label | default: 'SEND INQUIRY' }}
+          {%- if section.settings.submit_show_arrow -%}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          {%- endif -%}
+        </button>
+
+        {%- if section.settings.form_note != blank -%}
+          <p class="pw-contact__form-note">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 9.2 8 10 4.6-.8 8-5 8-10V6l-8-4z"/></svg>
+            {{ section.settings.form_note }}
+          </p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+</section>
+{% schema %}
+{ "name": "CTest B", "settings": [] }
+{% endschema %}

@@ -1,0 +1,89 @@
+{{ 'pravas-contact.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-contact" id="pw-contact-{{ section.id }}">
+  <div class="pw-contact__inner">
+
+    <aside class="pw-contact__info">
+      {%- if section.settings.info_eyebrow != blank or section.settings.info_location != blank -%}
+        <div class="pw-contact__info-head">
+          {%- if section.settings.info_eyebrow != blank -%}
+            <span class="pw-contact__info-eyebrow">{{ section.settings.info_eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.info_location != blank -%}
+            <span class="pw-contact__info-location">{{ section.settings.info_location }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.settings.enabled -%}
+          {%- case block.type -%}
+
+            {%- when 'detail' -%}
+              {%- liquid
+                # Fall back to the store's real Shopify contact details rather
+                # than shipping invented ones.
+                assign detail_value = block.settings.value
+                if detail_value == blank
+                  if block.settings.kind == 'email'
+                    assign detail_value = shop.email
+                  elsif block.settings.kind == 'phone'
+                    assign detail_value = shop.phone
+                  endif
+                endif
+
+                assign detail_href = block.settings.link_url
+                if detail_href == blank and detail_value != blank
+                  if block.settings.kind == 'email'
+                    assign detail_href = detail_value | prepend: 'mailto:'
+                  elsif block.settings.kind == 'phone'
+                    assign detail_href = detail_value | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | prepend: 'tel:'
+                  endif
+                endif
+              -%}
+
+              <div class="pw-contact__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.eyebrow != blank -%}
+                  <span class="pw-contact__item-eyebrow">{{ block.settings.eyebrow }}</span>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="pw-contact__item-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+                {%- if detail_value != blank -%}
+                  {%- if detail_href != blank -%}
+                    <a class="pw-contact__item-value pw-contact__item-value--link" href="{{ detail_href }}">{{ detail_value }}</a>
+                  {%- else -%}
+                    <span class="pw-contact__item-value">{{ detail_value }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+                {%- if block.settings.note != blank -%}
+                  <span class="pw-contact__item-note">{{ block.settings.note }}</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'viewing' -%}
+              <div class="pw-contact__viewing" {{ block.shopify_attributes }}>
+                {%- if block.settings.eyebrow != blank -%}
+                  <span class="pw-contact__viewing-eyebrow">{{ block.settings.eyebrow }}</span>
+                {%- endif -%}
+                {%- if block.settings.description != blank -%}
+                  <p class="pw-contact__viewing-desc">{{ block.settings.description }}</p>
+                {%- endif -%}
+                {%- if block.settings.link_label != blank -%}
+                  <a class="pw-contact__viewing-link" href="{{ block.settings.link_url | default: '#pw-contact-form' }}">
+                    {{ block.settings.link_label }}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                {%- endif -%}
+              </div>
+
+          {%- endcase -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </aside>
+
+    </div></section>{%- endif -%}
+{% schema %}
+{ "name": "CTest A", "settings": [] }
+{% endschema %}
