@@ -1,0 +1,108 @@
+<section>x</section>
+{% schema %}
+{
+  "name": "TEST-H",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Information Column"
+    },
+    {
+      "type": "text",
+      "id": "info_eyebrow",
+      "label": "Column eyebrow",
+      "default": "ATELIER DIRECTORY"
+    },
+    {
+      "type": "text",
+      "id": "info_location",
+      "label": "Column location line",
+      "info": "Leave blank if you do not want to show a location.",
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "Form — Content"
+    },
+    {
+      "type": "text",
+      "id": "form_eyebrow",
+      "label": "Form eyebrow",
+      "default": "DIRECT INQUIRY"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Speak with PRAVAS."
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form description",
+      "default": "Please share your inquiry details below. Our concierge will review your message and respond personally."
+    },
+    {
+      "type": "text",
+      "id": "name_label",
+      "label": "Name label",
+      "default": "FULL NAME"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Your name"
+    },
+    {
+      "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "EMAIL ADDRESS"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "name@domain.com"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "PHONE NUMBER"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Optional"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subject",
+      "label": "Show inquiry subject dropdown",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subject_label",
+      "label": "Subject label",
+      "default": "INQUIRY SUBJECT"
+    },
+    {
+      "type": "textarea",
+      "id": "subject_options",
+      "label": "Subject options",
+      "info": "Separate with a pipe ( | ).",
+      "default": "Timepiece & Caliber Inquiry|Order & Delivery|Warranty & Service|Private Viewing|Other"
+    }
+  ]
+}
+{% endschema %}
