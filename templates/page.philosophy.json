@@ -12,37 +12,337 @@
     "phil-hero": {
       "type": "pravas-phil-hero",
       "blocks": {
-        "t1": { "type": "tile", "settings": { "label": "CALIBRE 01" } },
-        "t2": { "type": "tile", "settings": { "label": "ENERGY & SPRING" } },
-        "t3": { "type": "tile", "settings": { "label": "21 JEWELS" } },
-        "t4": { "type": "tile", "settings": { "label": "HAND-REGULATED" } }
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "label": "CALIBRE 01",
+            "description": ""
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "label": "ENERGY & SPRING",
+            "description": ""
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "label": "21 JEWELS",
+            "description": ""
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "label": "HAND-REGULATED",
+            "description": ""
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4"],
-      "settings": {}
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "OUR PHILOSOPHY · THE ESSENCE OF TIME",
+        "quote": "\"Time is not an asset. It is the medium through which you become who you are.\"",
+        "show_rule": true,
+        "subtext": "HOROLOGY IN PURSUIT OF PERMANENCE",
+        "bg_image_position": "center",
+        "bg_image_opacity": 100,
+        "overlay_color": "#0f0f0f",
+        "overlay_opacity": 80,
+        "show_strip": true,
+        "strip_columns": 4,
+        "strip_gap": 8,
+        "strip_height": 120,
+        "strip_max_width": 1200,
+        "strip_image_position": "center",
+        "strip_radius": 0,
+        "strip_border_width": 0,
+        "strip_border_color": "#2e2e2e",
+        "strip_overlay_color": "#0f0f0f",
+        "strip_overlay_opacity": 45,
+        "strip_label_color": "#c8c8cc",
+        "strip_label_size": 9,
+        "strip_desc_color": "#888888",
+        "min_height": 0,
+        "content_max_width": 1000,
+        "quote_max_width": 900,
+        "rule_width": 40,
+        "rule_thickness": 1,
+        "padding_top": 96,
+        "padding_bottom": 48,
+        "padding_x": 40,
+        "padding_top_mobile": 56,
+        "padding_bottom_mobile": 32,
+        "padding_x_mobile": 20,
+        "quote_font": "playfair_display_n4",
+        "quote_size": 46,
+        "quote_size_tablet": 36,
+        "quote_size_mobile": 26,
+        "quote_weight": "400",
+        "quote_italic": true,
+        "quote_line_height": 1.3,
+        "quote_letter_spacing": 0,
+        "body_font": "inter_n4",
+        "eyebrow_size": 10,
+        "eyebrow_letter_spacing": 3,
+        "subtext_size": 10,
+        "subtext_letter_spacing": 3,
+        "bg_color": "#141414",
+        "text_color": "#f5f3ef",
+        "eyebrow_color": "#b5924a",
+        "quote_color": "#f5f3ef",
+        "subtext_color": "#888888",
+        "accent_color": "#b5924a"
+      }
     },
     "phil-principle-01": {
       "type": "pravas-phil-principle",
       "blocks": {
-        "m1": { "type": "meta", "settings": { "label": "ATELIER LOCATION", "value": "South Mumbai" } },
-        "m2": { "type": "meta", "settings": { "label": "GENESIS STANDARD", "value": "Hand Finished 316L Alloy" } }
+        "m1": {
+          "type": "meta",
+          "settings": {
+            "label": "ATELIER LOCATION",
+            "value": "New Delhi"
+          }
+        },
+        "m2": {
+          "type": "meta",
+          "settings": {
+            "label": "GENESIS STANDARD",
+            "value": "Miyota 8215"
+          }
+        }
       },
-      "block_order": ["m1", "m2"],
-      "settings": {}
+      "block_order": [
+        "m1",
+        "m2"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "PRINCIPLE 01",
+        "show_eyebrow_rule": true,
+        "heading": "First Beginnings Matter",
+        "body": "<p>Every PRAVAS timepiece is built on the belief that the initial intent determines the soul of the object. We do not retroactively apply \"luxury\" through marketing; it is forged into the base metal.</p><p>From the first sketch to the final regulation of the movement, the genesis is sacred. We choose movements not for their complexity, but for their character—reliable, rhythmic, and ready to outlast their owner.</p>",
+        "image_position": "right",
+        "image_aspect_ratio": "4/5",
+        "image_object_fit": "cover",
+        "image_object_position": "center",
+        "image_opacity": 100,
+        "image_radius": 0,
+        "image_border_width": 8,
+        "image_border_color": "#ffffff",
+        "enable_image_overlay": false,
+        "image_overlay_color": "#181818",
+        "image_overlay_opacity": 0,
+        "caption_left": "FIG 1.0 — THE SACRED GENESIS",
+        "caption_right": "MUMBAI HOROLOGY WORKSHOP",
+        "content_max_width": 1200,
+        "text_max_width": 420,
+        "text_column_ratio": 1,
+        "media_column_ratio": 1,
+        "column_gap": 80,
+        "paragraph_gap": 16,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_x": 40,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 32,
+        "heading_size_tablet": 28,
+        "heading_size_mobile": 24,
+        "heading_weight": "400",
+        "heading_italic": false,
+        "heading_line_height": 1.2,
+        "heading_letter_spacing": 0,
+        "body_font": "inter_n4",
+        "body_size": 14,
+        "body_size_mobile": 13,
+        "body_line_height": 1.8,
+        "eyebrow_size": 10,
+        "eyebrow_letter_spacing": 2,
+        "meta_label_size": 9,
+        "meta_value_size": 12,
+        "bg_color": "#f2f0eb",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#181818",
+        "body_color": "#4a4a4a",
+        "meta_label_color": "#8a8a8a",
+        "meta_value_color": "#181818",
+        "caption_color": "#8a8a8a",
+        "border_color": "#d8d4cc",
+        "accent_color": "#b5924a"
+      }
     },
     "phil-pillars": {
       "type": "pravas-phil-pillars",
       "blocks": {
-        "p1": { "type": "pillar", "settings": { "number": "01 / PILLAR", "icon": "shield", "title": "THE MATERIAL", "description": "Surgical-grade steel and sapphire crystal are our baseline. We build for decades, not seasons.", "meta_label": "Durability Standard", "meta_value": "316L / Sapphire" } },
-        "p2": { "type": "pillar", "settings": { "number": "02 / PILLAR", "icon": "infinity", "title": "THE MOTION", "description": "Automatic movements that derive energy from your movement. No batteries, no digital noise.", "meta_label": "Kinetic Energy", "meta_value": "21-Jewel / Self-Winding" } },
-        "p3": { "type": "pillar", "settings": { "number": "03 / PILLAR", "icon": "compass", "title": "THE MARK", "description": "We ignore trends. Our designs are balanced, symmetrical, and timeless in their simplicity.", "meta_label": "Visual Rhythm", "meta_value": "Golden Ratio Form" } }
+        "p1": {
+          "type": "pillar",
+          "settings": {
+            "number": "01 / PILLAR",
+            "icon": "shield",
+            "title": "THE MATERIAL",
+            "description": "Stainless steel and sapphire crystal are our baseline. We build for decades, not seasons.",
+            "meta_label": "Durability Standard",
+            "meta_value": "316L / Sapphire"
+          }
+        },
+        "p2": {
+          "type": "pillar",
+          "settings": {
+            "number": "02 / PILLAR",
+            "icon": "infinity",
+            "title": "THE MOTION",
+            "description": "Automatic movements that derive energy from your movement. No batteries, no digital noise.",
+            "meta_label": "Kinetic Energy",
+            "meta_value": "21-Jewel / Automatic"
+          }
+        },
+        "p3": {
+          "type": "pillar",
+          "settings": {
+            "number": "03 / PILLAR",
+            "icon": "compass",
+            "title": "THE MARK",
+            "description": "We ignore trends. Our designs are balanced, symmetrical, and timeless in their simplicity.",
+            "meta_label": "Visual Rhythm",
+            "meta_value": "Golden Ratio Form"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3"],
-      "settings": {}
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "PRINCIPLE 02",
+        "heading": "Not Fast Fashion. Not Fast Anything.",
+        "show_rule": true,
+        "body": "In an era of obsolescence, we choose permanence. A PRAVAS watch is an antidote to the disposable cycle of modern consumption.",
+        "footnote_left": "ENGINEERED FOR GENERATIONS",
+        "footnote_right": "A lifetime pledge of mechanical restoration for every registered PRAVAS calibre.",
+        "columns": 3,
+        "card_gap": 20,
+        "card_padding": 28,
+        "content_max_width": 1200,
+        "head_max_width": 620,
+        "rule_width": 40,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_x": 40,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "card_border_width": 1,
+        "card_border_color": "#2e2e2e",
+        "card_radius": 0,
+        "icon_color": "#b5924a",
+        "icon_size": 16,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 32,
+        "heading_size_tablet": 28,
+        "heading_size_mobile": 22,
+        "heading_weight": "400",
+        "heading_line_height": 1.2,
+        "body_font": "inter_n4",
+        "body_size": 13,
+        "body_line_height": 1.8,
+        "eyebrow_size": 10,
+        "eyebrow_letter_spacing": 3,
+        "card_title_size": 15,
+        "card_title_letter_spacing": 1,
+        "card_body_size": 12,
+        "card_meta_size": 9,
+        "bg_color": "#141414",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#9a9a9a",
+        "card_bg_color": "#1b1b1b",
+        "card_title_color": "#f5f3ef",
+        "card_body_color": "#9a9a9a",
+        "card_number_color": "#8a8a8a",
+        "card_meta_label_color": "#8a8a8a",
+        "card_meta_value_color": "#b5924a",
+        "divider_color": "#2e2e2e",
+        "footnote_color": "#8a8a8a",
+        "accent_color": "#b5924a"
+      }
     },
     "phil-closing": {
       "type": "pravas-phil-closing",
-      "settings": {}
+      "settings": {
+        "enabled": true,
+        "show_top_rule": true,
+        "eyebrow": "THE PRAVAS COMMITMENT",
+        "quote": "\"We promise a product that respects your time by existing outside of it.\"",
+        "body": "Craft is our prayer. Precision is our practice. Heritage is our guide.",
+        "cta_label": "EXPLORE THE COLLECTION",
+        "cta_url": "",
+        "cta_show_arrow": true,
+        "show_bottom_rule": true,
+        "footnote": "LIMITED ANNUAL PRODUCTION · INDIVIDUALLY NUMBERED",
+        "content_max_width": 760,
+        "quote_max_width": 680,
+        "rule_width": 40,
+        "rule_thickness": 1,
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "padding_x": 40,
+        "padding_top_mobile": 64,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 20,
+        "cta_bg_color": "#b5924a",
+        "cta_text_color": "#ffffff",
+        "cta_hover_bg_color": "#9e7e3d",
+        "cta_hover_text_color": "#ffffff",
+        "cta_border_color": "#b5924a",
+        "cta_border_width": 0,
+        "cta_radius": 0,
+        "cta_padding_y": 14,
+        "cta_padding_x": 32,
+        "cta_size": 10,
+        "cta_letter_spacing": 2,
+        "cta_margin_top": 32,
+        "quote_font": "playfair_display_n4",
+        "quote_size": 36,
+        "quote_size_tablet": 30,
+        "quote_size_mobile": 22,
+        "quote_weight": "400",
+        "quote_italic": true,
+        "quote_line_height": 1.3,
+        "body_font": "inter_n4",
+        "body_size": 13,
+        "body_line_height": 1.8,
+        "eyebrow_size": 9,
+        "eyebrow_letter_spacing": 3,
+        "footnote_size": 9,
+        "footnote_letter_spacing": 2,
+        "bg_color": "#f2f0eb",
+        "eyebrow_color": "#8a8a8a",
+        "quote_color": "#181818",
+        "body_color": "#4a4a4a",
+        "footnote_color": "#8a8a8a",
+        "divider_color": "#d8d4cc",
+        "accent_color": "#b5924a"
+      }
     }
   },
-  "order": ["phil-hero", "phil-principle-01", "phil-pillars", "phil-closing"]
+  "order": [
+    "phil-hero",
+    "phil-principle-01",
+    "phil-pillars",
+    "phil-closing"
+  ]
 }
