@@ -1,64 +1,35 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "contact-hero": {
-      "type": "pravas-contact-hero",
-      "settings": {}
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     },
-    "contact": {
-      "type": "pravas-contact",
-      "blocks": {
-        "d1": {
-          "type": "detail",
-          "settings": {
-            "eyebrow": "CONCIERGE DESK",
-            "kind": "email",
-            "value": "",
-            "note": ""
-          }
-        },
-        "d2": {
-          "type": "detail",
-          "settings": {
-            "eyebrow": "TELEPHONE",
-            "kind": "phone",
-            "value": "",
-            "note": ""
-          }
-        },
-        "d3": {
-          "type": "detail",
-          "settings": {
-            "eyebrow": "ORDERS & DELIVERY",
-            "description": "Questions regarding timepiece dispatch, transit, or order modifications.",
-            "kind": "email",
-            "value": ""
-          }
-        },
-        "d4": {
-          "type": "detail",
-          "settings": {
-            "eyebrow": "WARRANTY & SERVICE",
-            "description": "Caliber maintenance, servicing, repairs and warranty enquiries.",
-            "kind": "email",
-            "value": ""
-          }
-        },
-        "v1": {
-          "type": "viewing",
-          "settings": {
-            "eyebrow": "PRIVATE VIEWINGS",
-            "description": "Private viewings are available by appointment.",
-            "link_label": "REQUEST A PRIVATE VIEWING"
-          }
-        }
-      },
-      "block_order": ["d1", "d2", "d3", "d4", "v1"],
-      "settings": {}
-    },
-    "contact-newsletter": {
-      "type": "pravas-contact-newsletter",
-      "settings": {}
+    "form": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "",
+        "heading_size": "h1",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
-  "order": ["contact-hero", "contact", "contact-newsletter"]
+  "order": [
+    "main",
+    "form"
+  ]
 }
