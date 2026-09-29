@@ -1,0 +1,109 @@
+{{ 'pravas-contact.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-contact-hero" id="pw-contact-hero-{{ section.id }}">
+  <div class="pw-contact-hero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-contact-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="pw-contact-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pw-contact-hero__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.show_rule -%}
+      <hr class="pw-contact-hero__rule">
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #pw-contact-hero-{{ section.id }} {
+    --contact-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --contact-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --contact-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --contact-muted: {{ section.settings.body_color | default: '#8A8A8A' }};
+    --contact-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+
+    --contact-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --contact-heading-size: {{ section.settings.heading_size | default: 48 }}px;
+    --contact-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 38 }}px;
+    --contact-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 28 }}px;
+    --contact-heading-weight: {{ section.settings.heading_weight | default: '400' }};
+    --contact-heading-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+    --contact-heading-line-height: {{ section.settings.heading_line_height | default: 1.1 }};
+
+    --contact-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --contact-body-size: {{ section.settings.body_size | default: 13 }}px;
+    --contact-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --contact-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+    --contact-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --contact-hero-width: {{ section.settings.content_max_width | default: 640 }}px;
+    --contact-rule-width: {{ section.settings.rule_width | default: 56 }}px;
+
+    padding-top: {{ section.settings.padding_top | default: 88 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 56 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    #pw-contact-hero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 52 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 32 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW Contact Hero",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE PRAVAS CONCIERGE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How Can We Help?" },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "Whether you have a question about a timepiece, need help with an order, or simply want to speak with someone at PRAVAS, our concierge team is here to help." },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider below", "default": true },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 400, "max": 1000, "step": 20, "unit": "px", "default": 640 },
+    { "type": "range", "id": "rule_width", "label": "Divider width", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 240, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Size — desktop", "min": 22, "max": 88, "step": 2, "unit": "px", "default": 48 },
+    { "type": "range", "id": "heading_size_tablet", "label": "Size — tablet", "min": 18, "max": 64, "step": 2, "unit": "px", "default": 38 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Size — mobile", "min": 16, "max": 44, "step": 2, "unit": "px", "default": 28 },
+    { "type": "select", "id": "heading_weight", "label": "Weight", "options": [{ "value": "300", "label": "Light" }, { "value": "400", "label": "Regular" }, { "value": "500", "label": "Medium" }], "default": "400" },
+    { "type": "checkbox", "id": "heading_italic", "label": "Italic", "default": true },
+    { "type": "range", "id": "heading_line_height", "label": "Line height", "min": 1, "max": 2, "step": 0.1, "default": 1.1 },
+
+    { "type": "header", "content": "Typography — Body & Eyebrow" },
+    { "type": "font_picker", "id": "body_font", "label": "Font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 18, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Supporting text", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Accent / divider", "default": "#B5924A" }
+  ],
+  "presets": [{ "name": "PW Contact Hero" }]
+}
+{% endschema %}

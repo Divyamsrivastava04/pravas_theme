@@ -1,0 +1,176 @@
+{{ 'pravas-contact.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.enabled -%}
+<section class="pw-nl" id="pw-nl-{{ section.id }}">
+  <div class="pw-nl__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-nl__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pw-nl__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p class="pw-nl__body">{{ section.settings.body }}</p>
+    {%- endif -%}
+
+    {%- comment -%}
+      Shopify's native customer form with the newsletter tag — the same
+      mechanism the theme's existing newsletter section uses, so signups
+      continue flowing to the store's customer list.
+    {%- endcomment -%}
+    {%- form 'customer', id: 'PravasNewsletter', class: 'pw-nl__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="pw-nl__field">
+        <label class="visually-hidden" for="PravasNewsletter-email">{{ section.settings.placeholder | default: 'Enter your email address' }}</label>
+        <input
+          class="pw-nl__input"
+          type="email"
+          id="PravasNewsletter-email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="email"
+          spellcheck="false"
+          required
+          placeholder="{{ section.settings.placeholder | default: 'Enter your email address' }}"
+          {% if form.errors %}
+            aria-invalid="true"
+            aria-describedby="PravasNewsletter-error"
+          {% endif %}
+        >
+        <button type="submit" class="pw-nl__submit" aria-label="{{ section.settings.submit_label | default: 'Subscribe' }}">
+          {%- if section.settings.submit_style == 'text' -%}
+            {{ section.settings.submit_label | default: 'SUBSCRIBE' }}
+          {%- else -%}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          {%- endif -%}
+        </button>
+      </div>
+
+      {%- if form.errors -%}
+        <span class="pw-nl__error" id="PravasNewsletter-error" role="alert">
+          {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+        </span>
+      {%- endif -%}
+      {%- if form.posted_successfully? -%}
+        <span class="pw-nl__success" role="status">{{ section.settings.success_message | default: 'Thank you for subscribing.' }}</span>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+
+<style>
+  #pw-nl-{{ section.id }} {
+    --contact-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --contact-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --contact-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --contact-muted: {{ section.settings.body_color | default: '#8A8A8A' }};
+    --contact-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+    --contact-divider: {{ section.settings.divider_color | default: '#2A2A2A' }};
+
+    --contact-input-bg: {{ section.settings.input_bg_color | default: '#00000000' }};
+    --contact-input-text: {{ section.settings.input_text_color | default: '#F5F3EF' }};
+    --contact-input-placeholder: {{ section.settings.input_placeholder_color | default: '#6A6A6A' }};
+    --contact-input-border: {{ section.settings.input_border_color | default: '#B5924A' }};
+    --contact-input-border-width: {{ section.settings.input_border_width | default: 1 }}px;
+    --contact-input-radius: {{ section.settings.input_radius | default: 0 }}px;
+    --contact-input-size: {{ section.settings.input_size | default: 13 }}px;
+    --contact-btn-text: {{ section.settings.submit_color | default: '#B5924A' }};
+    --contact-btn-hover-text: {{ section.settings.submit_hover_color | default: '#F5F3EF' }};
+    --contact-error: {{ section.settings.error_color | default: '#C0564B' }};
+    --contact-success: {{ section.settings.success_color | default: '#6E9E7E' }};
+
+    --contact-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --contact-nl-heading-size: {{ section.settings.heading_size | default: 34 }}px;
+    --contact-nl-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 24 }}px;
+    --contact-nl-heading-style: {% if section.settings.heading_italic %}italic{% else %}normal{% endif %};
+    --contact-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --contact-body-size: {{ section.settings.body_size | default: 12 }}px;
+    --contact-body-line-height: {{ section.settings.body_line_height | default: 1.8 }};
+    --contact-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+    --contact-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --contact-nl-width: {{ section.settings.content_max_width | default: 560 }}px;
+    --contact-nl-form-width: {{ section.settings.form_max_width | default: 380 }}px;
+    --contact-nl-align: {{ section.settings.alignment | default: 'center' }};
+
+    padding-top: {{ section.settings.padding_top | default: 80 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+    border-top: {{ section.settings.border_top_width | default: 1 }}px solid var(--contact-divider);
+  }
+  @media screen and (max-width: 749px) {
+    #pw-nl-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 52 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 52 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW Contact Newsletter",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable section", "default": true },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "STAY WITH PRAVAS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the Journey." },
+    { "type": "textarea", "id": "body", "label": "Description", "default": "Occasional notes on new timepiece releases, horological craft, and private atelier viewings." },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Enter your email address" },
+    { "type": "select", "id": "submit_style", "label": "Submit style", "options": [{ "value": "arrow", "label": "Arrow icon" }, { "value": "text", "label": "Text" }], "default": "arrow" },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "info": "Used as the button text, and as the accessible label for the arrow.", "default": "SUBSCRIBE" },
+    { "type": "textarea", "id": "success_message", "label": "Success message", "default": "Thank you for subscribing." },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "alignment", "label": "Alignment", "options": [{ "value": "center", "label": "Center" }, { "value": "flex-start", "label": "Left" }], "default": "center" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 360, "max": 900, "step": 20, "unit": "px", "default": 560 },
+    { "type": "range", "id": "form_max_width", "label": "Form max-width", "min": 240, "max": 700, "step": 20, "unit": "px", "default": 380 },
+    { "type": "range", "id": "border_top_width", "label": "Top border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 60, "step": 4, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Input" },
+    { "type": "color", "id": "input_bg_color", "label": "Background", "default": "#00000000" },
+    { "type": "color", "id": "input_text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "color", "id": "input_placeholder_color", "label": "Placeholder", "default": "#6A6A6A" },
+    { "type": "color", "id": "input_border_color", "label": "Border", "default": "#B5924A" },
+    { "type": "range", "id": "input_border_width", "label": "Border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "input_radius", "label": "Radius (0 = sharp)", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "input_size", "label": "Text size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "color", "id": "submit_color", "label": "Submit colour", "default": "#B5924A" },
+    { "type": "color", "id": "submit_hover_color", "label": "Submit hover colour", "default": "#F5F3EF" },
+    { "type": "color", "id": "error_color", "label": "Error", "default": "#C0564B" },
+    { "type": "color", "id": "success_color", "label": "Success", "default": "#6E9E7E" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading — desktop", "min": 18, "max": 64, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading — mobile", "min": 14, "max": 40, "step": 2, "unit": "px", "default": 24 },
+    { "type": "checkbox", "id": "heading_italic", "label": "Italic heading", "default": true },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "inter_n4" },
+    { "type": "range", "id": "body_size", "label": "Body size", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "body_line_height", "label": "Body line height", "min": 1, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Description", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" },
+    { "type": "color", "id": "divider_color", "label": "Top border", "default": "#2A2A2A" }
+  ],
+  "presets": [{ "name": "PW Contact Newsletter" }]
+}
+{% endschema %}
