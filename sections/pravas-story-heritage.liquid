@@ -4,9 +4,10 @@
 <section class="pw-story-heritage" id="pw-story-heritage-{{ section.id }}">
   <div class="pw-story-heritage__inner">
     <div class="pw-story-heritage__media" data-reveal>
+      {%- assign heritage_alt = section.settings.image.alt | default: section.settings.heading -%}
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1400 | image_tag:
-             alt: section.settings.image.alt | default: section.settings.heading,
+             alt: heritage_alt,
              class: 'pw-story-heritage__image',
              loading: 'lazy',
              widths: '600,900,1200,1400'

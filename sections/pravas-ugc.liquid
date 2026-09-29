@@ -16,8 +16,9 @@
       <div class="pw-ugc__card" {{ block.shopify_attributes }}>
         {% if block.settings.thumb %}
           <div class="pw-ugc__thumb-wrap">
+            {%- assign ugc_alt = block.settings.handle | default: 'Community' -%}
             {{ block.settings.thumb | image_url: width: 400 | image_tag:
-                 alt: block.settings.handle | default: 'Community',
+                 alt: ugc_alt,
                  class: 'pw-ugc__thumb',
                  loading: 'lazy',
                  widths: '200,300,400'

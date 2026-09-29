@@ -17,8 +17,9 @@
     <div class="pw-feat__compare-layer pw-feat__compare-layer--base">
       <span class="pw-feat__label pw-feat__label--left">{{ section.settings.label_green | default: 'Sapphire Green' }}</span>
       {% if section.settings.img_green %}
+        {%- assign alt_green_txt = section.settings.alt_green | default: 'PRAVAS AARAMBH Sapphire Green' -%}
         {{ section.settings.img_green | image_url: width: 1400 | image_tag:
-             alt: section.settings.alt_green | default: 'PRAVAS AARAMBH Sapphire Green',
+             alt: alt_green_txt,
              class: 'pw-feat__compare-img',
              loading: 'lazy',
              widths: '700,1000,1400'
@@ -31,8 +32,9 @@
     <div class="pw-feat__compare-layer pw-feat__compare-layer--overlay" id="pw-feat-overlay">
       <span class="pw-feat__label pw-feat__label--right">{{ section.settings.label_black | default: 'Midnight Black' }}</span>
       {% if section.settings.img_black %}
+        {%- assign alt_black_txt = section.settings.alt_black | default: 'PRAVAS AARAMBH Midnight Black' -%}
         {{ section.settings.img_black | image_url: width: 1400 | image_tag:
-             alt: section.settings.alt_black | default: 'PRAVAS AARAMBH Midnight Black',
+             alt: alt_black_txt,
              class: 'pw-feat__compare-img',
              loading: 'lazy',
              widths: '700,1000,1400'

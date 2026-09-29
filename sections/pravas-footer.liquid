@@ -3,11 +3,13 @@
 
     <div class="pw-footer__brand">
       {% if section.settings.logo %}
+        {%- assign footer_logo_alt = section.settings.brand | default: 'PRAVAS' -%}
+        {%- assign footer_logo_style = 'height:' | append: section.settings.logo_height | append: 'px;' -%}
         {{ section.settings.logo | image_url: width: 300 | image_tag:
-             alt: section.settings.brand | default: 'PRAVAS',
+             alt: footer_logo_alt,
              class: 'pw-footer__logo-img',
              loading: 'lazy',
-             style: 'height:' | append: section.settings.logo_height | append: 'px;'
+             style: footer_logo_style
         }}
       {% else %}
         <span class="pw-footer__wordmark">{{ section.settings.brand | default: 'PRAVAS' }}</span>

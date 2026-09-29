@@ -23,9 +23,10 @@
 
     <div class="pw-story-mech__media" data-reveal>
       <div class="pw-story-mech__image-wrap">
-        {%- if section.settings.image != blank -%}
+        {%- assign mech_alt = section.settings.image.alt | default: section.settings.heading -%}
+      {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 1400 | image_tag:
-               alt: section.settings.image.alt | default: section.settings.heading,
+               alt: mech_alt,
                class: 'pw-story-mech__image',
                loading: 'lazy',
                widths: '600,900,1200,1400'

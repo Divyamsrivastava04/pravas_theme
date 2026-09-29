@@ -37,9 +37,10 @@
 
     <div class="pw-phil-principle__media" data-reveal>
       <div class="pw-phil-principle__media-frame">
-        {%- if section.settings.image != blank -%}
+        {%- assign principle_alt = section.settings.image.alt | default: section.settings.heading -%}
+      {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 1400 | image_tag:
-               alt: section.settings.image.alt | default: section.settings.heading,
+               alt: principle_alt,
                class: 'pw-phil-principle__image',
                loading: 'lazy',
                widths: '500,800,1100,1400'

@@ -2,11 +2,13 @@
   <div class="pw-hdr__inner">
     <a href="{{ routes.root_url }}" class="pw-hdr__logo">
       {% if section.settings.logo %}
+        {%- assign header_logo_alt = section.settings.brand | default: 'PRAVAS' -%}
+        {%- assign header_logo_style = 'height:' | append: section.settings.logo_height | append: 'px;' -%}
         {{ section.settings.logo | image_url: width: 300 | image_tag:
-             alt: section.settings.brand | default: 'PRAVAS',
+             alt: header_logo_alt,
              class: 'pw-hdr__logo-img',
              loading: 'eager',
-             style: 'height:' | append: section.settings.logo_height | append: 'px;'
+             style: header_logo_style
         }}
       {% else %}
         {{ section.settings.brand | default: 'PRAVAS' }}

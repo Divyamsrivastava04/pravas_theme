@@ -3,15 +3,16 @@
 <section class="pw-story-founder" id="pw-story-founder-{{ section.id }}">
   <div class="pw-story-founder__inner" data-reveal>
     <div class="pw-story-founder__avatar-wrap">
+      {%- assign founder_alt = section.settings.name | default: 'Founder' -%}
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 200 | image_tag:
-             alt: section.settings.name | default: 'Founder',
+             alt: founder_alt,
              class: 'pw-story-founder__avatar',
              loading: 'lazy',
              widths: '100,150,200'
         }}
       {%- else -%}
-        {{ 'model-2' | placeholder_svg_tag: 'pw-story-founder__avatar' }}
+        {{ 'detailed-apparel-1' | placeholder_svg_tag: 'pw-story-founder__avatar' }}
       {%- endif -%}
     </div>
 

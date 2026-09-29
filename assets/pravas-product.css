@@ -46,7 +46,7 @@
   width: 100%;
   height: 100%;
   object-fit: var(--product-image-fit, contain);
-  object-position: center;
+  object-position: var(--product-image-position, center);
   display: block;
 }
 .pw-pdp__gallery-ph {
@@ -97,7 +97,7 @@
   width: 100%;
   height: 100%;
   object-fit: var(--product-image-fit, contain);
-  object-position: center;
+  object-position: var(--product-image-position, center);
   display: block;
 }
 
@@ -209,14 +209,17 @@
   border-width: var(--product-swatch-border-width, 1px);
   border-style: solid;
   border-color: var(--product-swatch-border, #C8C8CC);
-  background: #fff;
+  background: var(--product-swatch-bg, #FFFFFF);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: border-color 200ms ease;
 }
-.pw-pdp__swatch.is-active { border-color: var(--product-swatch-border-selected, #B5924A); border-width: 2px; }
+.pw-pdp__swatch.is-active {
+  border-color: var(--product-swatch-border-selected, #B5924A);
+  border-width: var(--product-swatch-border-width-selected, 2px);
+}
 /* --product-swatch-label-color is set inline per swatch from its
    Swatch Colour block, falling back to the panel text colour. */
 .pw-pdp__swatch-label {

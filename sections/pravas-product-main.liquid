@@ -14,16 +14,18 @@
       <div class="pw-pdp__gallery-main">
         {%- if media.size > 0 -%}
           {%- for m in media -%}
+            {%- liquid
+              assign media_alt = m.alt | default: product.title
+              assign media_loading = 'lazy'
+              if forloop.first
+                assign media_loading = 'eager'
+              endif
+            -%}
             <div class="pw-pdp__gallery-slide{% if forloop.first %} is-active{% endif %}" data-media-id="{{ m.id }}">
               {%- if m.media_type == 'video' or m.media_type == 'external_video' -%}
                 {{ m | media_tag }}
               {%- else -%}
-                {{ m | image_url: width: 1400 | image_tag:
-                     alt: m.alt | default: product.title,
-                     class: 'pw-pdp__gallery-img',
-                     loading: forloop.first | default: 'lazy',
-                     widths: '700,1000,1400'
-                }}
+                {{ m | image_url: width: 1400 | image_tag: alt: media_alt, class: 'pw-pdp__gallery-img', loading: media_loading, widths: '700,1000,1400' }}
               {%- endif -%}
             </div>
           {%- endfor -%}
@@ -40,11 +42,12 @@
       {%- if media.size > 1 -%}
         <div class="pw-pdp__gallery-grid">
           {%- for m in media -%}
+            {%- assign thumb_alt = m.alt | default: product.title -%}
             <button type="button" class="pw-pdp__gallery-thumb{% if forloop.first %} is-active{% endif %}" data-media-index="{{ forloop.index0 }}" aria-label="Show image {{ forloop.index }}">
               {%- if m.media_type == 'video' or m.media_type == 'external_video' -%}
-                {{ m.preview_image | image_url: width: 400 | image_tag: alt: m.alt | default: product.title, class: 'pw-pdp__gallery-thumb-img', loading: 'lazy' }}
+                {{ m.preview_image | image_url: width: 600 | image_tag: alt: thumb_alt, class: 'pw-pdp__gallery-thumb-img', loading: 'lazy', widths: '200,400,600' }}
               {%- else -%}
-                {{ m | image_url: width: 400 | image_tag: alt: m.alt | default: product.title, class: 'pw-pdp__gallery-thumb-img', loading: 'lazy' }}
+                {{ m | image_url: width: 600 | image_tag: alt: thumb_alt, class: 'pw-pdp__gallery-thumb-img', loading: 'lazy', widths: '200,400,600' }}
               {%- endif -%}
             </button>
           {%- endfor -%}
@@ -216,14 +219,17 @@
 
     --product-swatch-size: {{ section.settings.swatch_size | default: 40 }}px;
     --product-swatch-radius: {{ section.settings.swatch_radius | default: 0 }}px;
+    --product-swatch-bg: {{ section.settings.swatch_bg_color | default: '#FFFFFF' }};
     --product-swatch-border: {{ section.settings.swatch_border_color | default: '#C8C8CC' }};
     --product-swatch-border-selected: {{ section.settings.swatch_border_selected_color | default: '#B5924A' }};
     --product-swatch-border-width: {{ section.settings.swatch_border_width | default: 1 }}px;
+    --product-swatch-border-width-selected: {{ section.settings.swatch_border_width_selected | default: 2 }}px;
 
     --product-gallery-gap: {{ section.settings.gallery_gap | default: 12 }}px;
     --product-gallery-radius: {{ section.settings.gallery_radius | default: 0 }}px;
     --product-gallery-aspect: {{ section.settings.gallery_aspect_ratio | default: '1/1' }};
     --product-image-fit: {{ section.settings.image_fit | default: 'contain' }};
+    --product-image-position: {{ section.settings.image_position | default: 'center' }};
     --product-gallery-bg: {{ section.settings.gallery_bg | default: '#101010' }};
     --product-gallery-padding: {{ section.settings.gallery_padding | default: 0 }}px;
     --product-thumb-columns: {{ section.settings.thumb_columns | default: 3 }};
@@ -262,7 +268,8 @@
     { "type": "checkbox", "id": "enable_zoom", "label": "Enable fullscreen zoom on click", "default": true },
     { "type": "range", "id": "gallery_gap", "label": "Gallery gap", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 12 },
     { "type": "range", "id": "gallery_radius", "label": "Gallery image radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
-    { "type": "select", "id": "image_fit", "label": "Image fit", "info": "Fit shows the whole image inside the frame. Fill crops it.", "options": [{ "value": "contain", "label": "Fit (no crop)" }, { "value": "cover", "label": "Fill (crops)" }], "default": "contain" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "info": "Fit shows the whole image. Fill crops to fill the frame. Scale down never enlarges a small image.", "options": [{ "value": "contain", "label": "Fit — show whole image" }, { "value": "cover", "label": "Fill — crop to frame" }, { "value": "scale-down", "label": "Scale down — fit, never enlarge" }, { "value": "fill", "label": "Stretch to frame" }, { "value": "none", "label": "Original size" }], "default": "contain" },
+    { "type": "select", "id": "image_position", "label": "Image position", "info": "Which part stays in view when the image is cropped.", "options": [{ "value": "center", "label": "Center" }, { "value": "top", "label": "Top" }, { "value": "bottom", "label": "Bottom" }, { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }, { "value": "top left", "label": "Top left" }, { "value": "top right", "label": "Top right" }, { "value": "bottom left", "label": "Bottom left" }, { "value": "bottom right", "label": "Bottom right" }], "default": "center" },
     { "type": "color", "id": "gallery_bg", "label": "Image frame background", "default": "#101010" },
     { "type": "range", "id": "gallery_padding", "label": "Image frame inner padding", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0 },
     { "type": "select", "id": "gallery_aspect_ratio", "label": "Main image aspect ratio", "options": [{ "value": "1/1", "label": "Square" }, { "value": "4/5", "label": "Portrait 4:5" }, { "value": "3/4", "label": "Portrait 3:4" }, { "value": "4/3", "label": "Landscape 4:3" }, { "value": "3/2", "label": "Landscape 3:2" }, { "value": "16/9", "label": "Landscape 16:9" }], "default": "4/5" },
@@ -301,7 +308,9 @@
     { "type": "header", "content": "Swatches" },
     { "type": "range", "id": "swatch_size", "label": "Swatch size", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
     { "type": "range", "id": "swatch_radius", "label": "Swatch radius (0 = square)", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 0 },
-    { "type": "range", "id": "swatch_border_width", "label": "Swatch border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "swatch_border_width", "label": "Border width — unselected", "min": 0, "max": 8, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "swatch_border_width_selected", "label": "Border width — selected", "min": 0, "max": 8, "step": 1, "unit": "px", "default": 2 },
+    { "type": "color", "id": "swatch_bg_color", "label": "Swatch background (no colour block)", "default": "#FFFFFF" },
     { "type": "color", "id": "swatch_border_color", "label": "Swatch border", "default": "#C8C8CC" },
     { "type": "color", "id": "swatch_border_selected_color", "label": "Swatch border — selected", "default": "#B5924A" },
 

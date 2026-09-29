@@ -1,9 +1,10 @@
 <section class="pw-pdp-founder" id="pw-pdp-founder-{{ section.id }}">
   <div class="pw-pdp-founder__inner">
     <div class="pw-pdp-founder__image-wrap">
+      {%- assign founder_img_alt = section.settings.image.alt | default: 'The founder at work' -%}
       {%- if section.settings.image != blank -%}
         {{ section.settings.image | image_url: width: 1200 | image_tag:
-             alt: section.settings.image.alt | default: 'The founder at work',
+             alt: founder_img_alt,
              class: 'pw-pdp-founder__image',
              loading: 'lazy',
              widths: '600,900,1200'

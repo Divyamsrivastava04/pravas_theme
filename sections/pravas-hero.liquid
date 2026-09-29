@@ -78,8 +78,9 @@
         {% if hero_img_1 %}
           {% assign has_image = true %}
           <div class="pw-hero__img-slide is-active">
+            {%- assign hero_alt_1 = section.settings.watch_img_alt | default: drop_product.title | default: 'PRAVAS AARAMBH' -%}
             {{ hero_img_1 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: drop_product.title | default: 'PRAVAS AARAMBH',
+                 alt: hero_alt_1,
                  class: 'pw-hero__img pw-hero__img--desktop',
                  loading: 'eager',
                  widths: '450,600,900'
@@ -89,8 +90,9 @@
         {% if section.settings.watch_img_2 %}
           {% assign has_image = true %}
           <div class="pw-hero__img-slide">
+            {%- assign hero_alt_2 = section.settings.watch_img_alt | default: 'PRAVAS AARAMBH' -%}
             {{ section.settings.watch_img_2 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 alt: hero_alt_2,
                  class: 'pw-hero__img pw-hero__img--desktop',
                  loading: 'lazy',
                  widths: '450,600,900'
@@ -100,8 +102,9 @@
         {% if section.settings.watch_img_3 %}
           {% assign has_image = true %}
           <div class="pw-hero__img-slide">
+            {%- assign hero_alt_3 = section.settings.watch_img_alt | default: 'PRAVAS AARAMBH' -%}
             {{ section.settings.watch_img_3 | image_url: width: 900 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 alt: hero_alt_3,
                  class: 'pw-hero__img pw-hero__img--desktop',
                  loading: 'lazy',
                  widths: '450,600,900'
@@ -110,8 +113,9 @@
         {% endif %}
         {% if section.settings.watch_img_mobile %}
           <div class="pw-hero__img-slide is-active pw-hero__img-slide--mobile">
+            {%- assign hero_alt_4 = section.settings.watch_img_alt | default: 'PRAVAS AARAMBH' -%}
             {{ section.settings.watch_img_mobile | image_url: width: 700 | image_tag:
-                 alt: section.settings.watch_img_alt | default: 'PRAVAS AARAMBH',
+                 alt: hero_alt_4,
                  class: 'pw-hero__img pw-hero__img--mobile',
                  loading: 'eager',
                  widths: '350,500,700'
