@@ -385,6 +385,22 @@
     "faq-cta": {
       "type": "pravas-faq-cta",
       "blocks": {
+        "detail_GjBaUF": {
+          "type": "detail",
+          "settings": {
+            "icon": "pin",
+            "text": "@pravaswatch",
+            "link_url": "https://www.instagram.com/pravaswatch/"
+          }
+        },
+        "detail_miTnxD": {
+          "type": "detail",
+          "settings": {
+            "icon": "phone",
+            "text": "+91-8448976677",
+            "link_url": ""
+          }
+        },
         "d1": {
           "type": "detail",
           "settings": {
@@ -397,12 +413,14 @@
           "type": "detail",
           "settings": {
             "icon": "mail",
-            "text": "concierge@pravas.in",
+            "text": "hello@pravaswatches.com",
             "link_url": ""
           }
         }
       },
       "block_order": [
+        "detail_GjBaUF",
+        "detail_miTnxD",
         "d1",
         "d2"
       ],
