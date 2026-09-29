@@ -107,24 +107,27 @@ button { font-family: inherit; cursor: pointer; }
 /* ANNOUNCEMENT BAR */
 .pw-ann {
   position: relative;
-  height: 40px;
+  min-height: 40px;
   background: var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
+/* Messages are stacked in a single grid cell rather than absolutely
+   positioned, so the track is as tall as the tallest message. With
+   absolute positioning the track had no height of its own, which meant
+   it collapsed and overflow:hidden clipped every message whenever the
+   bar was allowed to grow for wrapped text. */
 .pw-ann__track {
   position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  justify-items: center;
+  min-height: 40px;
 }
 .pw-ann__msg {
-  position: absolute;
+  grid-area: 1 / 1;
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 600;
@@ -161,13 +164,12 @@ button { font-family: inherit; cursor: pointer; }
 @media (max-width: 767px) {
   /* Messages keep cycling on mobile; they just need room to wrap
      instead of being forced onto one nowrap line. */
-  .pw-ann { height: auto; min-height: 40px; }
   .pw-ann__msg {
     white-space: normal;
     font-size: 10px;
     letter-spacing: 0.5px;
     line-height: 1.3;
-    padding: 6px 40px;
+    padding: 8px 40px;
   }
 }
 
@@ -244,7 +246,15 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 @media (max-width: 767px) {
-  .pw-hdr__inner { padding: 0 20px; }
+  /* The nav is hidden here, so it stops being a grid item. With the
+     three-column template the icons landed in the middle column, leaving
+     an empty trailing column plus its 32px gap between them and the edge.
+     Two columns with no gap puts them hard against the padding. */
+  .pw-hdr__inner {
+    padding: 0 20px;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+  }
   .pw-hdr__nav   { display: none; }
   .pw-hdr__burger { display: flex; }
 }
