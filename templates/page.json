@@ -184,6 +184,7 @@
         "location_value": "DELHI, IN",
         "est_label": "Est.",
         "est_value": "MMXXIV",
+        "image": "shopify://shop_images/2.jpg",
         "image_radius": 0,
         "image_border_width": 0,
         "image_border_color": "#2e2e2e",
