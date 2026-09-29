@@ -24,7 +24,7 @@
           "type": "swatch_color",
           "settings": {
             "option_value": "BURGUNDY",
-            "color": "#470B0B",
+            "color": "#470b0b",
             "text_color": "#f5f3ef"
           }
         },
@@ -32,7 +32,7 @@
           "type": "swatch_color",
           "settings": {
             "option_value": "SUNBURST GREEN",
-            "color": "#1E3925",
+            "color": "#1e3925",
             "text_color": "#f5f3ef"
           }
         },
@@ -88,6 +88,7 @@
         "gallery_gap": 12,
         "gallery_radius": 0,
         "image_fit": "contain",
+        "image_position": "center",
         "gallery_bg": "#101010",
         "gallery_padding": 0,
         "gallery_aspect_ratio": "4/5",
@@ -117,8 +118,10 @@
         "swatch_size": 40,
         "swatch_radius": 0,
         "swatch_border_width": 0,
+        "swatch_border_width_selected": 2,
+        "swatch_bg_color": "#ffffff",
         "swatch_border_color": "#000000",
-        "swatch_border_selected_color": "#B5924A",
+        "swatch_border_selected_color": "#b5924a",
         "atc_bg": "#b5924a",
         "atc_text_color": "#181818",
         "atc_border_color": "#b5924a",
@@ -261,12 +264,13 @@
         "location_value": "Purpose-built protection",
         "est_label": "PRESENTATION",
         "est_value": "Considered from atelier to wrist",
+        "image": "shopify://shop_images/b4b65d29-4621-4045-9780-5aafa367d831.jpg",
         "image_radius": 0,
         "image_border_width": 0,
-        "image_border_color": "#2E2E2E",
+        "image_border_color": "#2e2e2e",
         "enable_overlay": false,
         "overlay_color": "#181818",
-        "overlay_opacity": 25,
+        "overlay_opacity": 0,
         "text_max_width": 440,
         "text_padding": 64,
         "text_padding_mobile": 40,
@@ -283,12 +287,12 @@
         "body_size_mobile": 14,
         "body_line_height": 1.8,
         "bg_color": "#181818",
-        "eyebrow_color": "#B5924A",
-        "heading_color": "#F5F3EF",
-        "body_color": "#C8C8CC",
-        "meta_label_color": "#B5924A",
-        "meta_value_color": "#F5F3EF",
-        "divider_color": "#2E2E2E"
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#c8c8cc",
+        "meta_label_color": "#b5924a",
+        "meta_value_color": "#f5f3ef",
+        "divider_color": "#2e2e2e"
       }
     },
     "pravas_ugc_M4qQHY": {
