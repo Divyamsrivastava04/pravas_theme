@@ -149,12 +149,19 @@
         <span class="pw-qb-card__eyebrow">{{ section.settings.qb_eyebrow | default: 'LATEST DROP' }}</span>
         <span class="pw-qb-card__name">{{ qb_display_name }}</span>
       </div>
-      <button class="btn btn--gold pw-qb-card__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'QUICK ADD' }}</button>
+      {%- if section.settings.qb_behavior == 'drawer' -%}
+        <button class="btn btn--gold pw-qb-card__btn" id="pw-open-qb">{{ section.settings.qb_btn | default: 'QUICK ADD' }}</button>
+      {%- else -%}
+        <a href="{{ qb_link_url }}" class="btn btn--gold pw-qb-card__btn">{{ section.settings.qb_btn | default: 'QUICK ADD' }}</a>
+      {%- endif -%}
     </div>
   {% endif %}
 </section>
 
-<!-- Quick-buy drawer — reuses the existing AJAX /cart/add.js flow (see pravas.js) -->
+<!-- Quick-buy drawer — reuses the existing AJAX /cart/add.js flow (see pravas.js).
+     Only rendered when the quick-buy button is set to open the drawer; the
+     default sends shoppers straight to the product page instead. -->
+{%- if section.settings.qb_behavior == 'drawer' -%}
 <div class="pw-qb-drawer" id="pw-qb-drawer" role="dialog" aria-modal="true">
   <div class="pw-qb-drawer__overlay" id="pw-qb-overlay"></div>
   <div class="pw-qb-drawer__panel">
@@ -181,6 +188,7 @@
     <a href="{{ qb_link_url }}" class="pw-qb-drawer__detail">{{ section.settings.qb_detail_label | default: 'View full details' }} &darr;</a>
   </div>
 </div>
+{%- endif -%}
 
 {%- comment -%}
   Per-instance CSS custom properties, generated from Theme Editor settings.
@@ -278,6 +286,7 @@
     --hero-card-btn-radius: {{ section.settings.card_button_radius | default: 0 }}px;
     --hero-card-border-width: {{ section.settings.card_border_width | default: 1 }}px;
     --hero-card-border-color: {{ section.settings.card_border_color | default: '#2E2E2E' }};
+    --hero-card-position: {{ section.settings.qb_card_position | default: 'fixed' }};
     --hero-card-offset-x: {{ section.settings.card_offset_x | default: 40 }}px;
     --hero-card-offset-y: {{ section.settings.card_offset_y | default: 40 }}px;
   }
@@ -310,6 +319,8 @@
     { "type": "text",         "id": "spec2_label",   "label": "Material label",       "default": "MATERIAL" },
     { "type": "text",         "id": "spec2_value",   "label": "Material value",       "default": "316L Stainless Steel" },
     { "type": "checkbox",     "id": "show_quick_buy","label": "Show floating quick-buy card", "default": true },
+    { "type": "select", "id": "qb_behavior", "label": "Quick-buy button action", "info": "Go to product page is recommended. The drawer requires valid variant IDs below.", "options": [{ "value": "link", "label": "Go to product page" }, { "value": "drawer", "label": "Open quick-buy drawer" }], "default": "link" },
+    { "type": "select", "id": "qb_card_position", "label": "Quick-buy card behaviour", "options": [{ "value": "fixed", "label": "Stay fixed on screen while scrolling" }, { "value": "absolute", "label": "Stay inside the hero section" }], "default": "fixed" },
     { "type": "text",         "id": "qb_eyebrow",    "label": "Latest drop label",    "default": "LATEST DROP" },
     { "type": "product",      "id": "latest_drop_product", "label": "Latest drop product", "info": "Auto-fills the card's name, thumbnail and link. Manual fields below override this." },
     { "type": "text",         "id": "qb_name",       "label": "Product name (overrides product title)" },

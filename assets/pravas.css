@@ -159,8 +159,16 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1;
 }
 @media (max-width: 767px) {
-  .pw-ann__msg { animation: none; opacity: 0; }
-  .pw-ann__msg:first-child { opacity: 1; }
+  /* Messages keep cycling on mobile; they just need room to wrap
+     instead of being forced onto one nowrap line. */
+  .pw-ann { height: auto; min-height: 40px; }
+  .pw-ann__msg {
+    white-space: normal;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    padding: 6px 40px;
+  }
 }
 
 /* HEADER */
@@ -390,9 +398,11 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid rgba(var(--gold-rgb), 0.14);
 }
 .pw-hero--ring-spin .pw-hero__ring { animation: pw-ring-spin var(--hero-ring-rotation-speed, 70s) linear infinite; }
+/* The rotation keyframes replace the element's transform outright, so the
+   ring offsets have to be carried through here or they'd be discarded. */
 @keyframes pw-ring-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from { transform: translate(var(--hero-ring-offset-x, 0px), var(--hero-ring-offset-y, 0px)) rotate(0deg); }
+  to   { transform: translate(var(--hero-ring-offset-x, 0px), var(--hero-ring-offset-y, 0px)) rotate(360deg); }
 }
 .pw-hero__img-wrap {
   position: relative;
@@ -443,7 +453,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* Floating quick-buy card */
 .pw-qb-card {
-  position: absolute;
+  position: var(--hero-card-position, fixed);
   right: var(--hero-card-offset-x, 40px);
   bottom: var(--hero-card-offset-y, 40px);
   z-index: 5;

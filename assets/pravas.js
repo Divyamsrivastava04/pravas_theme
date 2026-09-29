@@ -101,14 +101,19 @@
   navClose?.addEventListener('click', closeNav);
   navOvl?.addEventListener('click', closeNav);
 
-  /* Quick-buy strip — hide when hero out of view */
+  /* Quick-buy card — hide when hero scrolls out of view, but only when the
+     card is anchored to the hero. When it's fixed to the screen, hiding it
+     would defeat the point of it staying visible. */
   const hero  = document.getElementById('pw-hero');
   const strip = document.getElementById('pw-qb-strip');
   if (hero && strip && window.IntersectionObserver) {
-    new IntersectionObserver(([e]) => {
-      strip.style.opacity       = e.isIntersecting ? '' : '0';
-      strip.style.pointerEvents = e.isIntersecting ? '' : 'none';
-    }, { threshold: 0 }).observe(hero);
+    const isFixed = getComputedStyle(strip).position === 'fixed';
+    if (!isFixed) {
+      new IntersectionObserver(([e]) => {
+        strip.style.opacity       = e.isIntersecting ? '' : '0';
+        strip.style.pointerEvents = e.isIntersecting ? '' : 'none';
+      }, { threshold: 0 }).observe(hero);
+    }
   }
 
   /* Quick-buy drawer */

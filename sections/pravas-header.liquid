@@ -1,18 +1,25 @@
 <header class="pw-hdr" id="pw-hdr">
   <div class="pw-hdr__inner">
     <a href="{{ routes.root_url }}" class="pw-hdr__logo">
-      {% if section.settings.logo %}
+      {%- if section.settings.logo_svg != blank -%}
+        {%- comment -%}
+          Shopify's image_picker only accepts raster files, so an SVG logo
+          has to be pasted as markup rather than uploaded.
+        {%- endcomment -%}
+        <span class="pw-hdr__logo-svg">{{ section.settings.logo_svg }}</span>
+      {%- elsif section.settings.logo != blank -%}
         {%- assign header_logo_alt = section.settings.brand | default: 'PRAVAS' -%}
         {%- assign header_logo_style = 'height:' | append: section.settings.logo_height | append: 'px;' -%}
-        {{ section.settings.logo | image_url: width: 300 | image_tag:
+        {{ section.settings.logo | image_url: width: 600 | image_tag:
              alt: header_logo_alt,
              class: 'pw-hdr__logo-img',
              loading: 'eager',
+             widths: '150,300,450,600',
              style: header_logo_style
         }}
-      {% else %}
+      {%- else -%}
         {{ section.settings.brand | default: 'PRAVAS' }}
-      {% endif %}
+      {%- endif -%}
     </a>
     <nav class="pw-hdr__nav">
       {% for i in (1..5) %}
@@ -49,12 +56,21 @@
   </div>
 </div>
 
+<style>
+  #pw-hdr { --hdr-logo-height: {{ section.settings.logo_height | default: 24 }}px; }
+  .pw-nav-drawer__panel {
+    {% if section.settings.drawer_side == 'left' %}left: 0; right: auto;{% else %}right: 0; left: auto;{% endif %}
+  }
+</style>
+
 {% schema %}
 {
   "name": "PW Header",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo (SVG or PNG — overrides brand name text)" },
-    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 64, "step": 2, "unit": "px", "default": 24 },
+    { "type": "image_picker", "id": "logo", "label": "Logo image (PNG/JPG/WEBP)", "info": "Shopify image uploads do not support SVG. To use an SVG logo, paste its code in the field below instead." },
+    { "type": "textarea", "id": "logo_svg", "label": "Logo SVG code (takes priority over the image above)" },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 24 },
+    { "type": "select", "id": "drawer_side", "label": "Mobile menu opens from", "options": [{ "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }], "default": "right" },
     { "type": "text", "id": "brand", "label": "Brand name (used if no logo uploaded, and as logo alt text)", "default": "PRAVAS" },
     { "type": "text", "id": "nav_label_1", "label": "Nav 1 text", "default": "Shop" },
     { "type": "url",  "id": "nav_url_1",   "label": "Nav 1 URL" },
