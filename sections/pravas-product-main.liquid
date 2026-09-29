@@ -83,18 +83,36 @@
 
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
-            <div class="pw-pdp__option" data-option-index="{{ forloop.index0 }}">
+            {%- assign option_index = forloop.index0 -%}
+            <div class="pw-pdp__option" data-option-index="{{ option_index }}">
               <span class="pw-pdp__option-label">
                 {{ option.name }}: <span class="pw-pdp__option-selected" data-option-selected>{{ option.selected_value }}</span>
               </span>
               <div class="pw-pdp__swatches">
                 {%- for value in option.values -%}
+                  {%- liquid
+                    assign swatch_bg = ''
+                    assign swatch_fg = ''
+                    assign value_key = value | downcase | strip
+                    for sb in section.blocks
+                      if sb.type == 'swatch_color'
+                        assign sb_key = sb.settings.option_value | downcase | strip
+                        if sb_key != '' and sb_key == value_key
+                          assign swatch_bg = sb.settings.color
+                          assign swatch_fg = sb.settings.text_color
+                        endif
+                      endif
+                    endfor
+                    if swatch_bg == blank and value.swatch.color
+                      assign swatch_bg = value.swatch.color
+                    endif
+                  -%}
                   <button
                     type="button"
                     class="pw-pdp__swatch{% if value == option.selected_value %} is-active{% endif %}"
-                    data-option-index="{{ forloop.parentloop.index0 }}"
+                    data-option-index="{{ option_index }}"
                     data-option-value="{{ value | escape }}"
-                    {% if value.swatch.color %}style="background:{{ value.swatch.color }};"{% endif %}
+                    {%- if swatch_bg != blank or swatch_fg != blank %} style="{% if swatch_bg != blank %}background:{{ swatch_bg }};{% endif %}{% if swatch_fg != blank %}--product-swatch-label-color:{{ swatch_fg }};{% endif %}"{% endif -%}
                   >
                     <span class="pw-pdp__swatch-label">{{ value }}</span>
                   </button>
@@ -205,6 +223,12 @@
     --product-gallery-gap: {{ section.settings.gallery_gap | default: 12 }}px;
     --product-gallery-radius: {{ section.settings.gallery_radius | default: 0 }}px;
     --product-gallery-aspect: {{ section.settings.gallery_aspect_ratio | default: '1/1' }};
+    --product-image-fit: {{ section.settings.image_fit | default: 'contain' }};
+    --product-gallery-bg: {{ section.settings.gallery_bg | default: '#101010' }};
+    --product-gallery-padding: {{ section.settings.gallery_padding | default: 0 }}px;
+    --product-thumb-columns: {{ section.settings.thumb_columns | default: 3 }};
+    --product-thumb-columns-mobile: {{ section.settings.thumb_columns_mobile | default: 3 }};
+    --product-thumb-aspect: {{ section.settings.thumb_aspect_ratio | default: '1/1' }};
     --product-section-padding: {{ section.settings.padding_top | default: 0 }}px {{ section.settings.padding_x | default: 80 }}px {{ section.settings.padding_bottom | default: 0 }}px;
     --product-content-max-width: {{ section.settings.content_max_width | default: 1440 }}px;
 
@@ -238,7 +262,13 @@
     { "type": "checkbox", "id": "enable_zoom", "label": "Enable fullscreen zoom on click", "default": true },
     { "type": "range", "id": "gallery_gap", "label": "Gallery gap", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 12 },
     { "type": "range", "id": "gallery_radius", "label": "Gallery image radius", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
-    { "type": "select", "id": "gallery_aspect_ratio", "label": "Main image aspect ratio", "options": [{ "value": "1/1", "label": "Square" }, { "value": "4/5", "label": "Portrait 4:5" }, { "value": "3/4", "label": "Portrait 3:4" }, { "value": "4/3", "label": "Landscape 4:3" }], "default": "4/5" },
+    { "type": "select", "id": "image_fit", "label": "Image fit", "info": "Fit shows the whole image inside the frame. Fill crops it.", "options": [{ "value": "contain", "label": "Fit (no crop)" }, { "value": "cover", "label": "Fill (crops)" }], "default": "contain" },
+    { "type": "color", "id": "gallery_bg", "label": "Image frame background", "default": "#101010" },
+    { "type": "range", "id": "gallery_padding", "label": "Image frame inner padding", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 0 },
+    { "type": "select", "id": "gallery_aspect_ratio", "label": "Main image aspect ratio", "options": [{ "value": "1/1", "label": "Square" }, { "value": "4/5", "label": "Portrait 4:5" }, { "value": "3/4", "label": "Portrait 3:4" }, { "value": "4/3", "label": "Landscape 4:3" }, { "value": "3/2", "label": "Landscape 3:2" }, { "value": "16/9", "label": "Landscape 16:9" }], "default": "4/5" },
+    { "type": "range", "id": "thumb_columns", "label": "Thumbnail columns — desktop", "min": 2, "max": 6, "step": 1, "default": 3 },
+    { "type": "range", "id": "thumb_columns_mobile", "label": "Thumbnail columns — mobile", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "thumb_aspect_ratio", "label": "Thumbnail aspect ratio", "options": [{ "value": "1/1", "label": "Square" }, { "value": "4/3", "label": "Landscape 4:3" }, { "value": "3/2", "label": "Landscape 3:2" }, { "value": "4/5", "label": "Portrait 4:5" }], "default": "1/1" },
 
     { "type": "header", "content": "Layout" },
     { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 1000, "max": 1800, "step": 20, "unit": "px", "default": 1440 },
@@ -297,6 +327,16 @@
         { "type": "image_picker", "id": "icon", "label": "Icon (optional)" },
         { "type": "text", "id": "label", "label": "Label", "default": "Movement" },
         { "type": "text", "id": "value", "label": "Value (optional)", "default": "Miyota 8215" }
+      ]
+    },
+    {
+      "type": "swatch_color",
+      "name": "Swatch Colour",
+      "settings": [
+        { "type": "paragraph", "content": "Type the option value exactly as it appears on the product (e.g. Midnight Black), then pick the colour to show for it." },
+        { "type": "text", "id": "option_value", "label": "Option value", "default": "Midnight Black" },
+        { "type": "color", "id": "color", "label": "Swatch colour", "default": "#181818" },
+        { "type": "color", "id": "text_color", "label": "Label colour on this swatch", "default": "#F5F3EF" }
       ]
     }
   ],
