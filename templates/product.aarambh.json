@@ -250,6 +250,47 @@
         "divider_color": "#2e2e2e"
       }
     },
+    "pravas_story_heritage_HP4CWE": {
+      "type": "pravas-story-heritage",
+      "name": "PW Story Heritage",
+      "settings": {
+        "eyebrow": "HERITAGE IN EVERY DETAIL",
+        "heading": "Made to Be Unboxed.",
+        "body": "A PRAVAS timepiece is not complete when the watch leaves the atelier. Every detail of its presentation is considered—from the protective packaging to the final placement of the timepiece.\n\nDesigned to protect, preserve, and reveal, our packaging carries the same philosophy as the watch itself: purposeful materials, considered construction, and nothing that exists without reason. The journey begins long before the watch reaches your wrist—and continues with the moment you open it.",
+        "location_label": "PACKAGING",
+        "location_value": "Purpose-built protection",
+        "est_label": "PRESENTATION",
+        "est_value": "Considered from atelier to wrist",
+        "image_radius": 0,
+        "image_border_width": 0,
+        "image_border_color": "#2E2E2E",
+        "enable_overlay": false,
+        "overlay_color": "#181818",
+        "overlay_opacity": 25,
+        "text_max_width": 440,
+        "text_padding": 64,
+        "text_padding_mobile": 40,
+        "column_gap": 64,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 26,
+        "heading_weight": "400",
+        "heading_line_height": 1.2,
+        "body_font": "inter_n4",
+        "body_size_desktop": 15,
+        "body_size_mobile": 14,
+        "body_line_height": 1.8,
+        "bg_color": "#181818",
+        "eyebrow_color": "#B5924A",
+        "heading_color": "#F5F3EF",
+        "body_color": "#C8C8CC",
+        "meta_label_color": "#B5924A",
+        "meta_value_color": "#F5F3EF",
+        "divider_color": "#2E2E2E"
+      }
+    },
     "pravas_ugc_M4qQHY": {
       "type": "pravas-ugc",
       "blocks": {
@@ -308,6 +349,7 @@
     "philosophy",
     "specs",
     "founder",
+    "pravas_story_heritage_HP4CWE",
     "pravas_ugc_M4qQHY"
   ]
 }
