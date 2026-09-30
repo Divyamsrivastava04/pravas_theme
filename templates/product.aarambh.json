@@ -187,7 +187,7 @@
           "type": "spec",
           "settings": {
             "label": "CASE DIAMETER",
-            "value": "40mm"
+            "value": "38mm"
           }
         },
         "s6": {
@@ -201,7 +201,7 @@
           "type": "spec",
           "settings": {
             "label": "LUG-TO-LUG",
-            "value": "47mm"
+            "value": "45mm"
           }
         }
       },
