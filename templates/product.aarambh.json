@@ -12,6 +12,17 @@
     "main": {
       "type": "pravas-product-main",
       "blocks": {
+        "swatch_link_eD6J7E": {
+          "type": "swatch_link",
+          "settings": {
+            "option_name": "Dial Color",
+            "link_product": "emerald-green",
+            "link_url": "",
+            "label": "",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
         "swatch_color_XUCLPF": {
           "type": "swatch_color",
           "settings": {
@@ -75,6 +86,7 @@
         }
       },
       "block_order": [
+        "swatch_link_eD6J7E",
         "swatch_color_XUCLPF",
         "swatch_color_tzXjKW",
         "swatch_color_VGhi9R",
