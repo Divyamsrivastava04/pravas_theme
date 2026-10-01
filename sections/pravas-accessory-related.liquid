@@ -13,49 +13,45 @@
   editorial card as the collection page.
 {%- endcomment -%}
 
+{%- comment -%}
+  Products come from Shopify's recommendations, a chosen collection, or one
+  chosen product — never a hardcoded id.
+
+  A single chosen product has nothing to grid, so that source always renders
+  as the feature layout, and a feature with nothing chosen falls back to the
+  first available product so the section is never half-configured on screen.
+
+  Recommendations arrive through Shopify's own endpoint, so on first render
+  there is nothing yet. The product-recommendations element wraps both
+  states and global.js swaps in the fetched element's innerHTML, so the
+  wrapper has to be emitted either way — which is why that source always
+  renders the section even with no content yet.
+{%- endcomment -%}
+
 {%- liquid
   assign limit = section.settings.product_limit | default: 3
   assign items = nil
-
-  case section.settings.source
-    when 'collection'
-      assign items = section.settings.collection.products
-    when 'product'
-      assign items = nil
-    else
-      comment
-        Shopify's recommendations are rendered through its own section
-        endpoint, which needs the intent and the product id.
-      endcomment
-      assign items = recommendations.products
-  endcase
+  if section.settings.source == 'collection'
+    assign items = section.settings.collection.products
+  elsif section.settings.source == 'recommendations'
+    assign items = recommendations.products
+  endif
 
   assign single = section.settings.product
+
   assign is_feature = false
-  if section.settings.layout == 'feature' or section.settings.source == 'product'
-    comment
-      A single chosen product has nothing to grid, so that source always
-      renders as the feature layout.
-    endcomment
+  if section.settings.layout == 'feature'
+    assign is_feature = true
+  endif
+  if section.settings.source == 'product'
     assign is_feature = true
   endif
 
-  comment
-    Shopify fetches recommendations through its own endpoint, so on first
-    render there is nothing yet. The <product-recommendations> element wraps
-    both states and global.js swaps in the fetched element's innerHTML — the
-    wrapper has to be present either way, and its data-url must not already
-    carry product_id or section_id, which the component appends itself.
-  endcomment
   assign is_reco = false
   if section.settings.source == 'recommendations'
     assign is_reco = true
   endif
 
-  comment
-    A feature block falls back to the first available product when none has
-    been chosen, so the section is never half-configured on screen.
-  endcomment
   if is_feature and single == blank
     assign single = items.first
   endif
@@ -63,14 +59,11 @@
   assign has_content = false
   if is_feature and single != blank
     assign has_content = true
-  elsif is_feature == false and items.size > 0
+  endif
+  if is_feature == false and items.size > 0
     assign has_content = true
   endif
 
-  comment
-    With recommendations the section must always emit its wrapper so the
-    fetch can happen, even though it has nothing to show yet.
-  endcomment
   assign render_section = has_content
   if is_reco
     assign render_section = true
