@@ -12,7 +12,7 @@
     assign ann_url = ann_product_url
   endif
 -%}
-<div class="pw-ann" id="pw-ann">
+<div class="pw-ann" id="pw-ann" data-ann-url="{{ ann_url }}">
   {%- if ann_url != blank -%}
     <a class="pw-ann__track pw-ann__track--link" href="{{ ann_url }}">
   {%- else -%}
