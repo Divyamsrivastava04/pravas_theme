@@ -249,6 +249,127 @@
           {%- endfor -%}
         {%- endunless -%}
 
+        {%- liquid
+          comment
+            A Swatch Link whose option row does not exist on this product had
+            nowhere to render — and a product down to a single variant has no
+            option rows at all, so every link block vanished. Those orphans
+            now get a row of their own, which is what makes a cross-product
+            colour selector work on both sides even when the two products are
+            built differently.
+          endcomment
+          assign option_names = '|'
+          unless product.has_only_default_variant
+            for opt in product.options_with_values
+              assign opt_key = opt.name | downcase | strip
+              assign option_names = option_names | append: opt_key | append: '|'
+            endfor
+          endunless
+
+          assign has_orphan_links = false
+          for sb in section.blocks
+            if sb.type == 'swatch_link'
+              assign sb_href = sb.settings.link_url
+              if sb.settings.link_product != blank
+                assign sb_href = sb.settings.link_product.url
+              endif
+              if sb_href != blank
+                assign t = sb.settings.option_name | downcase | strip
+                assign matched = false
+                if t == blank
+                  unless product.has_only_default_variant
+                    assign matched = true
+                  endunless
+                else
+                  assign needle = '|' | append: t | append: '|'
+                  if option_names contains needle
+                    assign matched = true
+                  endif
+                endif
+                if matched == false
+                  assign has_orphan_links = true
+                endif
+              endif
+            endif
+          endfor
+        -%}
+
+        {%- if has_orphan_links -%}
+          <div class="pw-pdp__option pw-pdp__option--links">
+            {%- if section.settings.link_row_label != blank -%}
+              <span class="pw-pdp__option-label">
+                {{ section.settings.link_row_label }}{% if section.settings.link_row_show_current %}: <span class="pw-pdp__option-selected">{{ section.settings.link_row_current_label | default: product.title }}</span>{% endif %}
+              </span>
+            {%- endif -%}
+            <div class="pw-pdp__swatches">
+              {%- if section.settings.link_row_show_current -%}
+                {%- comment -%}
+                  The product being viewed, shown as the active choice. It is
+                  a link to itself so the variant picker's script leaves it
+                  alone — it selects nothing on this page.
+                {%- endcomment -%}
+                {%- render 'pravas-product-swatch',
+                  label: section.settings.link_row_current_label | default: product.title,
+                  image: product.featured_image,
+                  color: section.settings.link_row_current_color,
+                  text_color: section.settings.link_row_current_text_color,
+                  href: product.url,
+                  option_index: 'links',
+                  is_active: true,
+                  mode: section.settings.swatch_mode
+                -%}
+              {%- endif -%}
+
+              {%- for sb in section.blocks -%}
+                {%- if sb.type == 'swatch_link' -%}
+                  {%- liquid
+                    assign link_href = sb.settings.link_url
+                    if sb.settings.link_product != blank
+                      assign link_href = sb.settings.link_product.url
+                    endif
+
+                    assign t = sb.settings.option_name | downcase | strip
+                    assign matched = false
+                    if t == blank
+                      unless product.has_only_default_variant
+                        assign matched = true
+                      endunless
+                    else
+                      assign needle = '|' | append: t | append: '|'
+                      if option_names contains needle
+                        assign matched = true
+                      endif
+                    endif
+
+                    assign link_label = sb.settings.label
+                    if link_label == blank
+                      assign link_label = sb.settings.link_product.title
+                    endif
+
+                    assign link_image = sb.settings.image
+                    if link_image == blank and section.settings.swatch_use_variant_image
+                      assign link_image = sb.settings.link_product.featured_image
+                    endif
+                  -%}
+                  {%- if matched == false and link_href != blank -%}
+                    {%- render 'pravas-product-swatch',
+                      label: link_label,
+                      image: link_image,
+                      color: sb.settings.color,
+                      text_color: sb.settings.text_color,
+                      href: link_href,
+                      option_index: 'links',
+                      is_active: false,
+                      mode: section.settings.swatch_mode,
+                      attrs: sb.shopify_attributes
+                    -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
         <div class="pw-pdp__availability" id="pw-pdp-availability" data-threshold="{{ section.settings.low_stock_threshold | default: 15 }}">
           {%- if current_variant.inventory_management == 'shopify' -%}
             <span class="pw-pdp__availability-label">{{ section.settings.availability_label | default: 'FIRST BATCH AVAILABILITY' }}</span>
@@ -652,6 +773,14 @@
     { "type": "header", "content": "Swatches — colour block style" },
     { "type": "range", "id": "swatch_size", "label": "Swatch height", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
     { "type": "color", "id": "swatch_bg_color", "label": "Background when no colour is set", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Cross-product swatch row" },
+    { "type": "paragraph", "content": "Where Swatch Link blocks appear when this product has no matching option row — including products down to a single variant. Use it to let shoppers move between models sold as separate products." },
+    { "type": "text", "id": "link_row_label", "label": "Row label", "default": "DIAL COLOR" },
+    { "type": "checkbox", "id": "link_row_show_current", "label": "Show the current product as the selected swatch", "default": true },
+    { "type": "text", "id": "link_row_current_label", "label": "Name for the current product", "info": "Defaults to the product title." },
+    { "type": "color", "id": "link_row_current_color", "label": "Current product swatch colour", "default": "#181818" },
+    { "type": "color", "id": "link_row_current_text_color", "label": "Current product label colour", "default": "#F5F3EF" },
 
     { "type": "header", "content": "Optional accessory" },
     { "type": "paragraph", "content": "Offers a separate Shopify product alongside this one. It stays its own product with its own inventory, and adding it creates a second cart line — it never changes this product's price or variants. Leave the product empty to hide the whole block." },
