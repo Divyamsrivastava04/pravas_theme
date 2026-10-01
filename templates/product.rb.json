@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "s": {
+      "type": "pw-rb",
+      "settings": {}
+    }
+  },
+  "order": [
+    "s"
+  ]
+}
