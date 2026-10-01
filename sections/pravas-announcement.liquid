@@ -1,14 +1,15 @@
 {% if section.settings.enabled %}
 {%- liquid
   comment
-    The link can point at a picked product or an explicit URL. A picked
-    product wins so the bar keeps working if the product handle changes.
+    The link can point at a picked product or an explicit URL. Start from
+    the URL and only let a picked product override it when that product
+    actually resolves, so an unset product setting can never blank out a
+    perfectly good URL.
   endcomment
-  assign ann_url = ''
-  if section.settings.link_product != blank
-    assign ann_url = section.settings.link_product.url
-  elsif section.settings.link_url != blank
-    assign ann_url = section.settings.link_url
+  assign ann_url = section.settings.link_url
+  assign ann_product_url = section.settings.link_product.url
+  if ann_product_url != blank
+    assign ann_url = ann_product_url
   endif
 -%}
 <div class="pw-ann" id="pw-ann">
