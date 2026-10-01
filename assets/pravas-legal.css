@@ -1,0 +1,284 @@
+/* pravas-legal.css — PRAVAS legal / policy pages.
+   One section serves Terms, Privacy, Shipping & Refunds and any other
+   policy page. Every value reads a --legal-* custom property generated
+   from Theme Editor settings. */
+
+.pw-legal * { min-width: 0; }
+
+.pw-legal {
+  background: var(--legal-bg, #131313);
+  color: var(--legal-text, #E8E6E1);
+}
+.pw-legal__inner {
+  max-width: var(--legal-content-width, 1140px);
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.pw-legal__head { margin-bottom: var(--legal-head-spacing, 48px); }
+.pw-legal__eyebrow {
+  display: block;
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: var(--legal-eyebrow-size, 9px);
+  font-weight: 600;
+  letter-spacing: var(--legal-eyebrow-spacing, 3px);
+  text-transform: uppercase;
+  color: var(--legal-eyebrow, #B5924A);
+  margin-bottom: 18px;
+}
+.pw-legal__title {
+  font-family: var(--legal-heading-font, var(--font-display));
+  font-size: var(--legal-title-size-mobile, 28px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--legal-heading, #F5F3EF);
+  margin: 0;
+}
+.pw-legal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 16px 0 0;
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.pw-legal__meta-label { color: var(--legal-muted, #8A8A8A); }
+.pw-legal__meta-value { color: var(--legal-text, #E8E6E1); }
+.pw-legal__rule {
+  height: var(--legal-divider-width, 1px);
+  background: var(--legal-divider, #2A2A2A);
+  border: none;
+  margin: 32px 0 0;
+}
+
+/* ===== BODY ===== */
+.pw-legal__body { display: block; }
+.pw-legal--with-toc .pw-legal__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--legal-column-gap, 72px);
+}
+
+/* Contents */
+.pw-legal__toc {
+  flex: 0 0 var(--legal-toc-width, 220px);
+  width: var(--legal-toc-width, 220px);
+}
+.pw-legal__toc-details {
+  position: sticky;
+  top: var(--legal-sticky-offset, 90px);
+}
+/* The details element is only a disclosure on small screens; on desktop
+   the list is always visible, so the marker is hidden there. */
+.pw-legal__toc-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+  cursor: default;
+  padding-bottom: 14px;
+  border-bottom: var(--legal-divider-width, 1px) solid var(--legal-divider, #2A2A2A);
+}
+.pw-legal__toc-summary::-webkit-details-marker { display: none; }
+.pw-legal__toc-title {
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: var(--legal-toc-size, 10px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--legal-muted, #8A8A8A);
+}
+.pw-legal__toc-icon { display: none; position: relative; width: 10px; height: 10px; flex-shrink: 0; }
+.pw-legal__toc-icon::before,
+.pw-legal__toc-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--legal-muted, #8A8A8A);
+  transition: transform 220ms ease;
+}
+.pw-legal__toc-icon::after { transform: rotate(90deg); }
+.pw-legal__toc-details[open] .pw-legal__toc-icon::after { transform: rotate(0deg); }
+
+.pw-legal__toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 0;
+  counter-reset: none;
+}
+.pw-legal__toc-item { margin: 0; }
+.pw-legal__toc-link {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 0;
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: var(--legal-toc-size, 10px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--legal-muted, #8A8A8A);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.pw-legal__toc-link:hover,
+.pw-legal__toc-link.is-active { color: var(--legal-accent, #B5924A); }
+.pw-legal__toc-link:focus-visible { outline: 1px solid var(--legal-accent, #B5924A); outline-offset: 2px; }
+.pw-legal__toc-num { flex-shrink: 0; opacity: 0.65; }
+.pw-legal__toc-text { flex: 1 1 auto; }
+
+/* ===== CONTENT ===== */
+.pw-legal__content {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: var(--legal-text-width, 700px);
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: var(--legal-body-size, 14px);
+  font-weight: 300;
+  line-height: var(--legal-body-line-height, 1.9);
+  color: var(--legal-text, #E8E6E1);
+}
+
+/* Headings inside the page content */
+.pw-legal__content h1,
+.pw-legal__content h2,
+.pw-legal__content h3,
+.pw-legal__content h4,
+.pw-legal__content h5,
+.pw-legal__content h6 {
+  font-family: var(--legal-heading-font, var(--font-display));
+  font-weight: 400;
+  color: var(--legal-heading, #F5F3EF);
+  line-height: 1.3;
+}
+.pw-legal__content h2 {
+  font-size: var(--legal-h2-size, 20px);
+  margin: var(--legal-section-spacing, 40px) 0 14px;
+  padding-top: var(--legal-section-spacing, 40px);
+  border-top: var(--legal-divider-width, 1px) solid var(--legal-divider, #2A2A2A);
+  scroll-margin-top: var(--legal-sticky-offset, 90px);
+}
+.pw-legal__content > h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.pw-legal__content h3 {
+  font-size: var(--legal-h3-size, 15px);
+  margin: 28px 0 10px;
+  letter-spacing: 0.5px;
+}
+.pw-legal__content h4,
+.pw-legal__content h5,
+.pw-legal__content h6 {
+  font-family: var(--legal-body-font, var(--font-body));
+  font-size: calc(var(--legal-body-size, 14px) + 1px);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 22px 0 8px;
+}
+
+.pw-legal__content p { margin: 0 0 var(--legal-paragraph-spacing, 18px); }
+.pw-legal__content p:last-child { margin-bottom: 0; }
+
+.pw-legal__content ul,
+.pw-legal__content ol {
+  margin: 0 0 var(--legal-paragraph-spacing, 18px);
+  padding-left: 20px;
+}
+.pw-legal__content li { margin-bottom: 8px; }
+.pw-legal__content li::marker { color: var(--legal-muted, #8A8A8A); }
+.pw-legal__content ul ul,
+.pw-legal__content ol ol { margin: 8px 0 0; }
+
+.pw-legal__content a {
+  color: var(--legal-accent, #B5924A);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: opacity 200ms ease;
+}
+.pw-legal__content a:hover { opacity: 0.75; }
+.pw-legal__content a:focus-visible { outline: 1px solid var(--legal-accent, #B5924A); outline-offset: 2px; }
+
+.pw-legal__content strong, .pw-legal__content b { color: var(--legal-heading, #F5F3EF); font-weight: 600; }
+.pw-legal__content em, .pw-legal__content i { font-style: italic; }
+
+.pw-legal__content blockquote {
+  margin: 24px 0;
+  padding: 4px 0 4px 20px;
+  border-left: 2px solid var(--legal-accent, #B5924A);
+  color: var(--legal-muted, #8A8A8A);
+  font-style: italic;
+}
+.pw-legal__content blockquote p:last-child { margin-bottom: 0; }
+
+.pw-legal__content hr {
+  height: var(--legal-divider-width, 1px);
+  background: var(--legal-divider, #2A2A2A);
+  border: none;
+  margin: 32px 0;
+}
+
+/* Tables stay readable on small screens without breaking the layout */
+.pw-legal__content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--legal-paragraph-spacing, 18px);
+  font-size: calc(var(--legal-body-size, 14px) - 1px);
+  display: block;
+  overflow-x: auto;
+}
+.pw-legal__content th,
+.pw-legal__content td {
+  text-align: left;
+  padding: 10px 14px 10px 0;
+  border-bottom: var(--legal-divider-width, 1px) solid var(--legal-divider, #2A2A2A);
+  vertical-align: top;
+}
+.pw-legal__content th {
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 10px;
+  color: var(--legal-muted, #8A8A8A);
+}
+
+.pw-legal__content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--legal-radius, 0);
+}
+
+/* Long unbroken strings (URLs, policy references) must not force scroll */
+.pw-legal__content { overflow-wrap: break-word; }
+
+@media screen and (min-width: 750px) {
+  .pw-legal__title { font-size: var(--legal-title-size-tablet, 36px); }
+}
+@media screen and (min-width: 990px) {
+  .pw-legal__title { font-size: var(--legal-title-size, 46px); }
+  /* Desktop is never collapsible — the script keeps it open */
+  .pw-legal__toc-summary { pointer-events: none; }
+}
+@media screen and (max-width: 989px) {
+  .pw-legal--with-toc .pw-legal__body { flex-direction: column; gap: 28px; }
+  .pw-legal__toc { flex: 1 1 auto; width: 100%; }
+  .pw-legal__toc-details { position: static; }
+  .pw-legal__toc-summary { cursor: pointer; }
+  .pw-legal__toc-icon { display: block; }
+  .pw-legal__content { max-width: none; }
+  /* Comfortable tap targets */
+  .pw-legal__toc-link { padding: 11px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-legal__toc-link,
+  .pw-legal__content a,
+  .pw-legal__toc-icon::before,
+  .pw-legal__toc-icon::after { transition: none; }
+}

@@ -1,0 +1,66 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "legal": {
+      "type": "pravas-legal",
+      "settings": {
+        "eyebrow": "LEGAL",
+        "show_rule": true,
+        "updated_label": "LAST UPDATED",
+        "show_toc": true,
+        "toc_title": "CONTENTS",
+        "toc_min_headings": 2,
+        "toc_numbered": true,
+        "toc_sticky": true,
+        "show_toc_mobile": true,
+        "toc_open_mobile": false,
+        "toc_width": 220,
+        "toc_size": 10,
+        "sticky_offset": 90,
+        "content_max_width": 1140,
+        "text_column_width": 700,
+        "column_gap": 72,
+        "head_spacing": 48,
+        "section_spacing": 40,
+        "paragraph_spacing": 18,
+        "padding_top": 88,
+        "padding_bottom": 120,
+        "padding_x": 40,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 64,
+        "padding_x_mobile": 22,
+        "heading_font": "playfair_display_n4",
+        "body_font": "inter_n4",
+        "title_size": 46,
+        "title_size_tablet": 36,
+        "title_size_mobile": 28,
+        "h2_size": 20,
+        "h3_size": 15,
+        "body_size": 14,
+        "body_line_height": 1.9,
+        "eyebrow_size": 9,
+        "eyebrow_letter_spacing": 3,
+        "bg_color": "#131313",
+        "text_color": "#e8e6e1",
+        "muted_color": "#8a8a8a",
+        "heading_color": "#f5f3ef",
+        "eyebrow_color": "#b5924a",
+        "accent_color": "#b5924a",
+        "divider_color": "#2a2a2a",
+        "divider_width": 1,
+        "radius": 0
+      }
+    }
+  },
+  "order": [
+    "legal"
+  ]
+}
