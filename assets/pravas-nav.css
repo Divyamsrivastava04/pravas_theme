@@ -1,0 +1,260 @@
+/* pravas-nav.css — collection dropdown in the PRAVAS header, plus the
+   mobile drawer disclosure. Values read --navdrop-* custom properties set
+   from the header section's Theme Editor settings. */
+
+/* ============================================================
+   DESKTOP DROPDOWN
+   ============================================================ */
+.pw-hdr__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pw-hdr__caret {
+  display: flex;
+  align-items: center;
+  padding: 4px 2px;
+  background: none;
+  border: none;
+  color: var(--navdrop-muted, #8A8A8A);
+  cursor: pointer;
+  transition: color 200ms ease, transform 200ms ease;
+}
+.pw-hdr__item:hover .pw-hdr__caret,
+.pw-hdr__item.is-open .pw-hdr__caret { color: var(--navdrop-accent, #B5924A); }
+.pw-hdr__item.is-open .pw-hdr__caret { transform: rotate(180deg); }
+.pw-hdr__caret:focus-visible,
+.pw-hdr__item .pw-hdr__link:focus-visible {
+  outline: 1px solid var(--navdrop-accent, #B5924A);
+  outline-offset: 4px;
+}
+
+.pw-navdrop {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 210;
+  width: var(--navdrop-width, 560px);
+  max-width: calc(100vw - 40px);
+  margin-top: 1px;
+  background: var(--navdrop-bg, #131313);
+  border: var(--navdrop-border-width, 1px) solid var(--navdrop-border, #2A2A2A);
+  border-radius: var(--navdrop-radius, 0);
+  /* Opacity + a small lift rather than a slide, so nothing draws attention
+     to itself on the way in. */
+  opacity: 0;
+  transform: translate(-50%, -6px);
+  transition:
+    opacity var(--navdrop-duration, 180ms) ease,
+    transform var(--navdrop-duration, 180ms) ease;
+}
+.pw-hdr__item.is-open .pw-navdrop {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* Bridges the 1px seam between the header and the panel so moving the
+   pointer down does not count as leaving the item. */
+.pw-navdrop::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.pw-navdrop__inner {
+  padding: var(--navdrop-pad-y, 28px) var(--navdrop-pad-x, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--navdrop-gap, 20px);
+}
+
+.pw-navdrop__head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: var(--navdrop-gap, 20px);
+  border-bottom: var(--navdrop-border-width, 1px) solid var(--navdrop-border, #2A2A2A);
+}
+.pw-navdrop__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--navdrop-text, #F5F3EF);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.pw-navdrop__title:hover { color: var(--navdrop-accent, #B5924A); }
+.pw-navdrop__desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--navdrop-muted, #8A8A8A);
+}
+
+.pw-navdrop__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+.pw-navdrop__link {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--navdrop-muted, #8A8A8A);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.pw-navdrop__link:hover { color: var(--navdrop-accent, #B5924A); }
+
+.pw-navdrop__label {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--navdrop-muted, #8A8A8A);
+}
+
+.pw-navdrop__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--navdrop-columns, 2), minmax(0, 1fr));
+  gap: var(--navdrop-gap, 20px);
+}
+.pw-navdrop__card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+}
+.pw-navdrop__media {
+  display: block;
+  width: 100%;
+  max-width: var(--navdrop-img-size, 150px);
+  aspect-ratio: var(--navdrop-image-ratio, 1/1);
+  background: rgba(255, 255, 255, 0.03);
+  border: var(--navdrop-border-width, 1px) solid var(--navdrop-border, #2A2A2A);
+  border-radius: var(--navdrop-radius, 0);
+  overflow: hidden;
+  transition: border-color 200ms ease;
+}
+.pw-navdrop__card:hover .pw-navdrop__media { border-color: var(--navdrop-accent, #B5924A); }
+.pw-navdrop__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.pw-navdrop__name {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--navdrop-text, #F5F3EF);
+}
+.pw-navdrop__cta {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--navdrop-accent, #B5924A);
+}
+.pw-navdrop__cta::after { content: ' \2192'; }
+
+/* ============================================================
+   MOBILE DRAWER DISCLOSURE
+   ============================================================ */
+.pw-nav-drawer__group {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  row-gap: 0;
+}
+.pw-nav-drawer__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: -8px -8px -8px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.pw-nav-drawer__toggle-icon {
+  position: relative;
+  display: block;
+  width: 11px;
+  height: 11px;
+}
+.pw-nav-drawer__toggle-icon::before,
+.pw-nav-drawer__toggle-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--navdrop-muted, #8A8A8A);
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+.pw-nav-drawer__toggle-icon::after { transform: rotate(90deg); }
+.pw-nav-drawer__group.is-open .pw-nav-drawer__toggle-icon::after { transform: rotate(0deg); }
+.pw-nav-drawer__group.is-open .pw-nav-drawer__toggle-icon::before,
+.pw-nav-drawer__group.is-open .pw-nav-drawer__toggle-icon::after {
+  background: var(--navdrop-accent, #B5924A);
+}
+
+.pw-nav-drawer__sub {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 14px;
+  padding-left: 14px;
+  border-left: var(--navdrop-border-width, 1px) solid var(--navdrop-border, #2A2A2A);
+}
+.pw-nav-drawer__sublink {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--navdrop-muted, #8A8A8A);
+  text-decoration: none;
+  /* Comfortable tap target */
+  padding: 10px 0;
+}
+.pw-nav-drawer__sublink:hover,
+.pw-nav-drawer__sublink:focus-visible { color: var(--navdrop-accent, #B5924A); }
+
+/* The dropdown is a pointer affordance; the drawer carries the same links
+   on small screens. */
+@media (max-width: 767px) {
+  .pw-navdrop { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-navdrop,
+  .pw-hdr__caret,
+  .pw-navdrop__title,
+  .pw-navdrop__media,
+  .pw-nav-drawer__toggle-icon::before,
+  .pw-nav-drawer__toggle-icon::after { transition: none; }
+  .pw-hdr__item.is-open .pw-navdrop { transform: translate(-50%, 0); }
+}

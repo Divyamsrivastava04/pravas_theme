@@ -1,77 +1,146 @@
-{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+{{ 'pravas-collection.css' | asset_url | stylesheet_tag }}
 
-{%- style -%}
-  @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
-    }
-  }
-{%- endstyle -%}
+{%- comment -%}
+  PRAVAS collection hero. Everything here comes from the collection itself,
+  so the same section serves every collection — nothing is hardcoded.
+{%- endcomment -%}
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
+{%- liquid
+  assign show_description = false
+  if section.settings.show_collection_description and collection.description != blank
+    assign show_description = true
+  endif
+-%}
 
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
-      {%- endif -%}
-    </div>
+<section class="pw-collhero pw-collhero--{{ section.settings.alignment }}" id="pw-collhero-{{ section.id }}">
+  <div class="pw-collhero__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pw-collhero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
 
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
-        <img
-          srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
-          "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.image.alt | escape }}"
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
-        >
+    <h1 class="pw-collhero__title">{{ collection.title }}</h1>
+
+    {%- if show_description -%}
+      <div class="pw-collhero__desc">{{ collection.description }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.show_image and collection.image -%}
+      {%- assign hero_alt = collection.image.alt | default: collection.title -%}
+      <div class="pw-collhero__media">
+        {{
+          collection.image
+          | image_url: width: 2000
+          | image_tag:
+            alt: hero_alt,
+            class: 'pw-collhero__img',
+            loading: 'eager',
+            sizes: '100vw',
+            widths: '600,900,1200,1600,2000'
+        }}
       </div>
     {%- endif -%}
+
+    {%- if section.settings.show_rule -%}
+      <hr class="pw-collhero__rule">
+    {%- endif -%}
   </div>
-</div>
+</section>
+
+<style>
+  #pw-collhero-{{ section.id }} {
+    --collhero-bg: {{ section.settings.bg_color | default: '#131313' }};
+    --collhero-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+    --collhero-heading: {{ section.settings.heading_color | default: '#F5F3EF' }};
+    --collhero-desc: {{ section.settings.desc_color | default: '#8A8A8A' }};
+    --collhero-divider: {{ section.settings.divider_color | default: '#2A2A2A' }};
+    --collhero-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+
+    --collhero-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+    --collhero-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+    --collhero-heading-size: {{ section.settings.heading_size | default: 52 }}px;
+    --collhero-heading-size-tablet: {{ section.settings.heading_size_tablet | default: 40 }}px;
+    --collhero-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 30 }}px;
+    --collhero-desc-size: {{ section.settings.desc_size | default: 13 }}px;
+    --collhero-desc-line-height: {{ section.settings.desc_line_height | default: 1.8 }};
+    --collhero-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+    --collhero-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing | default: 3 }}px;
+
+    --collhero-max-width: {{ section.settings.content_max_width | default: 1280 }}px;
+    --collhero-desc-width: {{ section.settings.desc_max_width | default: 520 }}px;
+    --collhero-gap: {{ section.settings.stack_gap | default: 18 }}px;
+    --collhero-image-radius: {{ section.settings.image_radius | default: 0 }}px;
+    --collhero-image-ratio: {{ section.settings.image_ratio | default: '16/6' }};
+
+    padding-top: {{ section.settings.padding_top | default: 72 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 40 }}px;
+    padding-left: {{ section.settings.padding_x | default: 40 }}px;
+    padding-right: {{ section.settings.padding_x | default: 40 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #pw-collhero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile | default: 44 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 28 }}px;
+      padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+      padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+    }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "t:sections.main-collection-banner.name",
-  "class": "section",
+  "name": "Collection banner",
   "settings": [
-    {
-      "type": "paragraph",
-      "content": "t:sections.main-collection-banner.settings.paragraph.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_description",
-      "default": true,
-      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "default": false,
-      "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    }
-  ]
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE COLLECTION" },
+    { "type": "checkbox", "id": "show_collection_description", "label": "Show collection description", "default": true },
+    { "type": "checkbox", "id": "show_image", "label": "Show collection image", "default": false },
+    { "type": "checkbox", "id": "show_rule", "label": "Show divider below", "default": true },
+    { "type": "select", "id": "alignment", "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" }
+      ], "default": "left" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 900, "max": 1600, "step": 20, "unit": "px", "default": 1280 },
+    { "type": "range", "id": "desc_max_width", "label": "Description width", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 520 },
+    { "type": "range", "id": "stack_gap", "label": "Space between elements", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 44 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Collection image" },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio",
+      "options": [
+        { "value": "16/6", "label": "Panoramic (16:6)" },
+        { "value": "16/9", "label": "Wide (16:9)" },
+        { "value": "3/1", "label": "Letterbox (3:1)" },
+        { "value": "4/3", "label": "Classic (4:3)" }
+      ], "default": "16/6" },
+    { "type": "range", "id": "image_radius", "label": "Image corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "inter_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading — desktop", "min": 24, "max": 90, "step": 2, "unit": "px", "default": 52 },
+    { "type": "range", "id": "heading_size_tablet", "label": "Heading — tablet", "min": 20, "max": 70, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading — mobile", "min": 18, "max": 50, "step": 2, "unit": "px", "default": 30 },
+    { "type": "range", "id": "desc_size", "label": "Description size", "min": 10, "max": 22, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "desc_line_height", "label": "Description line height", "min": 1.2, "max": 2.4, "step": 0.1, "default": 1.8 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 8, "step": 0.5, "unit": "px", "default": 3 },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "desc_color", "label": "Description", "default": "#8A8A8A" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2A2A2A" },
+    { "type": "range", "id": "divider_width", "label": "Divider thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 }
+  ],
+  "enabled_on": { "templates": ["collection"] }
 }
 {% endschema %}

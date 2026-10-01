@@ -1,0 +1,141 @@
+{%- comment -%}
+  PRAVAS editorial product card.
+
+  Kept separate from Dawn's card-product.liquid, which is shared by search,
+  featured collection, collage and related products — restyling that one
+  would change all of them.
+
+  Accepts:
+    card_product        the product
+    lazy_load           below the fold
+    show_eyebrow        bool
+    eyebrow_source      'type' | 'vendor' | 'collection'
+    show_description    bool
+    description_words   integer
+    show_secondary      bool, swap to the second image on hover
+    show_status         bool, sold out / pre-order / sale
+    show_compare        bool, compare-at price
+    sold_out_label / preorder_label / sale_label
+{%- endcomment -%}
+
+{%- liquid
+  assign card_variant = card_product.selected_or_first_available_variant
+
+  assign eyebrow = ''
+  if show_eyebrow
+    case eyebrow_source
+      when 'vendor'
+        assign eyebrow = card_product.vendor
+      when 'collection'
+        assign eyebrow = card_product.collections.first.title
+      else
+        assign eyebrow = card_product.type
+    endcase
+  endif
+
+  comment
+    Only states Shopify actually reports. "Pre-order" is the real
+    continue-selling-when-out-of-stock case, not an invented status.
+  endcomment
+  assign status = ''
+  if show_status
+    if card_product.available == false
+      assign status = sold_out_label | default: 'SOLD OUT'
+      assign status_kind = 'soldout'
+    elsif card_variant.inventory_management == 'shopify' and card_variant.inventory_policy == 'continue' and card_variant.inventory_quantity <= 0
+      assign status = preorder_label | default: 'PRE-ORDER'
+      assign status_kind = 'preorder'
+    elsif card_product.compare_at_price > card_product.price
+      assign status = sale_label | default: 'SALE'
+      assign status_kind = 'sale'
+    endif
+  endif
+
+  assign media_loading = 'eager'
+  if lazy_load
+    assign media_loading = 'lazy'
+  endif
+
+  assign primary = card_product.featured_media
+  assign secondary = card_product.media[1]
+
+  assign primary_alt = primary.alt | default: card_product.title
+  assign secondary_alt = secondary.alt | default: card_product.title
+
+  comment
+    Respect the focal point set on the image in Shopify admin, so cropping
+    to the card ratio keeps the subject in frame.
+  endcomment
+  assign primary_style = 'object-position:' | append: primary.preview_image.presentation.focal_point | append: ';'
+  assign secondary_style = 'object-position:' | append: secondary.preview_image.presentation.focal_point | append: ';'
+
+  assign has_dual = false
+  if show_secondary and secondary
+    assign has_dual = true
+  endif
+
+  assign words = description_words | default: 16
+  assign card_description = card_product.description | strip_html | truncatewords: words
+-%}
+
+<a class="pw-card" href="{{ card_product.url }}">
+  <div class="pw-card__media{% if has_dual %} pw-card__media--dual{% endif %}">
+    {%- if primary -%}
+      {{
+        primary
+        | image_url: width: 1200
+        | image_tag:
+          alt: primary_alt,
+          class: 'pw-card__img pw-card__img--primary',
+          loading: media_loading,
+          sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 90vw',
+          widths: '300,400,500,600,800,1000,1200',
+          style: primary_style
+      }}
+      {%- if has_dual -%}
+        {{
+          secondary
+          | image_url: width: 1200
+          | image_tag:
+            alt: secondary_alt,
+            class: 'pw-card__img pw-card__img--secondary',
+            loading: 'lazy',
+            sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 90vw',
+            widths: '300,400,500,600,800,1000,1200',
+            style: secondary_style
+        }}
+      {%- endif -%}
+    {%- else -%}
+      <span class="pw-card__img-placeholder" aria-hidden="true">
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'pw-card__placeholder-svg' }}
+      </span>
+    {%- endif -%}
+
+    {%- if status != blank -%}
+      <span class="pw-card__status pw-card__status--{{ status_kind }}">{{ status }}</span>
+    {%- endif -%}
+  </div>
+
+  <div class="pw-card__info">
+    {%- if eyebrow != blank -%}
+      <span class="pw-card__eyebrow">{{ eyebrow }}</span>
+    {%- endif -%}
+
+    <h3 class="pw-card__title">{{ card_product.title }}</h3>
+
+    {%- if show_description and card_description != blank -%}
+      <p class="pw-card__desc">{{ card_description }}</p>
+    {%- endif -%}
+
+    <p class="pw-card__price">
+      {%- if card_product.price_varies -%}
+        <span class="pw-card__price-current">{{ card_product.price_min | money }}{{ ' – ' }}{{ card_product.price_max | money }}</span>
+      {%- else -%}
+        <span class="pw-card__price-current">{{ card_product.price | money }}</span>
+      {%- endif -%}
+      {%- if show_compare and card_product.compare_at_price > card_product.price -%}
+        <s class="pw-card__price-compare">{{ card_product.compare_at_price | money }}</s>
+      {%- endif -%}
+    </p>
+  </div>
+</a>

@@ -1,3 +1,5 @@
+{{ 'pravas-nav.css' | asset_url | stylesheet_tag }}
+
 <header class="pw-hdr" id="pw-hdr">
   <div class="pw-hdr__inner">
     <a href="{{ routes.root_url }}" class="pw-hdr__logo">
@@ -25,8 +27,19 @@
       {% for i in (1..5) %}
         {% assign lbl = 'nav_label_' | append: i %}
         {% assign url = 'nav_url_'   | append: i %}
+        {% assign menu = 'nav_menu_' | append: i %}
         {% if section.settings[lbl] != blank %}
-          <a href="{{ section.settings[url] | default: '#' }}" class="pw-hdr__link">{{ section.settings[lbl] }}</a>
+          {% render 'pravas-nav-item',
+            label: section.settings[lbl],
+            url: section.settings[url],
+            child_menu: section.settings[menu],
+            index: i,
+            context: 'desktop',
+            product_limit: section.settings.dropdown_product_limit,
+            show_desc: section.settings.dropdown_show_description,
+            explore_label: section.settings.dropdown_explore_label,
+            products_title: section.settings.dropdown_products_title
+          %}
         {% endif %}
       {% endfor %}
     </nav>
@@ -49,8 +62,19 @@
     {% for i in (1..5) %}
       {% assign lbl = 'nav_label_' | append: i %}
       {% assign url = 'nav_url_'   | append: i %}
+      {% assign menu = 'nav_menu_' | append: i %}
       {% if section.settings[lbl] != blank %}
-        <a href="{{ section.settings[url] | default: '#' }}" class="pw-nav-drawer__link">{{ section.settings[lbl] }}</a>
+        {% render 'pravas-nav-item',
+          label: section.settings[lbl],
+          url: section.settings[url],
+          child_menu: section.settings[menu],
+          index: i,
+          context: 'drawer',
+          product_limit: section.settings.dropdown_product_limit,
+          show_desc: section.settings.dropdown_show_description,
+          explore_label: section.settings.dropdown_explore_label,
+          products_title: section.settings.dropdown_products_title
+        %}
       {% endif %}
     {% endfor %}
   </div>
@@ -61,7 +85,26 @@
   .pw-nav-drawer__panel {
     {% if section.settings.drawer_side == 'left' %}left: 0; right: auto;{% else %}right: 0; left: auto;{% endif %}
   }
+  #pw-hdr, .pw-nav-drawer {
+    --navdrop-bg: {{ section.settings.dropdown_bg | default: '#131313' }};
+    --navdrop-text: {{ section.settings.dropdown_text_color | default: '#F5F3EF' }};
+    --navdrop-muted: {{ section.settings.dropdown_muted_color | default: '#8A8A8A' }};
+    --navdrop-accent: {{ section.settings.dropdown_accent | default: '#B5924A' }};
+    --navdrop-border: {{ section.settings.dropdown_border_color | default: '#2A2A2A' }};
+    --navdrop-border-width: {{ section.settings.dropdown_border_width | default: 1 }}px;
+    --navdrop-radius: {{ section.settings.dropdown_radius | default: 0 }}px;
+    --navdrop-width: {{ section.settings.dropdown_width | default: 560 }}px;
+    --navdrop-pad-y: {{ section.settings.dropdown_padding_y | default: 28 }}px;
+    --navdrop-pad-x: {{ section.settings.dropdown_padding_x | default: 32 }}px;
+    --navdrop-gap: {{ section.settings.dropdown_gap | default: 20 }}px;
+    --navdrop-img-size: {{ section.settings.dropdown_image_size | default: 150 }}px;
+    --navdrop-image-ratio: {{ section.settings.dropdown_image_ratio | default: '1/1' }};
+    --navdrop-duration: {{ section.settings.dropdown_duration | default: 180 }}ms;
+    --navdrop-columns: {{ section.settings.dropdown_columns | default: 2 }};
+  }
 </style>
+
+<script src="{{ 'pravas-nav.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
@@ -72,16 +115,50 @@
     { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 80, "step": 2, "unit": "px", "default": 24 },
     { "type": "select", "id": "drawer_side", "label": "Mobile menu opens from", "options": [{ "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }], "default": "right" },
     { "type": "text", "id": "brand", "label": "Brand name (used if no logo uploaded, and as logo alt text)", "default": "PRAVAS" },
+    { "type": "header", "content": "Navigation" },
+    { "type": "paragraph", "content": "Any item whose URL points at a collection automatically gets a dropdown built from that collection. Adding a sub-menu gives an item a dropdown too." },
     { "type": "text", "id": "nav_label_1", "label": "Nav 1 text", "default": "Shop" },
     { "type": "url",  "id": "nav_url_1",   "label": "Nav 1 URL" },
+    { "type": "link_list", "id": "nav_menu_1", "label": "Nav 1 sub-menu (optional)" },
     { "type": "text", "id": "nav_label_2", "label": "Nav 2 text", "default": "Our Story" },
     { "type": "url",  "id": "nav_url_2",   "label": "Nav 2 URL" },
+    { "type": "link_list", "id": "nav_menu_2", "label": "Nav 2 sub-menu (optional)" },
     { "type": "text", "id": "nav_label_3", "label": "Nav 3 text", "default": "Philosophy" },
     { "type": "url",  "id": "nav_url_3",   "label": "Nav 3 URL" },
+    { "type": "link_list", "id": "nav_menu_3", "label": "Nav 3 sub-menu (optional)" },
     { "type": "text", "id": "nav_label_4", "label": "Nav 4 text", "default": "FAQ" },
     { "type": "url",  "id": "nav_url_4",   "label": "Nav 4 URL" },
+    { "type": "link_list", "id": "nav_menu_4", "label": "Nav 4 sub-menu (optional)" },
     { "type": "text", "id": "nav_label_5", "label": "Nav 5 text", "default": "Contact" },
-    { "type": "url",  "id": "nav_url_5",   "label": "Nav 5 URL" }
+    { "type": "url",  "id": "nav_url_5",   "label": "Nav 5 URL" },
+    { "type": "link_list", "id": "nav_menu_5", "label": "Nav 5 sub-menu (optional)" },
+
+    { "type": "header", "content": "Collection dropdown" },
+    { "type": "text", "id": "dropdown_products_title", "label": "Products heading", "default": "EXPLORE THE TIMEPIECES" },
+    { "type": "text", "id": "dropdown_explore_label", "label": "Per-product link text", "default": "EXPLORE" },
+    { "type": "checkbox", "id": "dropdown_show_description", "label": "Show collection description", "default": true },
+    { "type": "range", "id": "dropdown_product_limit", "label": "Products shown", "min": 1, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "dropdown_columns", "label": "Product columns", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "dropdown_width", "label": "Dropdown width", "min": 280, "max": 900, "step": 10, "unit": "px", "default": 560 },
+    { "type": "range", "id": "dropdown_padding_y", "label": "Padding — vertical", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 28 },
+    { "type": "range", "id": "dropdown_padding_x", "label": "Padding — horizontal", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 32 },
+    { "type": "range", "id": "dropdown_gap", "label": "Space between blocks", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "dropdown_image_size", "label": "Product image size", "min": 60, "max": 260, "step": 10, "unit": "px", "default": 150 },
+    { "type": "select", "id": "dropdown_image_ratio", "label": "Product image ratio",
+      "options": [
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/4", "label": "Tall portrait (3:4)" },
+        { "value": "4/3", "label": "Landscape (4:3)" }
+      ], "default": "1/1" },
+    { "type": "range", "id": "dropdown_duration", "label": "Animation duration", "min": 0, "max": 600, "step": 20, "unit": "ms", "default": 180 },
+    { "type": "range", "id": "dropdown_border_width", "label": "Border thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "dropdown_radius", "label": "Corner radius", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 },
+    { "type": "color", "id": "dropdown_bg", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "dropdown_text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "color", "id": "dropdown_muted_color", "label": "Muted text", "default": "#8A8A8A" },
+    { "type": "color", "id": "dropdown_accent", "label": "Accent", "default": "#B5924A" },
+    { "type": "color", "id": "dropdown_border_color", "label": "Border", "default": "#2A2A2A" }
   ],
   "presets": [{ "name": "PW Header" }]
 }

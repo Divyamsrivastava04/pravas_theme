@@ -1,0 +1,162 @@
+{%- comment -%}
+  One header navigation item.
+
+  If the item's URL points at a Shopify collection, it automatically gains a
+  dropdown built from that collection's own data. Nothing about which
+  collection is involved is hardcoded — the handle is read out of whatever
+  URL the merchant set, and looked up through `collections`.
+
+  Accepts:
+    label, url        from the header settings
+    child_menu        optional link_list, rendered alongside the products
+    index             nav position, used for ids
+    context           'desktop' | 'drawer'
+    product_limit     how many products to show
+    show_desc         show the collection description
+    explore_label     per-product link text
+    products_title    small heading above the product row
+{%- endcomment -%}
+
+{%- liquid
+  comment
+    A collection URL can arrive as /collections/handle, with a query string
+    or an anchor, or as the shopify:// form the link picker produces. Take
+    whatever follows /collections/ and stop at the next delimiter.
+  endcomment
+  assign nav_collection = nil
+  if url contains '/collections/'
+    assign tail = url | split: '/collections/' | last
+    assign handle = tail | split: '?' | first | split: '#' | first | split: '/' | first | strip
+    if handle != blank
+      assign nav_collection = collections[handle]
+    endif
+  endif
+
+  comment
+    collections[handle] returns an empty drop for an unknown handle, so test
+    for a real id before treating this as a collection link.
+  endcomment
+  assign has_dropdown = false
+  if nav_collection.id != blank
+    assign has_dropdown = true
+  endif
+  if child_menu != blank and child_menu.links.size > 0
+    assign has_dropdown = true
+  endif
+
+  assign limit = product_limit | default: 4
+  assign panel_id = 'pw-navdrop-' | append: context | append: '-' | append: index
+-%}
+
+{%- if context == 'drawer' -%}
+
+  {%- if has_dropdown -%}
+    <div class="pw-nav-drawer__group">
+      <a href="{{ url | default: '#' }}" class="pw-nav-drawer__link">{{ label }}</a>
+      <button
+        type="button"
+        class="pw-nav-drawer__toggle"
+        aria-expanded="false"
+        aria-controls="{{ panel_id }}"
+        aria-label="{{ 'Show more in ' | append: label | escape }}"
+        data-pw-nav-toggle
+      >
+        <span class="pw-nav-drawer__toggle-icon" aria-hidden="true"></span>
+      </button>
+      <div class="pw-nav-drawer__sub" id="{{ panel_id }}" hidden>
+        {%- if child_menu != blank -%}
+          {%- for link in child_menu.links -%}
+            <a href="{{ link.url }}" class="pw-nav-drawer__sublink">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if nav_collection -%}
+          {%- for product in nav_collection.products limit: limit -%}
+            <a href="{{ product.url }}" class="pw-nav-drawer__sublink">{{ product.title }}</a>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- else -%}
+    <a href="{{ url | default: '#' }}" class="pw-nav-drawer__link">{{ label }}</a>
+  {%- endif -%}
+
+{%- else -%}
+
+  {%- if has_dropdown -%}
+    {%- comment -%}
+      The trigger stays a real link so the collection page is one click away
+      and keyboard users tab straight to it. The panel opens on hover, on
+      focus within, and on tapping the chevron — which is a separate button
+      so a tap on the label still navigates.
+    {%- endcomment -%}
+    <div class="pw-hdr__item" data-pw-nav-item>
+      <a href="{{ url | default: '#' }}" class="pw-hdr__link" data-pw-nav-trigger>{{ label }}</a>
+      <button
+        type="button"
+        class="pw-hdr__caret"
+        aria-expanded="false"
+        aria-controls="{{ panel_id }}"
+        aria-label="{{ 'Show ' | append: label | append: ' menu' | escape }}"
+        data-pw-nav-caret
+      >
+        <svg viewBox="0 0 10 6" width="9" height="6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2"/></svg>
+      </button>
+
+      <div class="pw-navdrop" id="{{ panel_id }}" data-pw-nav-panel hidden>
+        <div class="pw-navdrop__inner">
+          {%- if nav_collection -%}
+            <div class="pw-navdrop__head">
+              <a class="pw-navdrop__title" href="{{ nav_collection.url }}">{{ nav_collection.title }}</a>
+              {%- if show_desc and nav_collection.description != blank -%}
+                <p class="pw-navdrop__desc">{{ nav_collection.description | strip_html | truncatewords: 22 }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if child_menu != blank and child_menu.links.size > 0 -%}
+            <ul class="pw-navdrop__links" role="list">
+              {%- for link in child_menu.links -%}
+                <li><a class="pw-navdrop__link" href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if nav_collection and nav_collection.products.size > 0 -%}
+            {%- if products_title != blank -%}
+              <span class="pw-navdrop__label">{{ products_title }}</span>
+            {%- endif -%}
+            <ul class="pw-navdrop__grid" role="list">
+              {%- for product in nav_collection.products limit: limit -%}
+                {%- assign nav_img_alt = product.featured_image.alt | default: product.title -%}
+                <li>
+                  <a class="pw-navdrop__card" href="{{ product.url }}">
+                    <span class="pw-navdrop__media">
+                      {%- if product.featured_image -%}
+                        {{
+                          product.featured_image
+                          | image_url: width: 500
+                          | image_tag:
+                            alt: nav_img_alt,
+                            class: 'pw-navdrop__img',
+                            loading: 'lazy',
+                            widths: '160,240,320,500'
+                        }}
+                      {%- endif -%}
+                    </span>
+                    <span class="pw-navdrop__name">{{ product.title }}</span>
+                    {%- if explore_label != blank -%}
+                      <span class="pw-navdrop__cta">{{ explore_label }}</span>
+                    {%- endif -%}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <a href="{{ url | default: '#' }}" class="pw-hdr__link">{{ label }}</a>
+  {%- endif -%}
+
+{%- endif -%}
