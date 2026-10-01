@@ -147,6 +147,14 @@ button { font-family: inherit; cursor: pointer; }
   31% { opacity: 0; }
   100%{ opacity: 0; }
 }
+.pw-ann__track--link { text-decoration: none; color: inherit; cursor: pointer; }
+.pw-ann__track--link:hover .pw-ann__cta { text-decoration: none; }
+.pw-ann__cta {
+  margin-left: 8px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .pw-ann__close {
   position: absolute;
   right: 12px;

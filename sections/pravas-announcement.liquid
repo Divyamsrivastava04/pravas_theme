@@ -1,13 +1,36 @@
 {% if section.settings.enabled %}
+{%- liquid
+  comment
+    The link can point at a picked product or an explicit URL. A picked
+    product wins so the bar keeps working if the product handle changes.
+  endcomment
+  assign ann_url = ''
+  if section.settings.link_product != blank
+    assign ann_url = section.settings.link_product.url
+  elsif section.settings.link_url != blank
+    assign ann_url = section.settings.link_url
+  endif
+-%}
 <div class="pw-ann" id="pw-ann">
-  <div class="pw-ann__track">
+  {%- if ann_url != blank -%}
+    <a class="pw-ann__track pw-ann__track--link" href="{{ ann_url }}">
+  {%- else -%}
+    <div class="pw-ann__track">
+  {%- endif -%}
     {% assign msgs = section.settings.messages | split: '|' %}
     {% for msg in msgs %}
       <span class="pw-ann__msg" style="animation-delay: {{ forloop.index0 | times: 3 }}s; animation-duration: {{ msgs.size | times: 3 }}s">
         {{ msg | strip }}
+        {%- if ann_url != blank and section.settings.link_label != blank -%}
+          <span class="pw-ann__cta">{{ section.settings.link_label }}</span>
+        {%- endif -%}
       </span>
     {% endfor %}
-  </div>
+  {%- if ann_url != blank -%}
+    </a>
+  {%- else -%}
+    </div>
+  {%- endif -%}
   <button class="pw-ann__close" id="pw-ann-close" aria-label="Dismiss">&#10005;</button>
 </div>
 {% endif %}
@@ -18,7 +41,12 @@
   "settings": [
     { "type": "checkbox",  "id": "enabled",  "label": "Show bar",    "default": true },
     { "type": "textarea",  "id": "messages", "label": "Messages (separate with | pipe)",
-      "default": "AARAMBH IS HERE — 100 PIECES. INDIVIDUALLY NUMBERED.|FREE DELIVERY ACROSS INDIA · AUTOMATIC ONLY · NO QUARTZ|FOUNDER DELIVERY AVAILABLE — PACKED BY HAND, SENT WITH INTENTION|LEATHER STRAPS AVAILABLE — BURGUNDY & BLACK" }
+      "default": "AARAMBH IS HERE — 100 PIECES. INDIVIDUALLY NUMBERED.|FREE DELIVERY ACROSS INDIA · AUTOMATIC ONLY · NO QUARTZ|FOUNDER DELIVERY AVAILABLE — PACKED BY HAND, SENT WITH INTENTION|LEATHER STRAPS AVAILABLE — BURGUNDY & BLACK" },
+
+    { "type": "header", "content": "Link" },
+    { "type": "product", "id": "link_product", "label": "Link to product", "info": "Makes the whole bar clickable. Takes priority over the URL below." },
+    { "type": "url", "id": "link_url", "label": "Or link to a URL" },
+    { "type": "text", "id": "link_label", "label": "Call to action shown after each message", "default": "SHOP NOW" }
   ],
   "presets": [{ "name": "PW Announcement Bar" }]
 }
