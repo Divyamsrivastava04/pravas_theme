@@ -17,7 +17,7 @@
         "h1_italic": "Journey",
         "subtext": "Time isn't just measured. It is lived.",
         "cta1": "EXPLORE AARAMBH",
-        "cta1_url": "shopify://products/sunburst-green",
+        "cta1_url": "shopify://products/midnight-black",
         "cta2": "OUR STORY",
         "cta2_url": "shopify://pages/our-story",
         "show_specs": true,
@@ -29,7 +29,7 @@
         "qb_behavior": "link",
         "qb_card_position": "fixed",
         "qb_eyebrow": "LATEST DROP",
-        "latest_drop_product": "sunburst-green",
+        "latest_drop_product": "midnight-black",
         "qb_name": "",
         "qb_btn": "QUICK ADD",
         "watch_img": "shopify://shop_images/image-removebg-preview_1.png",
@@ -143,6 +143,8 @@
       "type": "pravas-ticker",
       "settings": {
         "handle": "sunburst-green",
+        "colourway1_value": "Sunburst Green",
+        "colourway2_value": "Midnight Black",
         "m1": "Someone just claimed their AARAMBH",
         "m2_suffix": "of 100 pieces remaining",
         "m3": "Packed by hand",
@@ -151,9 +153,7 @@
         "colourway2_label": "Midnight Black:",
         "left_suffix": "left",
         "m7": "Automatic only. No quartz. No compromise.",
-        "m8": "Leather straps available — Burgundy & Black",
-        "colourway1_value": "Sunburst Green",
-        "colourway2_value": "Midnight Black"
+        "m8": "Leather straps available — Burgundy & Black"
       }
     },
     "pillars": {
@@ -190,7 +190,7 @@
         "meaning": "The Beginning — in two expressions.",
         "pricing": "₹9,999 · 50 pieces each colourway · Individually numbered.",
         "cta_text": "EXPLORE AARAMBH →",
-        "cta_url": "shopify://products/sunburst-green",
+        "cta_url": "shopify://products/midnight-black",
         "compare_height": 800,
         "compare_height_mobile": 200,
         "bg_color": "#181818",
