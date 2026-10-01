@@ -64,10 +64,14 @@
 
   comment
     Respect the focal point set on the image in Shopify admin, so cropping
-    to the card ratio keeps the subject in frame.
+    to the card ratio keeps the subject in frame. Images with no focal point
+    report it as blank, which would emit an empty declaration — centre is
+    the correct fallback there.
   endcomment
-  assign primary_style = 'object-position:' | append: primary.preview_image.presentation.focal_point | append: ';'
-  assign secondary_style = 'object-position:' | append: secondary.preview_image.presentation.focal_point | append: ';'
+  assign primary_focal = primary.preview_image.presentation.focal_point | default: 'center'
+  assign secondary_focal = secondary.preview_image.presentation.focal_point | default: 'center'
+  assign primary_style = 'object-position:' | append: primary_focal | append: ';'
+  assign secondary_style = 'object-position:' | append: secondary_focal | append: ';'
 
   assign has_dual = false
   if show_secondary and secondary

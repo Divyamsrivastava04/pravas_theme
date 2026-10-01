@@ -9,14 +9,9 @@
         "columns_desktop": 3,
         "columns_mobile": "2"
       }
-    },
-    "navtest": {
-      "type": "pw-navtest",
-      "settings": {}
     }
   },
   "order": [
-    "main",
-    "navtest"
+    "main"
   ]
 }

@@ -1,9 +1,0 @@
-{%- comment -%} TEMPORARY — verifies collection-URL detection in the nav snippet. Removed after the check. {%- endcomment -%}
-<div id="pw-navtest">
-  {% render 'pravas-nav-item', label: 'COLLECTION', url: '/collections/aarambh', index: 99, context: 'desktop', product_limit: 4, show_desc: true, explore_label: 'EXPLORE', products_title: 'EXPLORE THE TIMEPIECES' %}
-  {% render 'pravas-nav-item', label: 'COLLECTION', url: 'shopify://collections/aarambh', index: 98, context: 'drawer', product_limit: 4, show_desc: true, explore_label: 'EXPLORE', products_title: 'EXPLORE THE TIMEPIECES' %}
-  {% render 'pravas-nav-item', label: 'CONTACT', url: '/pages/contact', index: 97, context: 'desktop', product_limit: 4, show_desc: true, explore_label: 'EXPLORE', products_title: 'X' %}
-</div>
-{% schema %}
-{ "name": "PW Nav Test", "settings": [] }
-{% endschema %}
