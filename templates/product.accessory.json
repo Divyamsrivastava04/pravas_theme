@@ -93,34 +93,67 @@
       "blocks": {
         "material": {
           "type": "row",
-          "settings": { "label": "MATERIAL", "namespace": "custom", "key": "material" }
+          "settings": {
+            "label": "MATERIAL",
+            "namespace": "custom",
+            "key": "material",
+            "value": ""
+          }
         },
         "width": {
           "type": "row",
-          "settings": { "label": "WIDTH", "namespace": "custom", "key": "width" }
+          "settings": {
+            "label": "WIDTH",
+            "namespace": "custom",
+            "key": "width",
+            "value": ""
+          }
         },
         "length": {
           "type": "row",
-          "settings": { "label": "LENGTH", "namespace": "custom", "key": "length" }
+          "settings": {
+            "label": "LENGTH",
+            "namespace": "custom",
+            "key": "length",
+            "value": ""
+          }
         },
         "finish": {
           "type": "row",
-          "settings": { "label": "FINISH", "namespace": "custom", "key": "finish" }
+          "settings": {
+            "label": "FINISH",
+            "namespace": "custom",
+            "key": "finish",
+            "value": ""
+          }
         },
         "origin": {
           "type": "row",
-          "settings": { "label": "MADE IN", "namespace": "custom", "key": "country_of_manufacture" }
+          "settings": {
+            "label": "MADE IN",
+            "namespace": "custom",
+            "key": "country_of_manufacture",
+            "value": ""
+          }
         }
       },
-      "block_order": ["material", "width", "length", "finish", "origin"],
+      "block_order": [
+        "material",
+        "width",
+        "length",
+        "finish",
+        "origin"
+      ],
       "settings": {
         "eyebrow": "THE SPECIFICS",
         "heading": "Product Details",
         "layout": "rows",
         "columns": 1,
         "content_max_width": 1100,
+        "text_max_width": 640,
         "label_width": 180,
         "row_padding": 16,
+        "row_gap": 0,
         "head_gap": 36,
         "padding_top": 88,
         "padding_bottom": 56,
@@ -145,60 +178,15 @@
         "radius": 0
       }
     },
-    "compatibility": {
-      "type": "pravas-accessory-details",
-      "blocks": {
-        "fits": {
-          "type": "row",
-          "settings": { "label": "DESIGNED FOR", "namespace": "custom", "key": "compatibility" }
-        },
-        "lugwidth": {
-          "type": "row",
-          "settings": { "label": "LUG WIDTH", "namespace": "custom", "key": "lug_width" }
-        },
-        "clasp": {
-          "type": "row",
-          "settings": { "label": "CLASP", "namespace": "custom", "key": "clasp" }
-        }
-      },
-      "block_order": ["fits", "lugwidth", "clasp"],
-      "settings": {
-        "eyebrow": "COMPATIBILITY",
-        "heading": "Designed for PRAVAS",
-        "layout": "rows",
-        "columns": 1,
-        "content_max_width": 1100,
-        "label_width": 180,
-        "row_padding": 16,
-        "head_gap": 36,
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_x": 80,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32,
-        "padding_x_mobile": 20,
-        "heading_font": "playfair_display_n4",
-        "body_font": "inter_n4",
-        "heading_size": 26,
-        "heading_size_mobile": 20,
-        "body_size": 13,
-        "label_size": 9,
-        "eyebrow_size": 9,
-        "line_height": 1.8,
-        "bg_color": "#181818",
-        "text_color": "#f5f3ef",
-        "muted_color": "#8a8a8a",
-        "accent_color": "#b5924a",
-        "divider_color": "#2e2e2e",
-        "divider_width": 1,
-        "radius": 0
-      }
-    },
     "story": {
       "type": "pravas-accessory-editorial",
       "settings": {
         "eyebrow": "THE PRAVAS EXPERIENCE",
         "heading": "Made for the Journey.",
+        "body": "",
+        "link_label": "",
+        "link_product": "",
+        "link_url": "",
         "namespace": "custom",
         "eyebrow_key": "story_eyebrow",
         "heading_key": "story_heading",
@@ -235,80 +223,6 @@
         "animation_duration": 300
       }
     },
-    "care": {
-      "type": "pravas-accessory-details",
-      "blocks": {
-        "care": {
-          "type": "rich",
-          "settings": { "namespace": "custom", "key": "care_instructions" }
-        }
-      },
-      "block_order": ["care"],
-      "settings": {
-        "eyebrow": "CARE",
-        "heading": "Wearing it Well",
-        "layout": "prose",
-        "columns": 1,
-        "content_max_width": 1100,
-        "text_max_width": 640,
-        "head_gap": 36,
-        "padding_top": 72,
-        "padding_bottom": 72,
-        "padding_x": 80,
-        "padding_top_mobile": 44,
-        "padding_bottom_mobile": 44,
-        "padding_x_mobile": 20,
-        "heading_font": "playfair_display_n4",
-        "body_font": "inter_n4",
-        "heading_size": 26,
-        "heading_size_mobile": 20,
-        "body_size": 13,
-        "label_size": 9,
-        "eyebrow_size": 9,
-        "line_height": 1.8,
-        "bg_color": "#181818",
-        "text_color": "#f5f3ef",
-        "muted_color": "#8a8a8a",
-        "accent_color": "#b5924a",
-        "divider_color": "#2e2e2e",
-        "divider_width": 1,
-        "radius": 0
-      }
-    },
-    "companion": {
-      "type": "pravas-accessory-related",
-      "settings": {
-        "eyebrow": "DESIGNED TO ACCOMPANY",
-        "heading": "A Timepiece, Completed.",
-        "layout": "feature",
-        "source": "product",
-        "product_limit": 3,
-        "feature_eyebrow": "",
-        "link_label": "EXPLORE THE TIMEPIECE",
-        "show_feature_price": true,
-        "feature_ratio": "16/9",
-        "content_max_width": 1280,
-        "head_gap": 44,
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "padding_x": 80,
-        "padding_top_mobile": 56,
-        "padding_bottom_mobile": 56,
-        "padding_x_mobile": 20,
-        "heading_font": "playfair_display_n4",
-        "body_font": "inter_n4",
-        "heading_size": 30,
-        "heading_size_mobile": 22,
-        "eyebrow_size": 9,
-        "bg_color": "#131313",
-        "text_color": "#f5f3ef",
-        "muted_color": "#8a8a8a",
-        "accent_color": "#b5924a",
-        "border_color": "#2a2a2a",
-        "border_width": 1,
-        "radius": 0
-      }
-    },
     "related": {
       "type": "pravas-accessory-related",
       "settings": {
@@ -316,7 +230,13 @@
         "heading": "",
         "layout": "grid",
         "source": "recommendations",
+        "collection": "",
+        "product": "",
         "product_limit": 3,
+        "feature_eyebrow": "A TIMEPIECE, COMPLETED",
+        "link_label": "EXPLORE THE TIMEPIECE",
+        "show_feature_price": true,
+        "feature_ratio": "16/9",
         "columns": 3,
         "columns_tablet": 2,
         "columns_mobile": "2",
@@ -371,10 +291,7 @@
   "order": [
     "main",
     "details",
-    "compatibility",
     "story",
-    "care",
-    "companion",
     "related"
   ]
 }
