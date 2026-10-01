@@ -1,0 +1,177 @@
+<div class="pw-s2-probe">pw-s2 OK</div>
+
+{% schema %}
+{
+  "name": "PW S2 Probe",
+  "settings": [
+    {
+      "type": "range",
+      "id": "grid_gap_y",
+      "label": "Row gap — desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_x_mobile",
+      "label": "Column gap — mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_y_mobile",
+      "label": "Row gap — mobile",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Product card"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Card image ratio",
+      "options": [
+        {
+          "value": "4/5",
+          "label": "Portrait (4:5)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "3/4",
+          "label": "Tall portrait (3:4)"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        }
+      ],
+      "default": "4/5"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Card image fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Fill (crops to the frame)"
+        },
+        {
+          "value": "contain",
+          "label": "Fit (whole image, never cropped)"
+        }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "color",
+      "id": "image_bg_color",
+      "label": "Card image background",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "select",
+      "id": "card_align",
+      "label": "Card alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_eyebrow",
+      "label": "Show card eyebrow",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_source",
+      "label": "Card eyebrow source",
+      "options": [
+        {
+          "value": "type",
+          "label": "Product type"
+        },
+        {
+          "value": "vendor",
+          "label": "Vendor"
+        },
+        {
+          "value": "collection",
+          "label": "First collection"
+        }
+      ],
+      "default": "type"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show short description",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "description_words",
+      "label": "Description length",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "wd",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare",
+      "label": "Show compare-at price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Swap to second image on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_status",
+      "label": "Show sale / sold out / pre-order",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sale_label",
+      "label": "Sale label",
+      "default": "SALE"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_label",
+      "label": "Sold out label",
+      "default": "SOLD OUT"
+    }
+  ]
+}
+{% endschema %}

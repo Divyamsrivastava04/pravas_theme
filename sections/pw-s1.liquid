@@ -1,0 +1,162 @@
+<div class="pw-s1-probe">pw-s1 OK</div>
+
+{% schema %}
+{
+  "name": "PW S1 Probe",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "COMPLETE THE COLLECTION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Product grid"
+        },
+        {
+          "value": "feature",
+          "label": "Single featured product"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Products from",
+      "options": [
+        {
+          "value": "recommendations",
+          "label": "Shopify recommendations"
+        },
+        {
+          "value": "collection",
+          "label": "A collection"
+        },
+        {
+          "value": "product",
+          "label": "One chosen product"
+        }
+      ],
+      "default": "recommendations"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Featured product"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Products shown",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Featured layout"
+    },
+    {
+      "type": "text",
+      "id": "feature_eyebrow",
+      "label": "Eyebrow above product name",
+      "default": "A TIMEPIECE, COMPLETED"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "EXPLORE THE TIMEPIECE"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_feature_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "feature_ratio",
+      "label": "Image ratio",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "4/3",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "1/1",
+          "label": "Square (1:1)"
+        },
+        {
+          "value": "3/1",
+          "label": "Letterbox (3:1)"
+        }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns — desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns — tablet",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns — mobile",
+      "min": 1,
+      "max": 2,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "grid_gap_x",
+      "label": "Column gap — desktop",
+      "min": 0,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ]
+}
+{% endschema %}
