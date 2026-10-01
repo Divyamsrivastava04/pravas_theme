@@ -1,0 +1,78 @@
+{%- comment -%}
+  Body of the accessory related-products section.
+
+  Lives in a snippet because it has to appear either inside the
+  <product-recommendations> wrapper or on its own, and duplicating it across
+  those two branches would be two copies to keep in step.
+
+  Accepts: sec (the section), items, single, is_feature, limit
+{%- endcomment -%}
+
+<div class="pw-accrel__inner">
+  {%- if sec.settings.eyebrow != blank or sec.settings.heading != blank -%}
+    <div class="pw-accrel__head">
+      {%- if sec.settings.eyebrow != blank -%}
+        <span class="pw-accrel__eyebrow">{{ sec.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if sec.settings.heading != blank -%}
+        <h2 class="pw-accrel__heading">{{ sec.settings.heading }}</h2>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if is_feature -%}
+    {%- liquid
+      assign feat_alt = single.featured_image.alt | default: single.title
+      assign feat_link_label = sec.settings.link_label | default: 'EXPLORE'
+    -%}
+    <a class="pw-accrel__feature" href="{{ single.url }}">
+      <span class="pw-accrel__feature-media">
+        {%- if single.featured_image -%}
+          {{
+            single.featured_image
+            | image_url: width: 1400
+            | image_tag:
+              alt: feat_alt,
+              class: 'pw-accrel__feature-img',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 60vw, 100vw',
+              widths: '500,700,1000,1400'
+          }}
+        {%- endif -%}
+      </span>
+      <span class="pw-accrel__feature-info">
+        {%- if sec.settings.feature_eyebrow != blank -%}
+          <span class="pw-accrel__feature-eyebrow">{{ sec.settings.feature_eyebrow }}</span>
+        {%- endif -%}
+        <span class="pw-accrel__feature-title">{{ single.title }}</span>
+        {%- if sec.settings.show_feature_price -%}
+          <span class="pw-accrel__feature-price">{{ single.price | money }}</span>
+        {%- endif -%}
+        <span class="pw-accrel__feature-cta">{{ feat_link_label }}</span>
+      </span>
+    </a>
+  {%- else -%}
+    <ul class="pw-coll__grid pw-accrel__grid" role="list">
+      {%- for item in items limit: limit -%}
+        {%- if item.id != product.id -%}
+          <li class="pw-coll__item">
+            {% render 'pravas-product-card',
+              card_product: item,
+              lazy_load: true,
+              show_eyebrow: sec.settings.show_eyebrow,
+              eyebrow_source: sec.settings.eyebrow_source,
+              show_description: sec.settings.show_description,
+              description_words: sec.settings.description_words,
+              show_secondary: sec.settings.show_secondary_image,
+              show_status: sec.settings.show_status,
+              show_compare: sec.settings.show_compare,
+              sold_out_label: sec.settings.sold_out_label,
+              preorder_label: sec.settings.preorder_label,
+              sale_label: sec.settings.sale_label
+            %}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>

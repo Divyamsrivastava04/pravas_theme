@@ -1,0 +1,227 @@
+{{ 'pravas-accessory.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Editorial image + text for accessories.
+
+  One section serving both the story block ("THE PRAVAS EXPERIENCE") and the
+  large-image block ("THE DETAILS MATTER") — add it twice with different
+  settings rather than maintaining two near-identical sections.
+
+  Every text field and the image can be read from a product metafield, so
+  each accessory can carry its own story from the Shopify admin instead of
+  every accessory repeating the same copy. The theme-editor value is the
+  fallback. With neither an image nor any text, nothing renders.
+{%- endcomment -%}
+
+{%- liquid
+  assign ns = section.settings.namespace | strip
+
+  assign eyebrow = section.settings.eyebrow
+  if ns != blank and section.settings.eyebrow_key != blank
+    assign mf = product.metafields[ns][section.settings.eyebrow_key]
+    if mf != blank and mf.value != blank
+      assign eyebrow = mf.value
+    endif
+  endif
+
+  assign heading = section.settings.heading
+  if ns != blank and section.settings.heading_key != blank
+    assign mf = product.metafields[ns][section.settings.heading_key]
+    if mf != blank and mf.value != blank
+      assign heading = mf.value
+    endif
+  endif
+
+  assign body_mf = nil
+  if ns != blank and section.settings.body_key != blank
+    assign mf = product.metafields[ns][section.settings.body_key]
+    if mf != blank and mf.value != blank
+      assign body_mf = mf
+    endif
+  endif
+
+  assign image = section.settings.image
+  if ns != blank and section.settings.image_key != blank
+    assign mf = product.metafields[ns][section.settings.image_key]
+    if mf != blank and mf.value != blank
+      assign image = mf.value
+    endif
+  endif
+
+  assign has_text = false
+  if eyebrow != blank or heading != blank or body_mf != blank or section.settings.body != blank
+    assign has_text = true
+  endif
+
+  assign has_content = false
+  if has_text or image != blank
+    assign has_content = true
+  endif
+
+  assign link_url = section.settings.link_url
+  if section.settings.link_product != blank
+    assign link_url = section.settings.link_product.url
+  endif
+-%}
+
+{%- if has_content -%}
+  <section
+    class="pw-acced pw-acced--{{ section.settings.image_position }} pw-acced--text-{{ section.settings.text_align }}{% unless image != blank %} pw-acced--no-image{% endunless %}"
+    id="pw-acced-{{ section.id }}"
+  >
+    <div class="pw-acced__inner">
+      {%- if image != blank -%}
+        {%- assign ed_alt = heading | default: product.title -%}
+        <div class="pw-acced__media">
+          {{
+            image
+            | image_url: width: 1600
+            | image_tag:
+              alt: ed_alt,
+              class: 'pw-acced__img',
+              loading: 'lazy',
+              sizes: '(min-width: 990px) 60vw, 100vw',
+              widths: '500,700,1000,1300,1600'
+          }}
+        </div>
+      {%- endif -%}
+
+      {%- if has_text -%}
+        <div class="pw-acced__text">
+          {%- if eyebrow != blank -%}
+            <span class="pw-acced__eyebrow">{{ eyebrow }}</span>
+          {%- endif -%}
+          {%- if heading != blank -%}
+            <h2 class="pw-acced__heading">{{ heading }}</h2>
+          {%- endif -%}
+          {%- if body_mf != blank -%}
+            <div class="pw-acced__body">{{ body_mf | metafield_tag }}</div>
+          {%- elsif section.settings.body != blank -%}
+            <div class="pw-acced__body">{{ section.settings.body }}</div>
+          {%- endif -%}
+          {%- if link_url != blank and section.settings.link_label != blank -%}
+            <a class="pw-acced__link" href="{{ link_url }}">{{ section.settings.link_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+
+  <style>
+    #pw-acced-{{ section.id }} {
+      --acced-bg: {{ section.settings.bg_color | default: '#131313' }};
+      --acced-text: {{ section.settings.text_color | default: '#F5F3EF' }};
+      --acced-muted: {{ section.settings.body_color | default: '#8A8A8A' }};
+      --acced-eyebrow: {{ section.settings.eyebrow_color | default: '#B5924A' }};
+      --acced-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+
+      --acced-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --acced-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --acced-heading-size: {{ section.settings.heading_size | default: 34 }}px;
+      --acced-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 24 }}px;
+      --acced-body-size: {{ section.settings.body_size | default: 13 }}px;
+      --acced-body-line-height: {{ section.settings.body_line_height | default: 1.9 }};
+      --acced-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+
+      --acced-max-width: {{ section.settings.content_max_width | default: 1280 }}px;
+      --acced-image-width: {{ section.settings.image_width | default: 58 }}%;
+      --acced-text-width: {{ section.settings.text_max_width | default: 460 }}px;
+      --acced-gap: {{ section.settings.column_gap | default: 64 }}px;
+      --acced-stack-gap: {{ section.settings.stack_gap | default: 16 }}px;
+      --acced-image-ratio: {{ section.settings.image_ratio | default: '4/3' }};
+      --acced-radius: {{ section.settings.radius | default: 0 }}px;
+      --acced-duration: {{ section.settings.animation_duration | default: 300 }}ms;
+
+      padding-top: {{ section.settings.padding_top | default: 96 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 96 }}px;
+      padding-left: {{ section.settings.padding_x | default: 80 }}px;
+      padding-right: {{ section.settings.padding_x | default: 80 }}px;
+    }
+    @media screen and (max-width: 989px) {
+      #pw-acced-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top_mobile | default: 56 }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile | default: 56 }}px;
+        padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+        padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+        --acced-gap: {{ section.settings.column_gap_mobile | default: 24 }}px;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW Accessory Editorial",
+  "settings": [
+    { "type": "paragraph", "content": "Add this section twice for a story block and a large-image block. Any field can be read from a product metafield so each accessory tells its own story; the values below are the fallback." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE PRAVAS EXPERIENCE" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made for the Journey." },
+    { "type": "richtext", "id": "body", "label": "Description" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "product", "id": "link_product", "label": "Link to product" },
+    { "type": "url", "id": "link_url", "label": "Or link to URL" },
+
+    { "type": "header", "content": "Read from product metafields" },
+    { "type": "text", "id": "namespace", "label": "Metafield namespace", "default": "custom" },
+    { "type": "text", "id": "eyebrow_key", "label": "Eyebrow key" },
+    { "type": "text", "id": "heading_key", "label": "Heading key" },
+    { "type": "text", "id": "body_key", "label": "Description key" },
+    { "type": "text", "id": "image_key", "label": "Image key" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "image_position", "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left of text" },
+        { "value": "right", "label": "Right of text" },
+        { "value": "above", "label": "Above text" },
+        { "value": "below", "label": "Below text" }
+      ], "default": "left" },
+    { "type": "select", "id": "text_align", "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" }
+      ], "default": "left" },
+    { "type": "range", "id": "image_width", "label": "Image width", "min": 25, "max": 100, "step": 1, "unit": "%", "default": 58 },
+    { "type": "select", "id": "image_ratio", "label": "Image ratio",
+      "options": [
+        { "value": "4/3", "label": "Landscape (4:3)" },
+        { "value": "16/9", "label": "Wide (16:9)" },
+        { "value": "1/1", "label": "Square (1:1)" },
+        { "value": "4/5", "label": "Portrait (4:5)" },
+        { "value": "3/1", "label": "Letterbox (3:1)" }
+      ], "default": "4/3" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 700, "max": 1700, "step": 20, "unit": "px", "default": 1280 },
+    { "type": "range", "id": "text_max_width", "label": "Text width", "min": 280, "max": 900, "step": 10, "unit": "px", "default": 460 },
+    { "type": "range", "id": "column_gap", "label": "Gap — desktop", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "column_gap_mobile", "label": "Gap — mobile", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "stack_gap", "label": "Space between text lines", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 220, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "inter_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading — desktop", "min": 16, "max": 72, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading — mobile", "min": 14, "max": 44, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "body_size", "label": "Description size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "body_line_height", "label": "Description line height", "min": 1.2, "max": 2.4, "step": 0.1, "default": 1.9 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#131313" },
+    { "type": "color", "id": "text_color", "label": "Heading", "default": "#F5F3EF" },
+    { "type": "color", "id": "body_color", "label": "Description", "default": "#8A8A8A" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow", "default": "#B5924A" },
+    { "type": "color", "id": "accent_color", "label": "Link", "default": "#B5924A" },
+    { "type": "range", "id": "radius", "label": "Image corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "animation_duration", "label": "Animation duration", "min": 0, "max": 800, "step": 50, "unit": "ms", "default": 300 }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [{ "name": "PW Accessory Editorial" }]
+}
+{% endschema %}

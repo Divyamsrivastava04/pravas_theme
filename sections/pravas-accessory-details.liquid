@@ -1,0 +1,247 @@
+{{ 'pravas-accessory.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Reusable spec/detail list for accessories.
+
+  Add it once per group — Product Details, Compatibility, Care — and give
+  each copy its own heading and rows. Every row reads a Shopify metafield so
+  the values are managed in the Shopify admin, with a plain text setting as
+  the fallback. Rows with no value are dropped, and if nothing in the
+  section resolves the section renders nothing at all rather than leaving an
+  empty band on the page.
+{%- endcomment -%}
+
+{%- liquid
+  comment
+    First pass: work out whether anything at all has a value, so an
+    unconfigured section can be skipped entirely.
+  endcomment
+  assign has_content = false
+  for block in section.blocks
+    assign ns = block.settings.namespace | strip
+    assign key = block.settings.key | strip
+    assign mf = nil
+    if ns != blank and key != blank
+      assign mf = product.metafields[ns][key]
+    endif
+
+    if block.type == 'rich'
+      if mf != blank and mf.value != blank
+        assign has_content = true
+      elsif block.settings.text != blank
+        assign has_content = true
+      endif
+    else
+      assign resolved = ''
+      if mf != blank
+        if mf.type contains 'list'
+          assign resolved = mf.value | join: ', '
+        else
+          assign resolved = mf.value
+        endif
+      endif
+      if resolved == blank
+        assign resolved = block.settings.value
+      endif
+      if resolved != blank
+        assign has_content = true
+      endif
+    endif
+  endfor
+-%}
+
+{%- if has_content -%}
+  <section class="pw-accdet pw-accdet--{{ section.settings.layout }}" id="pw-accdet-{{ section.id }}">
+    <div class="pw-accdet__inner">
+      {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+        <div class="pw-accdet__head">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="pw-accdet__eyebrow">{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="pw-accdet__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <div class="pw-accdet__body">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign ns = block.settings.namespace | strip
+            assign key = block.settings.key | strip
+            assign mf = nil
+            if ns != blank and key != blank
+              assign mf = product.metafields[ns][key]
+            endif
+          -%}
+
+          {%- if block.type == 'rich' -%}
+            {%- if mf != blank and mf.value != blank -%}
+              <div class="pw-accdet__prose" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <span class="pw-accdet__label">{{ block.settings.label }}</span>
+                {%- endif -%}
+                <div class="pw-accdet__rich">{{ mf | metafield_tag }}</div>
+              </div>
+            {%- elsif block.settings.text != blank -%}
+              <div class="pw-accdet__prose" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <span class="pw-accdet__label">{{ block.settings.label }}</span>
+                {%- endif -%}
+                <div class="pw-accdet__rich">{{ block.settings.text }}</div>
+              </div>
+            {%- endif -%}
+
+          {%- else -%}
+            {%- liquid
+              assign resolved = ''
+              if mf != blank
+                if mf.type contains 'list'
+                  assign resolved = mf.value | join: ', '
+                else
+                  assign resolved = mf.value
+                endif
+              endif
+              if resolved == blank
+                assign resolved = block.settings.value
+              endif
+            -%}
+            {%- if resolved != blank -%}
+              <div class="pw-accdet__row" {{ block.shopify_attributes }}>
+                <span class="pw-accdet__label">{{ block.settings.label }}</span>
+                <span class="pw-accdet__value">{{ resolved }}</span>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #pw-accdet-{{ section.id }} {
+      --accdet-bg: {{ section.settings.bg_color | default: '#181818' }};
+      --accdet-text: {{ section.settings.text_color | default: '#F5F3EF' }};
+      --accdet-muted: {{ section.settings.muted_color | default: '#8A8A8A' }};
+      --accdet-accent: {{ section.settings.accent_color | default: '#B5924A' }};
+      --accdet-divider: {{ section.settings.divider_color | default: '#2E2E2E' }};
+      --accdet-divider-width: {{ section.settings.divider_width | default: 1 }}px;
+
+      --accdet-heading-font: {{ section.settings.heading_font.family }}, {{ section.settings.heading_font.fallback_families }};
+      --accdet-body-font: {{ section.settings.body_font.family }}, {{ section.settings.body_font.fallback_families }};
+      --accdet-heading-size: {{ section.settings.heading_size | default: 26 }}px;
+      --accdet-heading-size-mobile: {{ section.settings.heading_size_mobile | default: 20 }}px;
+      --accdet-body-size: {{ section.settings.body_size | default: 13 }}px;
+      --accdet-label-size: {{ section.settings.label_size | default: 9 }}px;
+      --accdet-eyebrow-size: {{ section.settings.eyebrow_size | default: 9 }}px;
+      --accdet-line-height: {{ section.settings.line_height | default: 1.8 }};
+
+      --accdet-max-width: {{ section.settings.content_max_width | default: 1100 }}px;
+      --accdet-text-width: {{ section.settings.text_max_width | default: 640 }}px;
+      --accdet-label-width: {{ section.settings.label_width | default: 180 }}px;
+      --accdet-row-gap: {{ section.settings.row_gap | default: 0 }}px;
+      --accdet-row-padding: {{ section.settings.row_padding | default: 16 }}px;
+      --accdet-head-gap: {{ section.settings.head_gap | default: 36 }}px;
+      --accdet-radius: {{ section.settings.radius | default: 0 }}px;
+      --accdet-columns: {{ section.settings.columns | default: 1 }};
+
+      padding-top: {{ section.settings.padding_top | default: 88 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 88 }}px;
+      padding-left: {{ section.settings.padding_x | default: 80 }}px;
+      padding-right: {{ section.settings.padding_x | default: 80 }}px;
+    }
+    @media screen and (max-width: 749px) {
+      #pw-accdet-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top_mobile | default: 48 }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile | default: 48 }}px;
+        padding-left: {{ section.settings.padding_x_mobile | default: 20 }}px;
+        padding-right: {{ section.settings.padding_x_mobile | default: 20 }}px;
+        --accdet-columns: 1;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PW Accessory Details",
+  "settings": [
+    { "type": "paragraph", "content": "Each row reads a product metafield so values are managed in Shopify admin. Rows with no value are hidden automatically, and the whole section disappears if nothing has a value." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE SPECIFICS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Product Details" },
+    { "type": "select", "id": "layout", "label": "Layout",
+      "options": [
+        { "value": "rows", "label": "Label / value rows" },
+        { "value": "prose", "label": "Paragraphs" }
+      ], "default": "rows" },
+    { "type": "range", "id": "columns", "label": "Row columns — desktop", "min": 1, "max": 3, "step": 1, "default": 1 },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "content_max_width", "label": "Content max-width", "min": 600, "max": 1600, "step": 20, "unit": "px", "default": 1100 },
+    { "type": "range", "id": "text_max_width", "label": "Paragraph width", "min": 360, "max": 900, "step": 10, "unit": "px", "default": 640 },
+    { "type": "range", "id": "label_width", "label": "Label column width", "min": 80, "max": 320, "step": 10, "unit": "px", "default": 180 },
+    { "type": "range", "id": "row_padding", "label": "Row padding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "row_gap", "label": "Gap between rows", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 },
+    { "type": "range", "id": "head_gap", "label": "Space below heading", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_top", "label": "Padding top — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom — desktop", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 88 },
+    { "type": "range", "id": "padding_x", "label": "Padding sides — desktop", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom — mobile", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_x_mobile", "label": "Padding sides — mobile", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 20 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "playfair_display_n4" },
+    { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "inter_n4" },
+    { "type": "range", "id": "heading_size", "label": "Heading — desktop", "min": 14, "max": 56, "step": 2, "unit": "px", "default": 26 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading — mobile", "min": 12, "max": 36, "step": 2, "unit": "px", "default": 20 },
+    { "type": "range", "id": "body_size", "label": "Value / body size", "min": 10, "max": 20, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "label_size", "label": "Label size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "eyebrow_size", "label": "Eyebrow size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "line_height", "label": "Line height", "min": 1.2, "max": 2.4, "step": 0.1, "default": 1.8 },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#181818" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#F5F3EF" },
+    { "type": "color", "id": "muted_color", "label": "Labels / muted text", "default": "#8A8A8A" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#B5924A" },
+    { "type": "color", "id": "divider_color", "label": "Divider", "default": "#2E2E2E" },
+    { "type": "range", "id": "divider_width", "label": "Divider thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "radius", "label": "Corner radius", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Detail row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "MATERIAL" },
+        { "type": "text", "id": "namespace", "label": "Metafield namespace", "default": "custom" },
+        { "type": "text", "id": "key", "label": "Metafield key", "info": "For example: material, width, compatibility, clasp." },
+        { "type": "text", "id": "value", "label": "Fallback value", "info": "Used only when the metafield is empty. Leave blank to hide the row instead." }
+      ]
+    },
+    {
+      "type": "rich",
+      "name": "Paragraph",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label (optional)" },
+        { "type": "text", "id": "namespace", "label": "Metafield namespace", "default": "custom" },
+        { "type": "text", "id": "key", "label": "Metafield key", "info": "For example: care_instructions." },
+        { "type": "richtext", "id": "text", "label": "Fallback text", "info": "Used only when the metafield is empty." }
+      ]
+    }
+  ],
+  "enabled_on": { "templates": ["product"] },
+  "presets": [
+    {
+      "name": "PW Accessory Details",
+      "blocks": [
+        { "type": "row", "settings": { "label": "MATERIAL", "key": "material" } },
+        { "type": "row", "settings": { "label": "WIDTH", "key": "width" } },
+        { "type": "row", "settings": { "label": "COMPATIBILITY", "key": "compatibility" } },
+        { "type": "row", "settings": { "label": "CLASP", "key": "clasp" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
