@@ -12,17 +12,6 @@
     "main": {
       "type": "pravas-product-main",
       "blocks": {
-        "swatch_link_nxPLyJ": {
-          "type": "swatch_link",
-          "settings": {
-            "option_name": "",
-            "link_product": "midnight-black",
-            "link_url": "",
-            "label": "Midnight black",
-            "color": "#181818",
-            "text_color": "#f5f3ef"
-          }
-        },
         "swatch_link_eD6J7E": {
           "type": "swatch_link",
           "settings": {
@@ -30,6 +19,19 @@
             "link_product": "emerald-green",
             "link_url": "",
             "label": "",
+            "image": "shopify://shop_images/a20e9cc7-ba2d-4a99-a37e-0c3e6c657844.jpg",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
+        "swatch_link_nxPLyJ": {
+          "type": "swatch_link",
+          "settings": {
+            "option_name": "Dial Colour",
+            "link_product": "midnight-black",
+            "link_url": "",
+            "label": "Midnight black",
+            "image": "shopify://shop_images/f521d8a9-3366-4a07-9120-b74259adafbe.jpg",
             "color": "#181818",
             "text_color": "#f5f3ef"
           }
@@ -57,8 +59,8 @@
         }
       },
       "block_order": [
-        "swatch_link_nxPLyJ",
         "swatch_link_eD6J7E",
+        "swatch_link_nxPLyJ",
         "feature_1",
         "feature_2",
         "feature_3"
@@ -121,6 +123,11 @@
         "swatch_label_active_color": "#181818",
         "swatch_size": 40,
         "swatch_bg_color": "#ffffff",
+        "link_row_label": "DIAL COLOR",
+        "link_row_show_current": true,
+        "link_row_current_label": "",
+        "link_row_current_color": "#181818",
+        "link_row_current_text_color": "#f5f3ef",
         "show_accessory": true,
         "accessory_product": "butterfly-leather-straps",
         "accessory_heading": "COMPLETE YOUR TIMEPIECE",
