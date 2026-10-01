@@ -6,7 +6,7 @@
 
 {{ 'pravas-product.css' | asset_url | stylesheet_tag }}
 
-<section class="pw-pdp" id="pw-pdp" data-rev="rev9802" data-section-id="{{ section.id }}">
+<section class="pw-pdp" id="pw-pdp" data-section-id="{{ section.id }}">
   <div class="pw-pdp__inner">
 
     <!-- GALLERY -->
@@ -228,8 +228,13 @@
                       if link_image == blank and section.settings.swatch_use_variant_image
                         assign link_image = sb.settings.link_product.featured_image
                       endif
+
+                      assign link_is_self = false
+                      if sb.settings.link_product != blank and sb.settings.link_product.id == product.id
+                        assign link_is_self = true
+                      endif
                     -%}
-                    {%- if in_this_row and link_href != blank -%}
+                    {%- if in_this_row and link_href != blank and link_is_self == false -%}
                       {%- render 'pravas-product-swatch',
                         label: link_label,
                         image: link_image,
@@ -273,7 +278,11 @@
               if sb.settings.link_product != blank
                 assign sb_href = sb.settings.link_product.url
               endif
-              if sb_href != blank
+              assign sb_is_self = false
+              if sb.settings.link_product != blank and sb.settings.link_product.id == product.id
+                assign sb_is_self = true
+              endif
+              if sb_href != blank and sb_is_self == false
                 assign t = sb.settings.option_name | downcase | strip
                 assign matched = false
                 if t == blank
@@ -356,8 +365,17 @@
                     if link_image == blank and section.settings.swatch_use_variant_image
                       assign link_image = sb.settings.link_product.featured_image
                     endif
+
+                    comment
+                      A link pointing at the product already being viewed is
+                      never useful, and duplicates the current-product swatch.
+                    endcomment
+                    assign link_is_self = false
+                    if sb.settings.link_product != blank and sb.settings.link_product.id == product.id
+                      assign link_is_self = true
+                    endif
                   -%}
-                  {%- if matched == false and link_href != blank -%}
+                  {%- if matched == false and link_href != blank and link_is_self == false -%}
                     {%- render 'pravas-product-swatch',
                       label: link_label,
                       image: link_image,
