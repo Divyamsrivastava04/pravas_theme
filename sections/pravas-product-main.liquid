@@ -431,6 +431,35 @@
               break
             endif
           endfor
+
+          comment
+            Bundle pricing is display only. The actual reduction is a real
+            Shopify automatic discount applied in the cart and at checkout —
+            the theme never alters a price. These settings exist so the page
+            states the same number that discount will produce, and must be
+            kept in step with it.
+          endcomment
+          assign addon_base = addon_first.price | default: addon.price
+          assign addon_bundle = addon_base
+          if section.settings.accessory_bundle_enabled
+            if section.settings.accessory_bundle_type == 'amount'
+              assign bundle_off = section.settings.accessory_bundle_value | times: 100
+              assign addon_bundle = addon_base | minus: bundle_off
+            elsif section.settings.accessory_bundle_type == 'percent'
+              assign bundle_keep = 100 | minus: section.settings.accessory_bundle_value
+              assign addon_bundle = addon_base | times: bundle_keep | divided_by: 100 | round
+            else
+              assign addon_bundle = section.settings.accessory_bundle_value | times: 100
+            endif
+            if addon_bundle < 0
+              assign addon_bundle = 0
+            endif
+          endif
+
+          assign bundle_on = false
+          if section.settings.accessory_bundle_enabled and addon_bundle < addon_base
+            assign bundle_on = true
+          endif
         -%}
 
         {%- comment -%}
@@ -446,7 +475,14 @@
         {%- endif -%}
 
         {%- if show_addon -%}
-          <div class="pw-addon" id="pw-addon" data-addon-product-url="{{ addon.url }}">
+          <div
+            class="pw-addon{% if bundle_on %} pw-addon--bundle{% endif %}"
+            id="pw-addon"
+            data-addon-product-url="{{ addon.url }}"
+            data-bundle-enabled="{{ section.settings.accessory_bundle_enabled }}"
+            data-bundle-type="{{ section.settings.accessory_bundle_type }}"
+            data-bundle-value="{{ section.settings.accessory_bundle_value }}"
+          >
             {%- if section.settings.accessory_heading != blank -%}
               <span class="pw-addon__eyebrow">{{ section.settings.accessory_heading }}</span>
             {%- endif -%}
@@ -477,7 +513,13 @@
                 <a class="pw-addon__title" href="{{ addon.url }}">{{ addon.title }}</a>
 
                 {%- if section.settings.accessory_show_price -%}
-                  <span class="pw-addon__price" id="pw-addon-price">+ {{ addon_first.price | default: addon.price | money }}</span>
+                  <span class="pw-addon__price" id="pw-addon-price">
+                    <s class="pw-addon__price-was" id="pw-addon-price-was"{% unless bundle_on %} hidden{% endunless %}>{{ addon_base | money }}</s>
+                    <span class="pw-addon__price-now" id="pw-addon-price-now">+ {{ addon_bundle | money }}</span>
+                  </span>
+                  {%- if bundle_on and section.settings.accessory_bundle_note != blank -%}
+                    <span class="pw-addon__bundle-note" id="pw-addon-bundle-note">{{ section.settings.accessory_bundle_note }}</span>
+                  {%- endif -%}
                 {%- endif -%}
 
                 {%- if addon.variants.size > 1 -%}
@@ -674,6 +716,8 @@
     --addon-btn-size: {{ section.settings.accessory_btn_size | default: 10 }}px;
     --addon-btn-bg: {{ section.settings.accessory_btn_bg | default: '#181818' }};
     --addon-btn-text: {{ section.settings.accessory_btn_text | default: '#F5F3EF' }};
+    --addon-was-color: {{ section.settings.accessory_was_color | default: '#6A6A6A' }};
+    --addon-now-color: {{ section.settings.accessory_now_color | default: '#B5924A' }};
 
     --sum-label-size: {{ section.settings.summary_label_size | default: 9 }}px;
     --sum-value-size: {{ section.settings.summary_value_size | default: 12 }}px;
@@ -817,6 +861,20 @@
     { "type": "text", "id": "accessory_sold_out_label", "label": "Sold out label", "default": "SOLD OUT" },
     { "type": "checkbox", "id": "accessory_show_image", "label": "Show accessory image", "default": true },
     { "type": "checkbox", "id": "accessory_show_price", "label": "Show accessory price", "default": true },
+
+    { "type": "header", "content": "Bundle price" },
+    { "type": "paragraph", "content": "Display only — the theme never changes a price. Create the real reduction as an automatic discount in Shopify (Discounts → Buy X get Y), then enter the same figure here so the page shows what the customer will actually be charged. If the discount changes, change this too." },
+    { "type": "checkbox", "id": "accessory_bundle_enabled", "label": "Show a bundle price", "default": false },
+    { "type": "select", "id": "accessory_bundle_type", "label": "The discount is",
+      "options": [
+        { "value": "price", "label": "A fixed price when bought together" },
+        { "value": "amount", "label": "An amount off" },
+        { "value": "percent", "label": "A percentage off" }
+      ], "default": "price" },
+    { "type": "number", "id": "accessory_bundle_value", "label": "Value", "info": "The bundled price, the amount off, or the percentage — matching the choice above. Enter whole currency units, so 999 means ₹999." },
+    { "type": "text", "id": "accessory_bundle_note", "label": "Note under the price", "default": "Bundle price — applied automatically at checkout." },
+    { "type": "color", "id": "accessory_was_color", "label": "Original price colour", "default": "#6A6A6A" },
+    { "type": "color", "id": "accessory_now_color", "label": "Bundle price colour", "default": "#B5924A" },
     { "type": "range", "id": "accessory_image_size", "label": "Image size", "min": 48, "max": 200, "step": 4, "unit": "px", "default": 92 },
     { "type": "range", "id": "accessory_padding", "label": "Padding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 18 },
     { "type": "range", "id": "accessory_gap", "label": "Inner spacing", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 14 },

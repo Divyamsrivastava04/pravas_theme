@@ -39,8 +39,31 @@
   const addonJsonEl = document.getElementById('pw-addon-variants-json');
   const addonVariants = addonJsonEl ? JSON.parse(addonJsonEl.textContent) : [];
   const addonToggle = document.getElementById('pw-addon-toggle');
-  const addonPriceEl = document.getElementById('pw-addon-price');
+  const addonPriceWasEl = document.getElementById('pw-addon-price-was');
+  const addonPriceNowEl = document.getElementById('pw-addon-price-now');
   const addonImgEl = document.getElementById('pw-addon-img');
+
+  /* Bundle pricing is display only — the reduction itself is a real Shopify
+     automatic discount applied in the cart and at checkout. These values
+     mirror that discount so the page states the same figure; the theme never
+     alters what is actually charged. */
+  const bundleCfg = {
+    on: addonEl?.dataset.bundleEnabled === 'true',
+    type: addonEl?.dataset.bundleType || 'price',
+    value: parseFloat(addonEl?.dataset.bundleValue) || 0,
+  };
+
+  function bundlePrice(base) {
+    if (!bundleCfg.on || !bundleCfg.value) return base;
+    let out = base;
+    if (bundleCfg.type === 'amount') out = base - bundleCfg.value * 100;
+    else if (bundleCfg.type === 'percent') out = Math.round((base * (100 - bundleCfg.value)) / 100);
+    else out = bundleCfg.value * 100;
+    if (out < 0) out = 0;
+    /* A "bundle price" above the real price would be nonsense, so it is
+       ignored rather than shown. */
+    return out < base ? out : base;
+  }
 
   const sumEl = document.getElementById('pw-sum');
   const sumProductEl = document.getElementById('pw-sum-product');
@@ -63,11 +86,12 @@
     const base = currentVariant();
     if (!base) return;
     const addonActive = addonOn && addonVariant && addonVariant.available;
-    const total = base.price + (addonActive ? addonVariant.price : 0);
+    const addonCharged = addonActive ? bundlePrice(addonVariant.price) : 0;
+    const total = base.price + addonCharged;
 
     if (sumProductEl) sumProductEl.textContent = formatMoney(base.price);
     if (sumAddonRow) sumAddonRow.hidden = !addonActive;
-    if (sumAddonEl && addonActive) sumAddonEl.textContent = '+ ' + formatMoney(addonVariant.price);
+    if (sumAddonEl && addonActive) sumAddonEl.textContent = '+ ' + formatMoney(addonCharged);
     if (sumTotalEl) sumTotalEl.textContent = formatMoney(total);
     if (stickyPriceEl) stickyPriceEl.textContent = formatMoney(total);
   }
@@ -79,7 +103,17 @@
       btn.classList.toggle('is-active', addonVariant && Number(btn.dataset.addonVariant) === addonVariant.id);
     });
 
-    if (addonPriceEl && addonVariant) addonPriceEl.textContent = '+ ' + formatMoney(addonVariant.price);
+    if (addonVariant) {
+      const base = addonVariant.price;
+      const now = bundlePrice(base);
+      const discounted = now < base;
+      if (addonPriceNowEl) addonPriceNowEl.textContent = '+ ' + formatMoney(now);
+      if (addonPriceWasEl) {
+        addonPriceWasEl.textContent = formatMoney(base);
+        addonPriceWasEl.hidden = !discounted;
+      }
+      addonEl.classList.toggle('pw-addon--bundle', discounted);
+    }
 
     if (addonImgEl && addonVariant) {
       const btn = addonEl.querySelector(`[data-addon-variant="${addonVariant.id}"]`);

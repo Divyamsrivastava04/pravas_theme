@@ -199,7 +199,13 @@
         "sticky_eyebrow": "CURRENTLY VIEWING",
         "sticky_bg": "#f5f3ef",
         "sticky_text_color": "#181818",
-        "sticky_price_color": "#181818"
+        "sticky_price_color": "#181818",
+        "accessory_bundle_enabled": true,
+        "accessory_bundle_type": "price",
+        "accessory_bundle_value": 999,
+        "accessory_bundle_note": "Bundle price — applied automatically at checkout.",
+        "accessory_was_color": "#6a6a6a",
+        "accessory_now_color": "#b5924a"
       }
     },
     "philosophy": {
