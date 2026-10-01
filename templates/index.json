@@ -32,9 +32,8 @@
         "latest_drop_product": "midnight-black",
         "qb_name": "",
         "qb_btn": "QUICK ADD",
-        "watch_img": "shopify://shop_images/image-removebg-preview_1.png",
+        "watch_img": "shopify://shop_images/image-removebg-preview_b277a2a1-cb47-4dc7-940f-9539d1d741ef.png",
         "watch_img_2": "shopify://shop_images/image-removebg-preview.png",
-        "watch_img_3": "shopify://shop_images/image-removebg-preview_1.png",
         "watch_img_alt": "PRAVAS AARAMBH",
         "image_object_fit": "contain",
         "image_object_position": "center",
@@ -142,6 +141,7 @@
     "ticker": {
       "type": "pravas-ticker",
       "settings": {
+        "product": "",
         "handle": "sunburst-green",
         "colourway1_value": "Sunburst Green",
         "colourway2_value": "Midnight Black",
