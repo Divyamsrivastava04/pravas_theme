@@ -1,0 +1,435 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "pravas-product-main",
+      "blocks": {
+        "swatch_link_eD6J7E": {
+          "type": "swatch_link",
+          "settings": {
+            "option_name": "Dial Color",
+            "link_product": "emerald-green",
+            "link_url": "",
+            "label": "",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
+        "swatch_color_XUCLPF": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "Black",
+            "color": "#181818",
+            "text_color": "#f5f3ef",
+            "link_product": "",
+            "link_url": ""
+          }
+        },
+        "swatch_color_tzXjKW": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "BURGUNDY",
+            "color": "#470b0b",
+            "text_color": "#f5f3ef",
+            "link_product": "",
+            "link_url": ""
+          }
+        },
+        "swatch_color_VGhi9R": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "SUNBURST GREEN",
+            "color": "#1e3925",
+            "text_color": "#f5f3ef",
+            "link_product": "",
+            "link_url": ""
+          }
+        },
+        "swatch_color_jGdzb9": {
+          "type": "swatch_color",
+          "settings": {
+            "option_value": "Midnight Black",
+            "color": "#181818",
+            "text_color": "#f5f3ef",
+            "link_product": "",
+            "link_url": ""
+          }
+        },
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "label": "MIYOTA 8215",
+            "value": ""
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "label": "SAPPHIRE Crystal",
+            "value": ""
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "label": "FREE DELIVERY",
+            "value": ""
+          }
+        }
+      },
+      "block_order": [
+        "swatch_link_eD6J7E",
+        "swatch_color_XUCLPF",
+        "swatch_color_tzXjKW",
+        "swatch_color_VGhi9R",
+        "swatch_color_jGdzb9",
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "eyebrow": "THE FIRST CHAPTER",
+        "subtitle": "A testament to time and its measured movement. Designed in India, driven by Miyota.",
+        "atc_label": "ADD TO COLLECTION",
+        "sold_out_label": "SOLD OUT",
+        "reassurance": "Shipping starts in October",
+        "availability_label": "FIRST BATCH AVAILABILITY",
+        "units_left_label": "UNITS LEFT",
+        "low_stock_threshold": 15,
+        "enable_zoom": true,
+        "gallery_gap": 12,
+        "gallery_radius": 0,
+        "image_fit": "contain",
+        "image_position": "center",
+        "gallery_bg": "#101010",
+        "gallery_padding": 0,
+        "gallery_aspect_ratio": "4/5",
+        "thumb_columns": 3,
+        "thumb_columns_mobile": 3,
+        "thumb_aspect_ratio": "1/1",
+        "content_max_width": 1440,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_x": 80,
+        "title_size_desktop": 40,
+        "title_size_mobile": 30,
+        "title_weight": "400",
+        "title_line_height": 1.1,
+        "color_bg": "#181818",
+        "color_text": "#f5f3ef",
+        "color_muted": "#888888",
+        "color_accent": "#b5924a",
+        "color_border": "#2e2e2e",
+        "color_panel_bg": "#f5f3ef",
+        "color_panel_text": "#181818",
+        "color_panel_muted": "#3a3a3a",
+        "color_eyebrow": "#b5924a",
+        "availability_color": "#3a3a3a",
+        "price_color": "#181818",
+        "price_compare_color": "#888888",
+        "swatch_mode": "auto",
+        "swatch_use_variant_image": true,
+        "swatch_gap": 10,
+        "swatch_radius": 0,
+        "swatch_border_width": 0,
+        "swatch_border_width_selected": 2,
+        "swatch_border_color": "#000000",
+        "swatch_border_selected_color": "#b5924a",
+        "swatch_image_size": 72,
+        "swatch_image_fit": "contain",
+        "swatch_image_padding": 4,
+        "swatch_image_bg": "#ffffff",
+        "swatch_label_size": 10,
+        "swatch_label_gap": 8,
+        "swatch_label_color": "#181818",
+        "swatch_label_active_color": "#181818",
+        "swatch_size": 40,
+        "swatch_bg_color": "#ffffff",
+        "show_accessory": true,
+        "accessory_product": "butterfly-leather-straps",
+        "accessory_heading": "COMPLETE YOUR TIMEPIECE",
+        "accessory_note": "The Presidential Bracelet is included with your timepiece. The leather strap is an optional addition.",
+        "accessory_add_label": "+ ADD STRAP",
+        "accessory_added_label": "STRAP ADDED — REMOVE",
+        "accessory_sold_out_label": "SOLD OUT",
+        "accessory_show_image": true,
+        "accessory_show_price": true,
+        "accessory_image_size": 92,
+        "accessory_padding": 18,
+        "accessory_gap": 14,
+        "accessory_heading_size": 9,
+        "accessory_title_size": 13,
+        "accessory_body_size": 11,
+        "accessory_price_size": 13,
+        "accessory_btn_height": 40,
+        "accessory_btn_size": 10,
+        "accessory_radius": 0,
+        "accessory_border_width": 1,
+        "accessory_bg": "#efede8",
+        "accessory_text": "#181818",
+        "accessory_muted": "#6a6a6a",
+        "accessory_accent": "#b5924a",
+        "accessory_border": "#d8d4cc",
+        "accessory_btn_bg": "#181818",
+        "accessory_btn_text": "#f5f3ef",
+        "show_price_summary": true,
+        "summary_product_label": "WATCH",
+        "summary_total_label": "TOTAL",
+        "summary_label_size": 9,
+        "summary_value_size": 12,
+        "summary_total_size": 16,
+        "summary_row_gap": 8,
+        "summary_label_color": "#6a6a6a",
+        "summary_value_color": "#181818",
+        "summary_divider": "#d8d4cc",
+        "atc_bg": "#b5924a",
+        "atc_text_color": "#181818",
+        "atc_border_color": "#b5924a",
+        "atc_border_width": 0,
+        "atc_radius": 0,
+        "enable_sticky_bar": true,
+        "sticky_eyebrow": "CURRENTLY VIEWING",
+        "sticky_bg": "#f5f3ef",
+        "sticky_text_color": "#181818",
+        "sticky_price_color": "#181818"
+      }
+    },
+    "philosophy": {
+      "type": "pravas-product-philosophy",
+      "settings": {
+        "eyebrow": "THE PHILOSOPHY",
+        "heading": "The Art of the Start",
+        "body_1": "Every PRAVAS timepiece begins not with a blueprint, but with a belief: that precision and patience are not opposites, but companions.",
+        "body_2": "The Aarambh — meaning \"the beginning\" — carries this belief on the wrist. It is a first chapter, built to be worn for decades, not seasons.",
+        "max_width": 720,
+        "padding_top": 100,
+        "padding_bottom": 100,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "bg_color": "#181818",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#c8c8cc"
+      }
+    },
+    "specs": {
+      "type": "pravas-product-specs",
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "MOVEMENT",
+            "value": "Miyota 8215 Automatic (21 Jewels)"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "CRYSTAL",
+            "value": "Sapphire with AR Coating"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "POWER RESERVE",
+            "value": "42 Hours"
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "label": "WATER RESISTANCE",
+            "value": "50 Metres / 5 ATM (Screw-down Crown)"
+          }
+        },
+        "s5": {
+          "type": "spec",
+          "settings": {
+            "label": "CASE DIAMETER",
+            "value": "38mm"
+          }
+        },
+        "s6": {
+          "type": "spec",
+          "settings": {
+            "label": "STRAP WIDTH",
+            "value": "20mm (Integrated Steel Bracelet)"
+          }
+        },
+        "s7": {
+          "type": "spec",
+          "settings": {
+            "label": "LUG-TO-LUG",
+            "value": "45mm"
+          }
+        },
+        "spec_4qkjwV": {
+          "type": "spec",
+          "settings": {
+            "label": "Date Window",
+            "value": "Yes"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6",
+        "s7",
+        "spec_4qkjwV"
+      ],
+      "settings": {
+        "heading": "Technical Specifications",
+        "intro": "Every component chosen with intent, every tolerance measured twice.",
+        "columns": "2",
+        "padding_top": 90,
+        "padding_bottom": 90,
+        "padding_top_mobile": 60,
+        "padding_bottom_mobile": 60,
+        "bg_color": "#181818",
+        "heading_color": "#f5f3ef",
+        "intro_color": "#888888",
+        "label_color": "#888888",
+        "value_color": "#f5f3ef",
+        "divider_color": "#b5924a40",
+        "divider_width": 1
+      }
+    },
+    "founder": {
+      "type": "pravas-product-founder",
+      "disabled": true,
+      "settings": {
+        "eyebrow": "A PERSONAL TOUCH",
+        "heading": "The Founder's Hand",
+        "body": "Each Aarambh is inspected and signed off by hand before it leaves the workshop. If you'd like, we'll include a small note — written by us, for you.",
+        "image_grayscale": true,
+        "image_radius": 0,
+        "enable_serial_option": true,
+        "serial_label": "Include Limited Serial Number",
+        "serial_checked_by_default": false,
+        "enable_message": true,
+        "message_label": "A note to the founder (optional)",
+        "message_placeholder": "Tell us why this piece matters to you…",
+        "bg_color": "#181818",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#c8c8cc",
+        "divider_color": "#2e2e2e"
+      }
+    },
+    "pravas_story_heritage_HP4CWE": {
+      "type": "pravas-story-heritage",
+      "name": "PW Story Heritage",
+      "settings": {
+        "eyebrow": "HERITAGE IN EVERY DETAIL",
+        "heading": "Made to Be Unboxed.",
+        "body": "A PRAVAS timepiece is not complete when the watch leaves the atelier. Every detail of its presentation is considered—from the protective packaging to the final placement of the timepiece.\n\nDesigned to protect, preserve, and reveal, our packaging carries the same philosophy as the watch itself: purposeful materials, considered construction, and nothing that exists without reason. The journey begins long before the watch reaches your wrist—and continues with the moment you open it.",
+        "location_label": "PACKAGING",
+        "location_value": "Purpose-built protection",
+        "est_label": "PRESENTATION",
+        "est_value": "Considered from atelier to wrist",
+        "image": "shopify://shop_images/b4b65d29-4621-4045-9780-5aafa367d831.jpg",
+        "image_radius": 0,
+        "image_border_width": 0,
+        "image_border_color": "#2e2e2e",
+        "enable_overlay": false,
+        "overlay_color": "#181818",
+        "overlay_opacity": 0,
+        "text_max_width": 440,
+        "text_padding": 64,
+        "text_padding_mobile": 40,
+        "column_gap": 64,
+        "eyebrow_size": 12,
+        "eyebrow_letter_spacing": 3,
+        "heading_font": "playfair_display_n4",
+        "heading_size_desktop": 36,
+        "heading_size_mobile": 26,
+        "heading_weight": "400",
+        "heading_line_height": 1.2,
+        "body_font": "inter_n4",
+        "body_size_desktop": 15,
+        "body_size_mobile": 14,
+        "body_line_height": 1.8,
+        "bg_color": "#181818",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#c8c8cc",
+        "meta_label_color": "#b5924a",
+        "meta_value_color": "#f5f3ef",
+        "divider_color": "#2e2e2e"
+      }
+    },
+    "pravas_ugc_M4qQHY": {
+      "type": "pravas-ugc",
+      "blocks": {
+        "card_t7TyDj": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card_JCypyj": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card_YWT4Kf": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        },
+        "card_qhXwwD": {
+          "type": "card",
+          "settings": {
+            "video_url": "",
+            "handle": "",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_t7TyDj",
+        "card_JCypyj",
+        "card_YWT4Kf",
+        "card_qhXwwD"
+      ],
+      "name": "PW Community Wall",
+      "settings": {
+        "eyebrow": "AS SEEN ON",
+        "heading": "The PRAVAS Community",
+        "subtext": "Real wrists. Real moments.",
+        "ig_url": "https://www.instagram.com/pravaswatch/",
+        "cta": "View All on Instagram @pravaswatch →",
+        "empty_state_label": "Coming Soon"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "philosophy",
+    "specs",
+    "founder",
+    "pravas_story_heritage_HP4CWE",
+    "pravas_ugc_M4qQHY"
+  ]
+}
