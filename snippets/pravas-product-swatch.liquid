@@ -1,0 +1,82 @@
+{%- comment -%}
+  One option swatch for the PDP.
+
+  Rendered from two places — the product's own option values and the
+  "Swatch Link" blocks for colours that live on a different product — so
+  the markup lives here and the two can't drift apart.
+
+  Accepts:
+    label          text shown under / inside the swatch
+    image          image drop, optional
+    color          hex, optional
+    text_color     label colour, colour-block style only
+    href           when present the swatch navigates instead of selecting
+    option_index   index of the option row it belongs to
+    is_active      marks the current selection
+    mode           'auto' | 'image' | 'color'
+    attrs          block.shopify_attributes, so the editor can target it
+{%- endcomment -%}
+
+{%- liquid
+  assign style_mode = 'color'
+  if mode == 'image'
+    assign style_mode = 'image'
+  elsif mode == 'auto' and image != blank
+    assign style_mode = 'image'
+  endif
+
+  assign cls = 'pw-pdp__swatch pw-pdp__swatch--' | append: style_mode
+  if is_active
+    assign cls = cls | append: ' is-active'
+  endif
+  if href != blank
+    assign cls = cls | append: ' pw-pdp__swatch--link'
+  endif
+
+  assign alt_text = label
+-%}
+
+{%- capture swatch_style -%}
+  {%- if style_mode == 'color' -%}
+    {%- if color != blank %}background:{{ color }};{% endif -%}
+    {%- if text_color != blank %}--product-swatch-label-color:{{ text_color }};{% endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture swatch_inner -%}
+  {%- if style_mode == 'image' -%}
+    {%- if image != blank -%}
+      <span class="pw-pdp__swatch-media">
+        {{ image | image_url: width: 280 | image_tag: alt: alt_text, class: 'pw-pdp__swatch-img', loading: 'lazy', widths: '80,120,160,200,280' }}
+      </span>
+    {%- else -%}
+      <span class="pw-pdp__swatch-media pw-pdp__swatch-media--color"{% if color != blank %} style="background:{{ color }};"{% endif %}></span>
+    {%- endif -%}
+  {%- endif -%}
+  <span class="pw-pdp__swatch-label">{{ label }}</span>
+{%- endcapture -%}
+
+{%- if href != blank -%}
+  {%- comment -%}
+    data-swatch-link keeps the variant picker's click handler off this one —
+    it changes product rather than selecting a variant on this page.
+  {%- endcomment -%}
+  <a
+    class="{{ cls }}"
+    href="{{ href }}"
+    data-swatch-link
+    data-option-index="{{ option_index }}"
+    data-option-value="{{ label | escape }}"
+    {%- if swatch_style != blank %} style="{{ swatch_style }}"{% endif -%}
+    {{ attrs }}
+  >{{ swatch_inner }}</a>
+{%- else -%}
+  <button
+    type="button"
+    class="{{ cls }}"
+    data-option-index="{{ option_index }}"
+    data-option-value="{{ label | escape }}"
+    {%- if swatch_style != blank %} style="{{ swatch_style }}"{% endif -%}
+    {{ attrs }}
+  >{{ swatch_inner }}</button>
+{%- endif -%}

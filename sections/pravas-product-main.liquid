@@ -96,29 +96,117 @@
                   {%- liquid
                     assign swatch_bg = ''
                     assign swatch_fg = ''
+                    assign swatch_img = ''
+                    assign swatch_href = ''
+                    assign swatch_attrs = ''
                     assign value_key = value | downcase | strip
+
+                    comment
+                      A Swatch Colour block matching this value supplies the
+                      colour, an image and — when set — a link to another
+                      product, which turns the swatch into navigation rather
+                      than a variant selector.
+                    endcomment
                     for sb in section.blocks
                       if sb.type == 'swatch_color'
                         assign sb_key = sb.settings.option_value | downcase | strip
                         if sb_key != '' and sb_key == value_key
                           assign swatch_bg = sb.settings.color
                           assign swatch_fg = sb.settings.text_color
+                          assign swatch_img = sb.settings.image
+                          assign swatch_href = sb.settings.link_url
+                          if sb.settings.link_product != blank
+                            assign swatch_href = sb.settings.link_product.url
+                          endif
+                          assign swatch_attrs = sb.shopify_attributes
                         endif
                       endif
                     endfor
+
+                    comment
+                      Fall back to Shopify's own swatch metafield, then to the
+                      photo of the first variant carrying this value, so a
+                      product with variant images needs no setup at all.
+                    endcomment
                     if swatch_bg == blank and value.swatch.color
                       assign swatch_bg = value.swatch.color
                     endif
+                    if swatch_img == blank and value.swatch.image
+                      assign swatch_img = value.swatch.image
+                    endif
+                    if swatch_img == blank and section.settings.swatch_use_variant_image
+                      for v in product.variants
+                        if v.options[option_index] == value and v.image
+                          assign swatch_img = v.image
+                          break
+                        endif
+                      endfor
+                    endif
+
+                    assign swatch_active = false
+                    if value == option.selected_value
+                      assign swatch_active = true
+                    endif
                   -%}
-                  <button
-                    type="button"
-                    class="pw-pdp__swatch{% if value == option.selected_value %} is-active{% endif %}"
-                    data-option-index="{{ option_index }}"
-                    data-option-value="{{ value | escape }}"
-                    {%- if swatch_bg != blank or swatch_fg != blank %} style="{% if swatch_bg != blank %}background:{{ swatch_bg }};{% endif %}{% if swatch_fg != blank %}--product-swatch-label-color:{{ swatch_fg }};{% endif %}"{% endif -%}
-                  >
-                    <span class="pw-pdp__swatch-label">{{ value }}</span>
-                  </button>
+                  {%- render 'pravas-product-swatch',
+                    label: value,
+                    image: swatch_img,
+                    color: swatch_bg,
+                    text_color: swatch_fg,
+                    href: swatch_href,
+                    option_index: option_index,
+                    is_active: swatch_active,
+                    mode: section.settings.swatch_mode,
+                    attrs: swatch_attrs
+                  -%}
+                {%- endfor -%}
+
+                {%- comment -%}
+                  Swatch Link blocks add colours that live on a separate
+                  product. They are never a selectable variant here, so they
+                  only render when they carry a destination.
+                {%- endcomment -%}
+                {%- for sb in section.blocks -%}
+                  {%- if sb.type == 'swatch_link' -%}
+                    {%- liquid
+                      assign target = sb.settings.option_name | downcase | strip
+                      assign this_option = option.name | downcase | strip
+                      assign in_this_row = false
+                      if target == this_option
+                        assign in_this_row = true
+                      elsif target == '' and option_index == 0
+                        assign in_this_row = true
+                      endif
+
+                      assign link_href = sb.settings.link_url
+                      if sb.settings.link_product != blank
+                        assign link_href = sb.settings.link_product.url
+                      endif
+
+                      assign link_label = sb.settings.label
+                      if link_label == blank
+                        assign link_label = sb.settings.link_product.title
+                      endif
+
+                      assign link_image = sb.settings.image
+                      if link_image == blank and section.settings.swatch_use_variant_image
+                        assign link_image = sb.settings.link_product.featured_image
+                      endif
+                    -%}
+                    {%- if in_this_row and link_href != blank -%}
+                      {%- render 'pravas-product-swatch',
+                        label: link_label,
+                        image: link_image,
+                        color: sb.settings.color,
+                        text_color: sb.settings.text_color,
+                        href: link_href,
+                        option_index: option_index,
+                        is_active: false,
+                        mode: section.settings.swatch_mode,
+                        attrs: sb.shopify_attributes
+                      -%}
+                    {%- endif -%}
+                  {%- endif -%}
                 {%- endfor -%}
               </div>
             </div>
@@ -224,6 +312,15 @@
     --product-swatch-border-selected: {{ section.settings.swatch_border_selected_color | default: '#B5924A' }};
     --product-swatch-border-width: {{ section.settings.swatch_border_width | default: 1 }}px;
     --product-swatch-border-width-selected: {{ section.settings.swatch_border_width_selected | default: 2 }}px;
+    --product-swatch-gap: {{ section.settings.swatch_gap | default: 10 }}px;
+    --product-swatch-image-size: {{ section.settings.swatch_image_size | default: 72 }}px;
+    --product-swatch-image-fit: {{ section.settings.swatch_image_fit | default: 'contain' }};
+    --product-swatch-image-padding: {{ section.settings.swatch_image_padding | default: 4 }}px;
+    --product-swatch-image-bg: {{ section.settings.swatch_image_bg | default: '#FFFFFF' }};
+    --product-swatch-label-size: {{ section.settings.swatch_label_size | default: 10 }}px;
+    --product-swatch-label-gap: {{ section.settings.swatch_label_gap | default: 8 }}px;
+    --product-swatch-label-list-color: {{ section.settings.swatch_label_color | default: '#181818' }};
+    --product-swatch-label-list-color-active: {{ section.settings.swatch_label_active_color | default: '#181818' }};
 
     --product-gallery-gap: {{ section.settings.gallery_gap | default: 12 }}px;
     --product-gallery-radius: {{ section.settings.gallery_radius | default: 0 }}px;
@@ -306,13 +403,39 @@
     { "type": "color", "id": "price_compare_color", "label": "Compare-at price", "default": "#888888" },
 
     { "type": "header", "content": "Swatches" },
-    { "type": "range", "id": "swatch_size", "label": "Swatch size", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
-    { "type": "range", "id": "swatch_radius", "label": "Swatch radius (0 = square)", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 0 },
+    { "type": "select", "id": "swatch_mode", "label": "Swatch style",
+      "info": "Automatic uses the image style for any swatch that has an image and the colour block for the rest.",
+      "options": [
+        { "value": "auto", "label": "Automatic" },
+        { "value": "image", "label": "Image with name below" },
+        { "value": "color", "label": "Colour block" }
+      ], "default": "auto" },
+    { "type": "checkbox", "id": "swatch_use_variant_image", "label": "Use the variant's own photo when no swatch image is set", "default": true },
+    { "type": "range", "id": "swatch_gap", "label": "Space between swatches", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 10 },
+    { "type": "range", "id": "swatch_radius", "label": "Corner radius (0 = square)", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 0 },
     { "type": "range", "id": "swatch_border_width", "label": "Border width — unselected", "min": 0, "max": 8, "step": 1, "unit": "px", "default": 1 },
     { "type": "range", "id": "swatch_border_width_selected", "label": "Border width — selected", "min": 0, "max": 8, "step": 1, "unit": "px", "default": 2 },
-    { "type": "color", "id": "swatch_bg_color", "label": "Swatch background (no colour block)", "default": "#FFFFFF" },
-    { "type": "color", "id": "swatch_border_color", "label": "Swatch border", "default": "#C8C8CC" },
-    { "type": "color", "id": "swatch_border_selected_color", "label": "Swatch border — selected", "default": "#B5924A" },
+    { "type": "color", "id": "swatch_border_color", "label": "Border — unselected", "default": "#C8C8CC" },
+    { "type": "color", "id": "swatch_border_selected_color", "label": "Border — selected", "default": "#B5924A" },
+
+    { "type": "header", "content": "Swatches — image style" },
+    { "type": "range", "id": "swatch_image_size", "label": "Swatch size", "min": 40, "max": 140, "step": 4, "unit": "px", "default": 72 },
+    { "type": "select", "id": "swatch_image_fit", "label": "Image fit",
+      "options": [
+        { "value": "contain", "label": "Fit (whole image, never cropped)" },
+        { "value": "cover", "label": "Fill (crops to the frame)" },
+        { "value": "scale-down", "label": "Fit, never enlarge" }
+      ], "default": "contain" },
+    { "type": "range", "id": "swatch_image_padding", "label": "Padding around image", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 4 },
+    { "type": "color", "id": "swatch_image_bg", "label": "Image tile background", "default": "#FFFFFF" },
+    { "type": "range", "id": "swatch_label_size", "label": "Name size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "swatch_label_gap", "label": "Space above name", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 8 },
+    { "type": "color", "id": "swatch_label_color", "label": "Name colour", "default": "#181818" },
+    { "type": "color", "id": "swatch_label_active_color", "label": "Name colour — selected", "default": "#181818" },
+
+    { "type": "header", "content": "Swatches — colour block style" },
+    { "type": "range", "id": "swatch_size", "label": "Swatch height", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "color", "id": "swatch_bg_color", "label": "Background when no colour is set", "default": "#FFFFFF" },
 
     { "type": "header", "content": "Add to Cart Button" },
     { "type": "color", "id": "atc_bg", "label": "Background", "default": "#B5924A" },
@@ -342,9 +465,28 @@
       "type": "swatch_color",
       "name": "Swatch Colour",
       "settings": [
-        { "type": "paragraph", "content": "Type the option value exactly as it appears on the product (e.g. Midnight Black), then pick the colour to show for it." },
+        { "type": "paragraph", "content": "Type the option value exactly as it appears on the product (e.g. Midnight Black), then style the swatch shown for it." },
         { "type": "text", "id": "option_value", "label": "Option value", "default": "Midnight Black" },
-        { "type": "color", "id": "color", "label": "Swatch colour", "default": "#181818" },
+        { "type": "image_picker", "id": "image", "label": "Swatch image" },
+        { "type": "color", "id": "color", "label": "Swatch colour", "info": "Used when there is no image.", "default": "#181818" },
+        { "type": "color", "id": "text_color", "label": "Label colour on this swatch", "default": "#F5F3EF" },
+        { "type": "header", "content": "Link" },
+        { "type": "paragraph", "content": "Leave both blank to select the variant on this page. Set one to send shoppers to a different product instead." },
+        { "type": "product", "id": "link_product", "label": "Go to product" },
+        { "type": "url", "id": "link_url", "label": "Or go to URL" }
+      ]
+    },
+    {
+      "type": "swatch_link",
+      "name": "Swatch Link",
+      "settings": [
+        { "type": "paragraph", "content": "Adds an extra swatch for a colour sold as its own product. It always links out and is never selectable here." },
+        { "type": "text", "id": "option_name", "label": "Add to which option row?", "info": "The option name exactly as it appears, e.g. Dial Color. Leave blank for the first row.", "default": "Dial Color" },
+        { "type": "product", "id": "link_product", "label": "Go to product" },
+        { "type": "url", "id": "link_url", "label": "Or go to URL" },
+        { "type": "text", "id": "label", "label": "Name shown", "info": "Defaults to the linked product's title." },
+        { "type": "image_picker", "id": "image", "label": "Swatch image", "info": "Defaults to the linked product's featured image." },
+        { "type": "color", "id": "color", "label": "Swatch colour", "info": "Used when there is no image.", "default": "#181818" },
         { "type": "color", "id": "text_color", "label": "Label colour on this swatch", "default": "#F5F3EF" }
       ]
     }

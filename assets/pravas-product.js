@@ -29,7 +29,7 @@
   const selected = {};
   form?.querySelectorAll('.pw-pdp__option').forEach((optionEl) => {
     const idx = optionEl.dataset.optionIndex;
-    const active = optionEl.querySelector('.pw-pdp__swatch.is-active');
+    const active = optionEl.querySelector('.pw-pdp__swatch.is-active:not([data-swatch-link])');
     if (active) selected[idx] = active.dataset.optionValue;
   });
 
@@ -115,12 +115,16 @@
   /* Store the "available" label text once so we can restore it after a sold-out state */
   if (atcText) atcText.dataset.available = atcText.textContent.trim();
 
-  /* Swatch selection */
-  form?.querySelectorAll('.pw-pdp__swatch').forEach((btn) => {
+  /* Swatch selection. Swatches carrying data-swatch-link point at another
+     product, so they are left alone to navigate rather than repainting this
+     page's price and availability on the way out. */
+  form?.querySelectorAll('.pw-pdp__swatch:not([data-swatch-link])').forEach((btn) => {
     btn.addEventListener('click', function () {
       const optionEl = this.closest('.pw-pdp__option');
       const idx = optionEl.dataset.optionIndex;
-      optionEl.querySelectorAll('.pw-pdp__swatch').forEach((s) => s.classList.remove('is-active'));
+      optionEl
+        .querySelectorAll('.pw-pdp__swatch:not([data-swatch-link])')
+        .forEach((s) => s.classList.remove('is-active'));
       this.classList.add('is-active');
       const label = optionEl.querySelector('[data-option-selected]');
       if (label) label.textContent = this.dataset.optionValue;
