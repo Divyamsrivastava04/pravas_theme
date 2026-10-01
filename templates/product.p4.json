@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "r": {
+      "type": "pravas-accessory-related",
+      "settings": {}
+    }
+  },
+  "order": [
+    "r"
+  ]
+}
