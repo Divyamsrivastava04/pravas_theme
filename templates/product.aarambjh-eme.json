@@ -12,6 +12,17 @@
     "main": {
       "type": "pravas-product-main",
       "blocks": {
+        "swatch_link_nxPLyJ": {
+          "type": "swatch_link",
+          "settings": {
+            "option_name": "",
+            "link_product": "midnight-black",
+            "link_url": "",
+            "label": "Midnight black",
+            "color": "#181818",
+            "text_color": "#f5f3ef"
+          }
+        },
         "swatch_link_eD6J7E": {
           "type": "swatch_link",
           "settings": {
@@ -21,46 +32,6 @@
             "label": "",
             "color": "#181818",
             "text_color": "#f5f3ef"
-          }
-        },
-        "swatch_color_XUCLPF": {
-          "type": "swatch_color",
-          "settings": {
-            "option_value": "Black",
-            "color": "#181818",
-            "text_color": "#f5f3ef",
-            "link_product": "",
-            "link_url": ""
-          }
-        },
-        "swatch_color_tzXjKW": {
-          "type": "swatch_color",
-          "settings": {
-            "option_value": "BURGUNDY",
-            "color": "#470b0b",
-            "text_color": "#f5f3ef",
-            "link_product": "",
-            "link_url": ""
-          }
-        },
-        "swatch_color_VGhi9R": {
-          "type": "swatch_color",
-          "settings": {
-            "option_value": "SUNBURST GREEN",
-            "color": "#1e3925",
-            "text_color": "#f5f3ef",
-            "link_product": "",
-            "link_url": ""
-          }
-        },
-        "swatch_color_jGdzb9": {
-          "type": "swatch_color",
-          "settings": {
-            "option_value": "Midnight Black",
-            "color": "#181818",
-            "text_color": "#f5f3ef",
-            "link_product": "",
-            "link_url": ""
           }
         },
         "feature_1": {
@@ -86,11 +57,8 @@
         }
       },
       "block_order": [
+        "swatch_link_nxPLyJ",
         "swatch_link_eD6J7E",
-        "swatch_color_XUCLPF",
-        "swatch_color_tzXjKW",
-        "swatch_color_VGhi9R",
-        "swatch_color_jGdzb9",
         "feature_1",
         "feature_2",
         "feature_3"
@@ -276,7 +244,7 @@
           "type": "spec",
           "settings": {
             "label": "Date Window",
-            "value": "Yes"
+            "value": "No"
           }
         }
       },
