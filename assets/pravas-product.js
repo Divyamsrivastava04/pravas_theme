@@ -26,6 +26,102 @@
   const stickyVariantEl = document.getElementById('pw-pdp-sticky-variant');
   const soldOutLabel = root.dataset.soldOutLabel || 'SOLD OUT';
 
+  /* ---------------------------------------------------------------
+     Optional accessory add-on.
+
+     The accessory is a separate Shopify product. Nothing here changes
+     this product's price or variants — the only effect is a second,
+     independent line in the cart. Absent when no accessory product is
+     configured, in which case every branch below is skipped and the page
+     behaves exactly as it did before.
+     --------------------------------------------------------------- */
+  const addonEl = document.getElementById('pw-addon');
+  const addonJsonEl = document.getElementById('pw-addon-variants-json');
+  const addonVariants = addonJsonEl ? JSON.parse(addonJsonEl.textContent) : [];
+  const addonToggle = document.getElementById('pw-addon-toggle');
+  const addonPriceEl = document.getElementById('pw-addon-price');
+  const addonImgEl = document.getElementById('pw-addon-img');
+
+  const sumEl = document.getElementById('pw-sum');
+  const sumProductEl = document.getElementById('pw-sum-product');
+  const sumAddonRow = document.getElementById('pw-sum-addon-row');
+  const sumAddonEl = document.getElementById('pw-sum-addon');
+  const sumTotalEl = document.getElementById('pw-sum-total');
+
+  let addonVariant = addonVariants.find((v) => v.available) || null;
+  let addonOn = false;
+
+  function currentVariant() {
+    const id = Number(variantIdInput?.value);
+    return variants.find((v) => v.id === id) || variants[0];
+  }
+
+  /* The only place the two prices are ever combined. Both come from real
+     Shopify variant data, so a price change in Shopify flows through
+     without touching the theme. */
+  function renderTotals() {
+    const base = currentVariant();
+    if (!base) return;
+    const addonActive = addonOn && addonVariant && addonVariant.available;
+    const total = base.price + (addonActive ? addonVariant.price : 0);
+
+    if (sumProductEl) sumProductEl.textContent = formatMoney(base.price);
+    if (sumAddonRow) sumAddonRow.hidden = !addonActive;
+    if (sumAddonEl && addonActive) sumAddonEl.textContent = '+ ' + formatMoney(addonVariant.price);
+    if (sumTotalEl) sumTotalEl.textContent = formatMoney(total);
+    if (stickyPriceEl) stickyPriceEl.textContent = formatMoney(total);
+  }
+
+  function renderAddon() {
+    if (!addonEl) return;
+
+    addonEl.querySelectorAll('[data-addon-variant]').forEach((btn) => {
+      btn.classList.toggle('is-active', addonVariant && Number(btn.dataset.addonVariant) === addonVariant.id);
+    });
+
+    if (addonPriceEl && addonVariant) addonPriceEl.textContent = '+ ' + formatMoney(addonVariant.price);
+
+    if (addonImgEl && addonVariant) {
+      const btn = addonEl.querySelector(`[data-addon-variant="${addonVariant.id}"]`);
+      const src = btn?.dataset.addonImage;
+      if (src && addonImgEl.getAttribute('src') !== src) {
+        addonImgEl.removeAttribute('srcset');
+        addonImgEl.src = src;
+      }
+    }
+
+    if (addonToggle) {
+      const usable = !!(addonVariant && addonVariant.available);
+      addonToggle.disabled = !usable;
+      if (!usable) addonOn = false;
+      addonToggle.setAttribute('aria-pressed', String(addonOn));
+      addonToggle.textContent = addonOn
+        ? addonToggle.dataset.addedLabel || 'REMOVE'
+        : addonToggle.dataset.addLabel || '+ ADD';
+    }
+  }
+
+  if (addonEl) {
+    addonEl.querySelectorAll('[data-addon-variant]').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        if (this.disabled) return;
+        const next = addonVariants.find((v) => v.id === Number(this.dataset.addonVariant));
+        /* Changing colour swaps the chosen variant; it never adds a second
+           accessory, and it leaves the added/not-added state alone. */
+        if (next) addonVariant = next;
+        renderAddon();
+        renderTotals();
+      });
+    });
+
+    addonToggle?.addEventListener('click', function () {
+      if (this.disabled) return;
+      addonOn = !addonOn;
+      renderAddon();
+      renderTotals();
+    });
+  }
+
   const selected = {};
   form?.querySelectorAll('.pw-pdp__option').forEach((optionEl) => {
     const idx = optionEl.dataset.optionIndex;
@@ -94,7 +190,9 @@
       if (atcText) atcText.textContent = variant.available ? atcText.dataset.available || atcText.textContent : soldOutLabel;
     }
 
-    if (stickyPriceEl) stickyPriceEl.textContent = formatMoney(variant.price);
+    /* Sticky bar and summary both show watch + accessory, so they are
+       driven from one place rather than set piecemeal here. */
+    renderTotals();
     if (stickyVariantEl && variant.title !== 'Default Title') {
       stickyVariantEl.textContent = '— ' + variant.title;
     }
@@ -114,6 +212,10 @@
 
   /* Store the "available" label text once so we can restore it after a sold-out state */
   if (atcText) atcText.dataset.available = atcText.textContent.trim();
+
+  /* Paint the accessory and the totals from the server-rendered state */
+  renderAddon();
+  renderTotals();
 
   /* Swatch selection. Swatches carrying data-swatch-link point at another
      product, so they are left alone to navigate rather than repainting this
@@ -166,23 +268,38 @@
     button.disabled = true;
     button.textContent = 'Adding…';
 
-    /* Built from the real form (includes the hidden variant id input, plus
-       any line-item property fields from other sections associated via
-       the form="pw-pdp-form" attribute, e.g. the Founder's Hand note). */
+    /* One request, one or two line items.
+
+       Line-item properties still come from the real form, so other
+       sections attached via form="pw-pdp-form" (the Founder's Hand note)
+       keep working. The accessory is appended as its own item with its own
+       variant id, which is what makes it a separate cart line with its own
+       inventory — never a property on the watch, never a combined variant. */
     const formData = new FormData(form);
-    formData.set('quantity', 1);
-    [...formData.keys()].forEach((key) => {
-      if (key.indexOf('properties[') === 0 && !formData.get(key)) formData.delete(key);
+    const properties = {};
+    formData.forEach((value, key) => {
+      const match = key.match(/^properties\[(.+)\]$/);
+      if (match && value) properties[match[1]] = value;
     });
+
+    const mainItem = { id: Number(variantIdInput.value), quantity: 1 };
+    if (Object.keys(properties).length) mainItem.properties = properties;
+
+    const items = [mainItem];
+    if (addonOn && addonVariant && addonVariant.available) {
+      items.push({ id: addonVariant.id, quantity: 1 });
+    }
+
+    const payload = { items: items };
     if (cart) {
-      formData.append('sections', cart.getSectionsToRender().map((s) => s.id));
-      formData.append('sections_url', window.location.pathname);
+      payload.sections = cart.getSectionsToRender().map((s) => s.id);
+      payload.sections_url = window.location.pathname;
     }
 
     fetch(window.routes ? window.routes.cart_add_url : '/cart/add.js', {
       method: 'POST',
-      headers: { Accept: 'application/javascript' },
-      body: formData,
+      headers: { 'Content-Type': 'application/json', Accept: 'application/javascript' },
+      body: JSON.stringify(payload),
     })
       .then((r) => r.json())
       .then((response) => {

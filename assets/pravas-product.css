@@ -598,3 +598,184 @@
   .pw-pdp-founder__content { padding: 40px 24px; }
   .pw-pdp-founder__image { min-height: 280px; }
 }
+
+/* ===== OPTIONAL ACCESSORY ADD-ON =====
+   Sits inside the information panel between the variant selector and the
+   add-to-cart button. The accessory is a separate Shopify product; nothing
+   here touches this product's price or variants. */
+.pw-addon {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pw-addon__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--addon-heading-size, 9px);
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--addon-muted, #6A6A6A);
+}
+.pw-addon__card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--addon-gap, 14px);
+  padding: var(--addon-padding, 18px);
+  background: var(--addon-bg, #EFEDE8);
+  border: var(--addon-border-width, 1px) solid var(--addon-border, #D8D4CC);
+  border-radius: var(--addon-radius, 0);
+}
+.pw-addon__media {
+  flex: 0 0 var(--addon-image-size, 92px);
+  width: var(--addon-image-size, 92px);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--addon-radius, 0);
+  background: #fff;
+}
+.pw-addon__img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.pw-addon__body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: flex-start;
+}
+.pw-addon__title {
+  font-family: var(--font-body);
+  font-size: var(--addon-title-size, 13px);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--addon-text, #181818);
+  text-decoration: none;
+}
+.pw-addon__title:hover { color: var(--addon-accent, #B5924A); }
+.pw-addon__price {
+  font-family: var(--font-body);
+  font-size: var(--addon-price-size, 13px);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--addon-text, #181818);
+}
+
+.pw-addon__opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.pw-addon__opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: transparent;
+  border: var(--addon-border-width, 1px) solid var(--addon-border, #D8D4CC);
+  border-radius: var(--addon-radius, 0);
+  font-family: var(--font-body);
+  font-size: var(--addon-body-size, 11px);
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--addon-text, #181818);
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.pw-addon__opt:hover:not([disabled]) { border-color: var(--addon-accent, #B5924A); }
+.pw-addon__opt.is-active {
+  border-color: var(--addon-accent, #B5924A);
+  color: var(--addon-accent, #B5924A);
+}
+.pw-addon__opt[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+.pw-addon__opt-state {
+  font-size: 0.85em;
+  letter-spacing: 1px;
+  color: var(--addon-muted, #6A6A6A);
+  text-decoration: none;
+}
+
+.pw-addon__toggle {
+  margin-top: 2px;
+  min-height: var(--addon-btn-height, 40px);
+  padding: 0 18px;
+  background: transparent;
+  border: var(--addon-border-width, 1px) solid var(--addon-text, #181818);
+  border-radius: var(--addon-radius, 0);
+  font-family: var(--font-body);
+  font-size: var(--addon-btn-size, 10px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--addon-text, #181818);
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.pw-addon__toggle[aria-pressed='true'] {
+  background: var(--addon-btn-bg, #181818);
+  color: var(--addon-btn-text, #F5F3EF);
+  border-color: var(--addon-btn-bg, #181818);
+}
+.pw-addon__toggle[disabled] { opacity: 0.4; cursor: not-allowed; }
+.pw-addon__opt:focus-visible,
+.pw-addon__toggle:focus-visible {
+  outline: 2px solid var(--addon-accent, #B5924A);
+  outline-offset: 2px;
+}
+
+.pw-addon__note {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--addon-body-size, 11px);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--addon-muted, #6A6A6A);
+}
+
+/* ===== PRICE SUMMARY ===== */
+.pw-sum {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sum-row-gap, 8px);
+  padding-top: 4px;
+}
+.pw-sum__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pw-sum__row[hidden] { display: none; }
+.pw-sum__label {
+  font-family: var(--font-body);
+  font-size: var(--sum-label-size, 9px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--sum-label-color, #6A6A6A);
+}
+.pw-sum__value {
+  font-family: var(--font-body);
+  font-size: var(--sum-value-size, 12px);
+  font-weight: 400;
+  color: var(--sum-value-color, #181818);
+}
+.pw-sum__row--total {
+  padding-top: var(--sum-row-gap, 8px);
+  border-top: 1px solid var(--sum-divider, #D8D4CC);
+}
+.pw-sum__row--total .pw-sum__value {
+  font-family: var(--font-display);
+  font-size: var(--sum-total-size, 16px);
+}
+
+@media screen and (max-width: 749px) {
+  /* Image above the detail rather than a cramped two-column card */
+  .pw-addon__card { flex-direction: column; }
+  .pw-addon__media { flex: 1 1 auto; width: var(--addon-image-size, 92px); }
+  .pw-addon__toggle { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-addon__opt, .pw-addon__toggle { transition: none; }
+}

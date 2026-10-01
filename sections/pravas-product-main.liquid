@@ -265,6 +265,147 @@
           {%- endif -%}
         </div>
 
+        {%- liquid
+          comment
+            Optional accessory add-on. The accessory stays its own Shopify
+            product: nothing here alters the watch's price or variants, and
+            adding it produces a second, independent cart line. If no
+            accessory product is chosen the whole block is absent, so the
+            page behaves exactly as it did before.
+          endcomment
+          assign addon = section.settings.accessory_product
+          assign show_addon = false
+          if section.settings.show_accessory and addon != blank and addon.variants.size > 0
+            assign show_addon = true
+          endif
+
+          assign addon_first = nil
+          for v in addon.variants
+            if v.available
+              assign addon_first = v
+              break
+            endif
+          endfor
+        -%}
+
+        {%- if show_addon -%}
+          <div class="pw-addon" id="pw-addon" data-addon-product-url="{{ addon.url }}">
+            {%- if section.settings.accessory_heading != blank -%}
+              <span class="pw-addon__eyebrow">{{ section.settings.accessory_heading }}</span>
+            {%- endif -%}
+
+            <div class="pw-addon__card">
+              {%- if section.settings.accessory_show_image -%}
+                {%- liquid
+                  assign addon_img = addon_first.image | default: addon.featured_image
+                  assign addon_alt = addon_img.alt | default: addon.title
+                -%}
+                <span class="pw-addon__media">
+                  {%- if addon_img -%}
+                    {{
+                      addon_img
+                      | image_url: width: 400
+                      | image_tag:
+                        alt: addon_alt,
+                        class: 'pw-addon__img',
+                        id: 'pw-addon-img',
+                        loading: 'lazy',
+                        widths: '100,160,220,300,400'
+                    }}
+                  {%- endif -%}
+                </span>
+              {%- endif -%}
+
+              <div class="pw-addon__body">
+                <a class="pw-addon__title" href="{{ addon.url }}">{{ addon.title }}</a>
+
+                {%- if section.settings.accessory_show_price -%}
+                  <span class="pw-addon__price" id="pw-addon-price">+ {{ addon_first.price | default: addon.price | money }}</span>
+                {%- endif -%}
+
+                {%- if addon.variants.size > 1 -%}
+                  <div class="pw-addon__opts" role="group" aria-label="{{ addon.title | escape }}">
+                    {%- for v in addon.variants -%}
+                      {%- liquid
+                        assign v_img = v.image | default: addon.featured_image
+                        assign v_src = ''
+                        if v_img
+                          assign v_src = v_img | image_url: width: 400
+                        endif
+                        assign is_first_available = false
+                        if addon_first != nil and v.id == addon_first.id
+                          assign is_first_available = true
+                        endif
+                      -%}
+                      <button
+                        type="button"
+                        class="pw-addon__opt{% if is_first_available %} is-active{% endif %}"
+                        data-addon-variant="{{ v.id }}"
+                        data-addon-price="{{ v.price }}"
+                        data-addon-title="{{ v.title | escape }}"
+                        data-addon-image="{{ v_src }}"
+                        {% unless v.available %}disabled aria-disabled="true"{% endunless %}
+                      >
+                        <span class="pw-addon__opt-label">{{ v.title }}</span>
+                        {%- unless v.available -%}
+                          <span class="pw-addon__opt-state">{{ section.settings.accessory_sold_out_label | default: 'SOLD OUT' }}</span>
+                        {%- endunless -%}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                {%- comment -%}
+                  The toggle is what actually puts the accessory in the order.
+                  It is disabled outright when nothing in the accessory is in
+                  stock, so a sold-out strap can never be added while the
+                  watch itself stays purchasable.
+                {%- endcomment -%}
+                <button
+                  type="button"
+                  class="pw-addon__toggle"
+                  id="pw-addon-toggle"
+                  aria-pressed="false"
+                  data-add-label="{{ section.settings.accessory_add_label | default: '+ ADD STRAP' | escape }}"
+                  data-added-label="{{ section.settings.accessory_added_label | default: 'STRAP ADDED — REMOVE' | escape }}"
+                  {% if addon_first == nil %}disabled{% endif %}
+                >
+                  {%- if addon_first == nil -%}
+                    {{ section.settings.accessory_sold_out_label | default: 'SOLD OUT' }}
+                  {%- else -%}
+                    {{ section.settings.accessory_add_label | default: '+ ADD STRAP' }}
+                  {%- endif -%}
+                </button>
+              </div>
+            </div>
+
+            {%- if section.settings.accessory_note != blank -%}
+              <p class="pw-addon__note">{{ section.settings.accessory_note }}</p>
+            {%- endif -%}
+          </div>
+
+          <script type="application/json" id="pw-addon-variants-json">
+            {{ addon.variants | json }}
+          </script>
+        {%- endif -%}
+
+        {%- if section.settings.show_price_summary -%}
+          <div class="pw-sum" id="pw-sum">
+            <div class="pw-sum__row">
+              <span class="pw-sum__label">{{ section.settings.summary_product_label | default: 'WATCH' }}</span>
+              <span class="pw-sum__value" id="pw-sum-product">{{ current_variant.price | money }}</span>
+            </div>
+            <div class="pw-sum__row" id="pw-sum-addon-row" hidden>
+              <span class="pw-sum__label" id="pw-sum-addon-label">{{ addon.title | default: 'ACCESSORY' }}</span>
+              <span class="pw-sum__value" id="pw-sum-addon"></span>
+            </div>
+            <div class="pw-sum__row pw-sum__row--total">
+              <span class="pw-sum__label">{{ section.settings.summary_total_label | default: 'TOTAL' }}</span>
+              <span class="pw-sum__value" id="pw-sum-total">{{ current_variant.price | money }}</span>
+            </div>
+          </div>
+        {%- endif -%}
+
         <button
           type="submit"
           name="add"
@@ -357,6 +498,33 @@
     --product-swatch-label-gap: {{ section.settings.swatch_label_gap | default: 8 }}px;
     --product-swatch-label-list-color: {{ section.settings.swatch_label_color | default: '#181818' }};
     --product-swatch-label-list-color-active: {{ section.settings.swatch_label_active_color | default: '#181818' }};
+
+    --addon-bg: {{ section.settings.accessory_bg | default: '#EFEDE8' }};
+    --addon-text: {{ section.settings.accessory_text | default: '#181818' }};
+    --addon-muted: {{ section.settings.accessory_muted | default: '#6A6A6A' }};
+    --addon-accent: {{ section.settings.accessory_accent | default: '#B5924A' }};
+    --addon-border: {{ section.settings.accessory_border | default: '#D8D4CC' }};
+    --addon-border-width: {{ section.settings.accessory_border_width | default: 1 }}px;
+    --addon-radius: {{ section.settings.accessory_radius | default: 0 }}px;
+    --addon-padding: {{ section.settings.accessory_padding | default: 18 }}px;
+    --addon-gap: {{ section.settings.accessory_gap | default: 14 }}px;
+    --addon-image-size: {{ section.settings.accessory_image_size | default: 92 }}px;
+    --addon-heading-size: {{ section.settings.accessory_heading_size | default: 9 }}px;
+    --addon-title-size: {{ section.settings.accessory_title_size | default: 13 }}px;
+    --addon-body-size: {{ section.settings.accessory_body_size | default: 11 }}px;
+    --addon-price-size: {{ section.settings.accessory_price_size | default: 13 }}px;
+    --addon-btn-height: {{ section.settings.accessory_btn_height | default: 40 }}px;
+    --addon-btn-size: {{ section.settings.accessory_btn_size | default: 10 }}px;
+    --addon-btn-bg: {{ section.settings.accessory_btn_bg | default: '#181818' }};
+    --addon-btn-text: {{ section.settings.accessory_btn_text | default: '#F5F3EF' }};
+
+    --sum-label-size: {{ section.settings.summary_label_size | default: 9 }}px;
+    --sum-value-size: {{ section.settings.summary_value_size | default: 12 }}px;
+    --sum-total-size: {{ section.settings.summary_total_size | default: 16 }}px;
+    --sum-row-gap: {{ section.settings.summary_row_gap | default: 8 }}px;
+    --sum-label-color: {{ section.settings.summary_label_color | default: '#6A6A6A' }};
+    --sum-value-color: {{ section.settings.summary_value_color | default: '#181818' }};
+    --sum-divider: {{ section.settings.summary_divider | default: '#D8D4CC' }};
 
     --product-gallery-gap: {{ section.settings.gallery_gap | default: 12 }}px;
     --product-gallery-radius: {{ section.settings.gallery_radius | default: 0 }}px;
@@ -472,6 +640,48 @@
     { "type": "header", "content": "Swatches — colour block style" },
     { "type": "range", "id": "swatch_size", "label": "Swatch height", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
     { "type": "color", "id": "swatch_bg_color", "label": "Background when no colour is set", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Optional accessory" },
+    { "type": "paragraph", "content": "Offers a separate Shopify product alongside this one. It stays its own product with its own inventory, and adding it creates a second cart line — it never changes this product's price or variants. Leave the product empty to hide the whole block." },
+    { "type": "checkbox", "id": "show_accessory", "label": "Show accessory add-on", "default": true },
+    { "type": "product", "id": "accessory_product", "label": "Accessory product" },
+    { "type": "text", "id": "accessory_heading", "label": "Heading", "default": "COMPLETE YOUR TIMEPIECE" },
+    { "type": "text", "id": "accessory_note", "label": "Explanatory line", "default": "The Presidential Bracelet is included with your timepiece. The leather strap is an optional addition." },
+    { "type": "text", "id": "accessory_add_label", "label": "Button — not added", "default": "+ ADD STRAP" },
+    { "type": "text", "id": "accessory_added_label", "label": "Button — added", "default": "STRAP ADDED — REMOVE" },
+    { "type": "text", "id": "accessory_sold_out_label", "label": "Sold out label", "default": "SOLD OUT" },
+    { "type": "checkbox", "id": "accessory_show_image", "label": "Show accessory image", "default": true },
+    { "type": "checkbox", "id": "accessory_show_price", "label": "Show accessory price", "default": true },
+    { "type": "range", "id": "accessory_image_size", "label": "Image size", "min": 48, "max": 200, "step": 4, "unit": "px", "default": 92 },
+    { "type": "range", "id": "accessory_padding", "label": "Padding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "accessory_gap", "label": "Inner spacing", "min": 0, "max": 32, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "accessory_heading_size", "label": "Heading size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "accessory_title_size", "label": "Product name size", "min": 9, "max": 22, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "accessory_body_size", "label": "Body size", "min": 8, "max": 18, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "accessory_price_size", "label": "Price size", "min": 9, "max": 24, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "accessory_btn_height", "label": "Button height", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
+    { "type": "range", "id": "accessory_btn_size", "label": "Button text size", "min": 8, "max": 16, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "accessory_radius", "label": "Corner radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "accessory_border_width", "label": "Border thickness", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "color", "id": "accessory_bg", "label": "Background", "default": "#EFEDE8" },
+    { "type": "color", "id": "accessory_text", "label": "Text", "default": "#181818" },
+    { "type": "color", "id": "accessory_muted", "label": "Muted text", "default": "#6A6A6A" },
+    { "type": "color", "id": "accessory_accent", "label": "Accent", "default": "#B5924A" },
+    { "type": "color", "id": "accessory_border", "label": "Border", "default": "#D8D4CC" },
+    { "type": "color", "id": "accessory_btn_bg", "label": "Button background — added", "default": "#181818" },
+    { "type": "color", "id": "accessory_btn_text", "label": "Button text — added", "default": "#F5F3EF" },
+
+    { "type": "header", "content": "Price summary" },
+    { "type": "checkbox", "id": "show_price_summary", "label": "Show price summary above the button", "default": true },
+    { "type": "text", "id": "summary_product_label", "label": "Product row label", "default": "WATCH" },
+    { "type": "text", "id": "summary_total_label", "label": "Total row label", "default": "TOTAL" },
+    { "type": "range", "id": "summary_label_size", "label": "Label size", "min": 7, "max": 16, "step": 1, "unit": "px", "default": 9 },
+    { "type": "range", "id": "summary_value_size", "label": "Value size", "min": 9, "max": 20, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "summary_total_size", "label": "Total size", "min": 10, "max": 32, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "summary_row_gap", "label": "Row spacing", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 8 },
+    { "type": "color", "id": "summary_label_color", "label": "Label colour", "default": "#6A6A6A" },
+    { "type": "color", "id": "summary_value_color", "label": "Value colour", "default": "#181818" },
+    { "type": "color", "id": "summary_divider", "label": "Divider", "default": "#D8D4CC" },
 
     { "type": "header", "content": "Add to Cart Button" },
     { "type": "color", "id": "atc_bg", "label": "Background", "default": "#B5924A" },
