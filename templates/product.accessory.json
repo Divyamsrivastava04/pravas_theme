@@ -319,7 +319,7 @@
         "product_limit": 3,
         "columns": 3,
         "columns_tablet": 2,
-        "columns_mobile": 2,
+        "columns_mobile": "2",
         "grid_gap_x": 32,
         "grid_gap_y": 48,
         "grid_gap_x_mobile": 12,
