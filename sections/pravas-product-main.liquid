@@ -87,6 +87,42 @@
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
             {%- assign option_index = forloop.index0 -%}
+            {%- liquid
+              comment
+                Automatic picks the style for the whole row, not per swatch:
+                one value without a picture would otherwise sit as a small
+                colour block beside tall image tiles. If anything in the row
+                has an image, the row goes image style and the rest fill
+                their tile with their colour.
+              endcomment
+              assign row_mode = 'color'
+              if section.settings.swatch_mode == 'image'
+                assign row_mode = 'image'
+              elsif section.settings.swatch_mode == 'auto'
+                for value in option.values
+                  assign scan_key = value | downcase | strip
+                  for sb in section.blocks
+                    if sb.type == 'swatch_color'
+                      assign sb_key = sb.settings.option_value | downcase | strip
+                      if sb_key == scan_key and sb.settings.image != blank
+                        assign row_mode = 'image'
+                      endif
+                    endif
+                  endfor
+                  if value.swatch.image
+                    assign row_mode = 'image'
+                  endif
+                  if section.settings.swatch_use_variant_image
+                    for v in product.variants
+                      if v.options[option_index] == value and v.image
+                        assign row_mode = 'image'
+                        break
+                      endif
+                    endfor
+                  endif
+                endfor
+              endif
+            -%}
             <div class="pw-pdp__option" data-option-index="{{ option_index }}">
               <span class="pw-pdp__option-label">
                 {{ option.name }}: <span class="pw-pdp__option-selected" data-option-selected>{{ option.selected_value }}</span>
@@ -156,7 +192,7 @@
                     href: swatch_href,
                     option_index: option_index,
                     is_active: swatch_active,
-                    mode: section.settings.swatch_mode,
+                    mode: row_mode,
                     attrs: swatch_attrs
                   -%}
                 {%- endfor -%}
@@ -202,7 +238,7 @@
                         href: link_href,
                         option_index: option_index,
                         is_active: false,
-                        mode: section.settings.swatch_mode,
+                        mode: row_mode,
                         attrs: sb.shopify_attributes
                       -%}
                     {%- endif -%}
