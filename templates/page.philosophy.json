@@ -23,6 +23,7 @@
         "t2": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_1_2026_09_49_30_PM.png",
             "label": "ENERGY & SPRING",
             "description": ""
           }
@@ -30,6 +31,7 @@
         "t3": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_1_2026_10_04_19_PM.png",
             "label": "21 JEWELS",
             "description": ""
           }
@@ -37,6 +39,7 @@
         "t4": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Oct_1_2026_10_01_07_PM.png",
             "label": "HAND-REGULATED",
             "description": ""
           }
@@ -141,7 +144,7 @@
         "image_opacity": 100,
         "image_radius": 0,
         "image_border_width": 0,
-        "image_border_color": "#EFF0F0",
+        "image_border_color": "#eff0f0",
         "enable_image_overlay": false,
         "image_overlay_color": "#181818",
         "image_overlay_opacity": 0,
