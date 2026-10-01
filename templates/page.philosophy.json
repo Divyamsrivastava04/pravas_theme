@@ -15,6 +15,7 @@
         "t1": {
           "type": "tile",
           "settings": {
+            "image": "shopify://shop_images/8ef2d68f-d981-4bc4-b06b-4923acb2180e.jpg",
             "label": "CALIBRE 01",
             "description": ""
           }
@@ -145,7 +146,7 @@
         "image_overlay_color": "#181818",
         "image_overlay_opacity": 0,
         "caption_left": "FIG 1.0 — THE SACRED GENESIS",
-        "caption_right": "MUMBAI HOROLOGY WORKSHOP",
+        "caption_right": "Emerald green aarambh",
         "content_max_width": 1200,
         "text_max_width": 420,
         "text_column_ratio": 1,
@@ -291,7 +292,7 @@
         "quote": "\"We promise a product that respects your time by existing outside of it.\"",
         "body": "Craft is our prayer. Precision is our practice. Heritage is our guide.",
         "cta_label": "EXPLORE THE COLLECTION",
-        "cta_url": "",
+        "cta_url": "shopify://products/sunburst-green",
         "cta_show_arrow": true,
         "show_bottom_rule": true,
         "footnote": "LIMITED ANNUAL PRODUCTION · INDIVIDUALLY NUMBERED",
