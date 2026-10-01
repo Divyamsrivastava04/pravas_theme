@@ -164,6 +164,10 @@
         if (response.status) throw new Error(response.description || response.message);
         closeQB();
         if (cart) {
+          /* Same reason as the product page: the drawer keeps its page-load
+             is-empty class through renderContents, so the first add into an
+             empty cart renders the empty state until a reload. */
+          cart.classList.remove('is-empty');
           cart.renderContents(response);
         } else {
           fetch('/cart.js').then((r) => r.json()).then((cartData) => {

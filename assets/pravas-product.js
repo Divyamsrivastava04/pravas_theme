@@ -339,6 +339,12 @@
       .then((response) => {
         if (response.status) throw new Error(response.description || response.message);
         if (cart) {
+          /* The drawer carries is-empty from page load when the cart was
+             empty, and renderContents only ever clears it off .drawer__inner,
+             which never has it. Left on, the drawer keeps its empty-state
+             layout and the newly added lines do not appear until a reload.
+             Dawn's own product-form.js clears it here for the same reason. */
+          cart.classList.remove('is-empty');
           cart.renderContents(response);
         } else {
           window.location.href = window.routes ? window.routes.cart_url : '/cart';
