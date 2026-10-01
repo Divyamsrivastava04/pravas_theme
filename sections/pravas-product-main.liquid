@@ -288,6 +288,18 @@
           endfor
         -%}
 
+        {%- comment -%}
+          Hidden on the storefront when no accessory product is chosen, but
+          silent absence is indistinguishable from a bug, so the theme
+          editor gets a reason instead of nothing. request.design_mode is
+          only ever true inside the editor.
+        {%- endcomment -%}
+        {%- if section.settings.show_accessory and addon == blank and request.design_mode -%}
+          <p class="pw-addon__setup">
+            Pick an <strong>Accessory product</strong> under “Optional accessory” in this section’s settings to show the add-on block here. Nothing is shown to customers until you do.
+          </p>
+        {%- endif -%}
+
         {%- if show_addon -%}
           <div class="pw-addon" id="pw-addon" data-addon-product-url="{{ addon.url }}">
             {%- if section.settings.accessory_heading != blank -%}

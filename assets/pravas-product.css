@@ -779,3 +779,17 @@
 @media (prefers-reduced-motion: reduce) {
   .pw-addon__opt, .pw-addon__toggle { transition: none; }
 }
+
+/* Theme-editor-only hint when the accessory block has no product chosen.
+   Never rendered on the storefront. */
+.pw-addon__setup {
+  margin: 0;
+  padding: 14px 16px;
+  background: rgba(181, 146, 74, 0.1);
+  border: 1px dashed var(--addon-accent, #B5924A);
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--addon-text, #181818);
+}
+.pw-addon__setup strong { font-weight: 600; }
