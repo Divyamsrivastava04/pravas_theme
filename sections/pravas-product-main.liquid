@@ -259,12 +259,12 @@
             built differently.
           endcomment
           assign option_names = '|'
-          unless product.has_only_default_variant
+          if product.has_only_default_variant == false
             for opt in product.options_with_values
               assign opt_key = opt.name | downcase | strip
               assign option_names = option_names | append: opt_key | append: '|'
             endfor
-          endunless
+          endif
 
           assign has_orphan_links = false
           for sb in section.blocks
@@ -277,9 +277,9 @@
                 assign t = sb.settings.option_name | downcase | strip
                 assign matched = false
                 if t == blank
-                  unless product.has_only_default_variant
+                  if product.has_only_default_variant == false
                     assign matched = true
-                  endunless
+                  endif
                 else
                   assign needle = '|' | append: t | append: '|'
                   if option_names contains needle
@@ -308,8 +308,14 @@
                   a link to itself so the variant picker's script leaves it
                   alone — it selects nothing on this page.
                 {%- endcomment -%}
+                {%- comment -%}
+                  The label is resolved before the call: a filter inside a
+                  render argument list is the same trap as one inside
+                  image_tag — everything after it gets swallowed.
+                {%- endcomment -%}
+                {%- assign current_swatch_label = section.settings.link_row_current_label | default: product.title -%}
                 {%- render 'pravas-product-swatch',
-                  label: section.settings.link_row_current_label | default: product.title,
+                  label: current_swatch_label,
                   image: product.featured_image,
                   color: section.settings.link_row_current_color,
                   text_color: section.settings.link_row_current_text_color,
@@ -331,9 +337,9 @@
                     assign t = sb.settings.option_name | downcase | strip
                     assign matched = false
                     if t == blank
-                      unless product.has_only_default_variant
+                      if product.has_only_default_variant == false
                         assign matched = true
-                      endunless
+                      endif
                     else
                       assign needle = '|' | append: t | append: '|'
                       if option_names contains needle
