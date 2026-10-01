@@ -1,0 +1,25 @@
+<div class="pw-t2-probe">ok</div>
+
+{% schema %}
+{
+  "name": "PW T2",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Product grid"
+        },
+        {
+          "value": "feature",
+          "label": "Single featured product"
+        }
+      ],
+      "default": "grid"
+    }
+  ]
+}
+{% endschema %}

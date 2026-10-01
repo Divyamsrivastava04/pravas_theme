@@ -1,7 +1,7 @@
 {
   "sections": {
     "s": {
-      "type": "pw-s3",
+      "type": "pw-t5",
       "settings": {}
     }
   },

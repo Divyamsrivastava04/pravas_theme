@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "s": {
+      "type": "pw-t16",
+      "settings": {}
+    }
+  },
+  "order": [
+    "s"
+  ]
+}
