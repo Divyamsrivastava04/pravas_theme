@@ -141,8 +141,8 @@
     "ticker": {
       "type": "pravas-ticker",
       "settings": {
-        "product": "",
-        "handle": "sunburst-green",
+        "product": "emerald-green",
+        "handle": "Emerald-green",
         "colourway1_value": "Sunburst Green",
         "colourway2_value": "Midnight Black",
         "m1": "Someone just claimed their AARAMBH",
