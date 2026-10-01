@@ -18,9 +18,17 @@
         "columns_desktop": 3,
         "columns_mobile": "2"
       }
+    },
+    "accprobe": {
+      "type": "pravas-accessory-editorial",
+      "settings": {
+        "eyebrow": "PROBE",
+        "heading": "Probe Heading"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "accprobe"
   ]
 }
