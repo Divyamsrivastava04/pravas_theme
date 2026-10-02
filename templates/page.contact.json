@@ -1,8 +1,48 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "contact-hero": {
       "type": "pravas-contact-hero",
-      "settings": {}
+      "settings": {
+        "enabled": true,
+        "eyebrow": "THE PRAVAS CONCIERGE",
+        "heading": "How Can We Help?",
+        "body": "Whether you have a question about a timepiece, need help with an order, or simply want to speak with someone at PRAVAS, our concierge team is here to help.",
+        "show_rule": true,
+        "content_max_width": 640,
+        "rule_width": 56,
+        "padding_top": 88,
+        "padding_bottom": 56,
+        "padding_x": 40,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 32,
+        "padding_x_mobile": 20,
+        "heading_font": "playfair_display_n4",
+        "heading_size": 48,
+        "heading_size_tablet": 38,
+        "heading_size_mobile": 28,
+        "heading_weight": "400",
+        "heading_italic": true,
+        "heading_line_height": 1.1,
+        "body_font": "inter_n4",
+        "body_size": 13,
+        "body_line_height": 1.8,
+        "eyebrow_size": 9,
+        "eyebrow_letter_spacing": 3,
+        "bg_color": "#131313",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#8a8a8a",
+        "accent_color": "#b5924a"
+      }
     },
     "contact": {
       "type": "pravas-contact",
@@ -10,49 +50,186 @@
         "d1": {
           "type": "detail",
           "settings": {
+            "enabled": true,
             "eyebrow": "CONCIERGE DESK",
-            "kind": "email"
+            "description": "",
+            "kind": "email",
+            "value": "hello@pravaswatches.com",
+            "link_url": "",
+            "note": ""
           }
         },
         "d2": {
           "type": "detail",
           "settings": {
+            "enabled": true,
             "eyebrow": "TELEPHONE",
-            "kind": "phone"
+            "description": "",
+            "kind": "phone",
+            "value": "",
+            "link_url": "",
+            "note": ""
           }
         },
         "d3": {
           "type": "detail",
           "settings": {
+            "enabled": true,
             "eyebrow": "ORDERS & DELIVERY",
             "description": "Questions regarding timepiece dispatch, transit, or order modifications.",
-            "kind": "email"
+            "kind": "email",
+            "value": "hello@pravaswatches.com",
+            "link_url": "",
+            "note": ""
           }
         },
         "d4": {
           "type": "detail",
           "settings": {
+            "enabled": true,
             "eyebrow": "WARRANTY & SERVICE",
             "description": "Caliber maintenance, servicing, repairs and warranty enquiries.",
-            "kind": "email"
+            "kind": "email",
+            "value": "",
+            "link_url": "",
+            "note": ""
           }
         },
         "v1": {
           "type": "viewing",
           "settings": {
+            "enabled": true,
             "eyebrow": "PRIVATE VIEWINGS",
             "description": "Private viewings are available by appointment.",
-            "link_label": "REQUEST A PRIVATE VIEWING"
+            "link_label": "REQUEST A PRIVATE VIEWING",
+            "link_url": ""
           }
         }
       },
-      "block_order": ["d1", "d2", "d3", "d4", "v1"],
-      "settings": {}
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "v1"
+      ],
+      "settings": {
+        "enabled": true,
+        "info_eyebrow": "ATELIER DIRECTORY",
+        "info_location": "New Delhi",
+        "form_eyebrow": "DIRECT INQUIRY",
+        "form_heading": "Speak with PRAVAS.",
+        "form_description": "Please share your inquiry details below. Our concierge will review your message and respond personally.",
+        "name_label": "FULL NAME",
+        "name_placeholder": "Your name",
+        "email_label": "EMAIL ADDRESS",
+        "email_placeholder": "name@domain.com",
+        "phone_label": "PHONE NUMBER",
+        "phone_placeholder": "Optional",
+        "show_subject": true,
+        "subject_label": "INQUIRY SUBJECT",
+        "subject_options": "Timepiece & Caliber Inquiry|Order & Delivery|Warranty & Service|Private Viewing|Other",
+        "message_label": "YOUR MESSAGE / INQUIRY",
+        "message_placeholder": "Tell us how we can assist you…",
+        "submit_label": "SEND INQUIRY",
+        "submit_show_arrow": true,
+        "form_note": "",
+        "success_message": "Thank you. Our concierge will be in touch shortly.",
+        "error_message": "Please check the highlighted field and try again.",
+        "content_max_width": 1140,
+        "column_gap": 56,
+        "field_gap": 18,
+        "panel_padding": 36,
+        "padding_top": 8,
+        "padding_bottom": 96,
+        "padding_x": 40,
+        "padding_x_mobile": 20,
+        "panel_bg_color": "#1a1a1a",
+        "panel_border_color": "#2a2a2a",
+        "panel_radius": 0,
+        "input_bg_color": "#131313",
+        "input_text_color": "#f5f3ef",
+        "input_placeholder_color": "#6a6a6a",
+        "input_border_color": "#2e2e2e",
+        "input_focus_border_color": "#b5924a",
+        "input_border_width": 1,
+        "input_radius": 0,
+        "input_padding": 13,
+        "label_color": "#8a8a8a",
+        "error_color": "#c0564b",
+        "success_color": "#6e9e7e",
+        "btn_bg_color": "#b5924a",
+        "btn_text_color": "#131313",
+        "btn_hover_bg_color": "#c7a25e",
+        "btn_hover_text_color": "#131313",
+        "btn_radius": 0,
+        "btn_padding": 14,
+        "btn_size": 10,
+        "heading_font": "playfair_display_n4",
+        "form_heading_size": 28,
+        "body_font": "inter_n4",
+        "body_size": 12,
+        "bg_color": "#131313",
+        "text_color": "#f5f3ef",
+        "muted_color": "#8a8a8a",
+        "eyebrow_color": "#b5924a",
+        "link_hover_color": "#b5924a",
+        "divider_color": "#2a2a2a"
+      }
     },
     "contact-newsletter": {
       "type": "pravas-contact-newsletter",
-      "settings": {}
+      "settings": {
+        "enabled": true,
+        "eyebrow": "STAY WITH PRAVAS",
+        "heading": "Join the Journey.",
+        "body": "Occasional notes on new timepiece releases, horological craft, and private atelier viewings.",
+        "placeholder": "Enter your email address",
+        "submit_style": "arrow",
+        "submit_label": "SUBSCRIBE",
+        "success_message": "Thank you for subscribing.",
+        "alignment": "center",
+        "content_max_width": 560,
+        "form_max_width": 380,
+        "border_top_width": 1,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_x": 40,
+        "padding_top_mobile": 52,
+        "padding_bottom_mobile": 52,
+        "padding_x_mobile": 20,
+        "input_bg_color": "rgba(0,0,0,0)",
+        "input_text_color": "#f5f3ef",
+        "input_placeholder_color": "#6a6a6a",
+        "input_border_color": "#b5924a",
+        "input_border_width": 1,
+        "input_radius": 0,
+        "input_size": 13,
+        "submit_color": "#b5924a",
+        "submit_hover_color": "#f5f3ef",
+        "error_color": "#c0564b",
+        "success_color": "#6e9e7e",
+        "heading_font": "playfair_display_n4",
+        "heading_size": 34,
+        "heading_size_mobile": 24,
+        "heading_italic": true,
+        "body_font": "inter_n4",
+        "body_size": 12,
+        "body_line_height": 1.8,
+        "eyebrow_size": 9,
+        "eyebrow_letter_spacing": 3,
+        "bg_color": "#131313",
+        "eyebrow_color": "#b5924a",
+        "heading_color": "#f5f3ef",
+        "body_color": "#8a8a8a",
+        "accent_color": "#b5924a",
+        "divider_color": "#2a2a2a"
+      }
     }
   },
-  "order": ["contact-hero", "contact", "contact-newsletter"]
+  "order": [
+    "contact-hero",
+    "contact",
+    "contact-newsletter"
+  ]
 }
