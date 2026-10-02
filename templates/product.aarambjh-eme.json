@@ -137,6 +137,12 @@
         "accessory_sold_out_label": "SOLD OUT",
         "accessory_show_image": true,
         "accessory_show_price": true,
+        "accessory_bundle_enabled": true,
+        "accessory_bundle_type": "price",
+        "accessory_bundle_value": 999,
+        "accessory_bundle_note": "Bundle price — applied automatically at checkout.",
+        "accessory_was_color": "#6a6a6a",
+        "accessory_now_color": "#b5924a",
         "accessory_image_size": 92,
         "accessory_padding": 18,
         "accessory_gap": 14,
@@ -174,13 +180,7 @@
         "sticky_eyebrow": "CURRENTLY VIEWING",
         "sticky_bg": "#f5f3ef",
         "sticky_text_color": "#181818",
-        "sticky_price_color": "#181818",
-        "accessory_bundle_enabled": true,
-        "accessory_bundle_type": "price",
-        "accessory_bundle_value": 999,
-        "accessory_bundle_note": "Bundle price — applied automatically at checkout.",
-        "accessory_was_color": "#6a6a6a",
-        "accessory_now_color": "#b5924a"
+        "sticky_price_color": "#181818"
       }
     },
     "philosophy": {
@@ -235,7 +235,7 @@
         "s5": {
           "type": "spec",
           "settings": {
-            "label": "CASE DIAMETER",
+            "label": "DIAL SIZE",
             "value": "38mm"
           }
         },
